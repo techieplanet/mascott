@@ -48,7 +48,7 @@ class RoleService {
      * This method constructs a map of ID and Title 
      * @return array(id=>x, title=>y)
      */
-    public function getRolesAsAssocArray(){
-        return Role::find()->asArray()->all();
+    public function getRolesMap(){
+        return ArrayHelper::map(Role::getRolesAsAssocArray(), 'id', 'title');
     }
 }

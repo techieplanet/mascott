@@ -72,21 +72,20 @@ class UserController extends Controller
         $selectedRoleId = 0;
         
         $roleService = new RoleService();
-        $rolesMap = ArrayHelper::map($roleService->getRolesAsAssocArray(), 'id', 'title');
+        $rolesMap = $roleService->getRolesMap();
         $rolesMap[0] = '--Select Role--';
         ksort($rolesMap);
-        //var_dump($rolesMap); exit;
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $success = true;
-            $selectedRoleId = $model->role_id;
+            //$selectedRoleId = $model->user_id;
         } 
         
         return $this->render('create', [
             'model' => $model,
             'rolesMap' => $rolesMap,
             'success' => $success,
-            'selectedRoleId' => $selectedRoleId
+            //'selectedRoleId' => $selectedRoleId
         ]);
     }
 
