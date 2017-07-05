@@ -1,5 +1,8 @@
 <?php
 
+//use app\assets\AppAsset;
+//AppAsset::register($this);  // $this represents the view object
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -23,7 +26,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
     
 </head>
-<body class="skin-blue sidebar-mini wysihtml5-supported">
+<body class="skin-green sidebar-mini wysihtml5-supported">
 <?php $this->beginBody() ?>
 
 <div class="wrapper">
@@ -47,11 +50,11 @@ AppAsset::register($this);
     
                 
     <footer class="main-footer">
-        <div class="pull-right hidden-xs">
+<!--        <div class="pull-right hidden-xs">
           <b>Version</b> 2.3.0
-        </div>
-        <strong>Copyright &copy; <?= date('Y') ?></strong> All rights reserved.
-      </footer>
+        </div>-->
+        <div class="text-right"><strong>Copyright &copy; <?= date('Y') ?></strong> All rights reserved.</div>
+    </footer>
     
 </div>
 
@@ -63,7 +66,7 @@ AppAsset::register($this);
     </div>
 </footer>-->
 
-    <?php require '../web/plugins/plugins.php' ?>
+    <?php //require '../web/plugins/plugins.php' ?>
     
 <?php $this->endBody() ?>
 

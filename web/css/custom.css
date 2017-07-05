@@ -289,3 +289,69 @@ body .modal .modal-lg {
     display: block;
     font-weight: bold;
 }
+
+.main-header>.navbar {
+    margin-left: 0px !important;
+    padding: 10px 20px;
+    background: #2F9E69 !important;
+}
+
+.logo-text {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 17px;
+    float:left;
+    margin: 20px 10px;
+}
+
+.logo-text:hover {
+    color: #fff;
+}
+
+.logo-icon img {
+    width: 80px;
+    height: 83px;
+}
+
+.logo-anchor {
+    /*margin-left: 20px;*/
+}
+
+.sub-logo-text {
+    color: #D6AB4F;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sub-logo-text:hover {
+    color: #D6AB4F;
+}
+
+.main-sidebar, .left-side {
+    padding-top: 120px !important;
+    background: #3D7359 !important;
+}
+
+.wrapper {
+    background: #3D7359 !important;
+}
+
+.content-wrapper, .right-side {
+    background: #E6E2C9 !important;
+    padding: 15px;
+    padding-top: 25px;
+}
+
+.content {
+    background: #FEFEFE !important;
+}
+
+li.user-header {
+    height: auto !important;
+}
+
+.dropdown.user.user-menu a > img {
+    width: 32px;
+    height: 32px;
+}

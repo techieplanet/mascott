@@ -15,14 +15,20 @@ use Yii;
  *
  * @author Swedge
  */
-class UserService {
-    //put your code here
-    public  function createSalt(){
-        return Yii::$app->getSecurity()->generateRandomString(6);
-    }
+class UserService extends Service{
     
-    //put your code here
-    public  function createPassword(){
-        return Yii::$app->getSecurity()->generateRandomString(6);
+    public function sendNewUserEmail($model){
+        $this->sendEmail(
+                Yii::$app->params['no-reply-email'], //from 
+                $model->email,                       //to
+                'New Account Registration',         //$subject, 
+                [
+                    'password' => $model->tempPass,
+                    'firstname' => $model->firstname,
+                    'lastname' => $model->lastname,
+                ],
+                'new-user',                          //view/template file
+                'new-account'                       //layout file
+        );
     }
 }

@@ -81,10 +81,6 @@ class Role extends \yii\db\ActiveRecord
         return $permissionIdList;
     }
     
-      /**
-     * This method constructs a map of ID and Title 
-     * @return array(id=>x, title=>y)
-     */
     public static function getRolesAsAssocArray(){
         return Role::find()->asArray()->all();
     }

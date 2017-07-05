@@ -16,6 +16,9 @@ use yii\helpers\Html;
 <body>
     <?php $this->beginBody() ?>
     <?= $content ?>
+    
+    NAFDAC MAS Team.
+    
     <?php $this->endBody() ?>
 </body>
 </html>

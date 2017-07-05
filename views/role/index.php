@@ -38,12 +38,13 @@ $this->title = 'Roles';
                     <th>Actions</th>
                 </tr>
             </thead>
+                <tbody>
         <?php
             //echo is_array($roles) ? 'array' : 'scalar'; exit;
             $count=0;
             foreach($roles as $role){
         ?>
-                <tbody>
+                
                     <tr>
                         <td><?php echo ++$count; ?></td>
                         <td><?php echo $role->title; ?></td>
@@ -57,10 +58,10 @@ $this->title = 'Roles';
                             </span>
                         </td>
                     </tr>
-                </tbody>
         <?php
             }
         ?>
+                 </tbody>
         </table>
     </div>
 </div>    

@@ -20,7 +20,7 @@ use Yii;
  * @property integer $modified_by
  * @property string $modified_date
  *
- * @property Drug[] $drugs
+ * @property Product[] $products
  */
 class Provider extends \yii\db\ActiveRecord
 {
@@ -38,7 +38,7 @@ class Provider extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['provider_name', 'street', 'city', 'state', 'contact_person', 'contact_phone', 'contact_email', 'created_by', 'created_date', 'modified_by', 'modified_date'], 'required'],
+            [['provider_name', 'street', 'city', 'state', 'contact_person', 'contact_phone', 'contact_email', 'created_by'], 'required'],
             [['street'], 'string'],
             [['created_by', 'modified_by'], 'integer'],
             [['created_date', 'modified_date'], 'safe'],
@@ -72,8 +72,12 @@ class Provider extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDrugs()
+    public function getProducts()
     {
-        return $this->hasMany(Drug::className(), ['provider_id' => 'id']);
+        return $this->hasMany(Product::className(), ['provider_id' => 'id']);
+    }
+    
+    public static function getProvidersAsAssocArray(){
+        return Provider::find()->asArray()->all();
     }
 }

@@ -28,6 +28,8 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $tempPass = '';
+    
     /**
      * @inheritdoc
      */
@@ -42,12 +44,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['firstname', 'middlename', 'lastname', 'designation', 'email', 'phone' , 'role_id'], 'required'],
+            [['firstname', 'lastname', 'designation', 'email', 'phone' , 'role_id'], 'required'],
             [['role_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
-            [['created_date', 'modified_date'], 'safe'],
+            [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
             [['firstname', 'middlename', 'lastname', 'designation'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 100],
+            [['email'], 'email'],
+            //[['email'], 'unique'],
             [['phone'], 'string', 'max' => 11],
+            [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
             [['salt'], 'string', 'max' => 6],
             [['password'], 'string', 'max' => 128],
             [['access_token'], 'string', 'max' => 15],
@@ -62,16 +67,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             'id' => 'ID',
-            'firstname' => 'Firstname',
-            'middlename' => 'Middlename',
-            'lastname' => 'Lastname',
+            'firstname' => 'First Name',
+            'middlename' => 'Middle Name',
+            'lastname' => 'Last Name',
             'designation' => 'Designation',
             'email' => 'Email',
             'phone' => 'Phone',
             'salt' => 'Salt',
             'password' => 'Password',
             'access_token' => 'Access Token',
-            'role_id' => 'Role ID',
+            'role_id' => 'Role',
             'deleted' => 'Deleted',
             'created_date' => 'Created Date',
             'created_by' => 'Created By',

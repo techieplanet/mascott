@@ -6,6 +6,8 @@ use Yii;
 use app\models\User;
 use app\models\Role;
 use app\controllers\services\RoleService;
+use app\controllers\services\UserService;
+use app\models\utils\Trailable;
 use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -67,26 +69,44 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User();
-        $success = false;
-        $selectedRoleId = 0;
-        
-        $roleService = new RoleService();
-        $rolesMap = $roleService->getRolesMap();
-        $rolesMap[0] = '--Select Role--';
-        ksort($rolesMap);
-        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $success = true;
-            //$selectedRoleId = $model->user_id;
-        } 
-        
-        return $this->render('create', [
-            'model' => $model,
-            'rolesMap' => $rolesMap,
-            'success' => $success,
-            //'selectedRoleId' => $selectedRoleId
-        ]);
+                
+        try {
+            $model = new User();
+            $success = false;
+            $selectedRoleId = 0; $selectedDesignation = '';
+            $roleService = new RoleService();
+            $userService = new UserService();
+
+            $rolesMap = $roleService->getRolesMap();
+            $rolesMap[0] = '--Select Role--';
+            ksort($rolesMap);
+
+            //add generated fields
+            $model->salt = $userService->generateRandomString(6);
+            $model->tempPass = $userService->generateRandomString(6);
+            $model->password = $userService->hashPassword($model->tempPass);
+            $model->access_token = $userService->generateRandomString(15);
+            
+            //audit trail
+            (new Trailable($model))->registerInsert(0);
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $success = true;
+                $selectedRoleId = $model->role_id;
+                $selectedDesignation = $model->designation;
+                $userService->sendNewUserEmail($model);
+            }
+                
+            return $this->render('create', [
+                'model' => $model,
+                'rolesMap' => $rolesMap,
+                'success' => $success,
+                'selectedRoleId' => $selectedRoleId,
+                'selectedDesignation' => $selectedDesignation
+            ]);
+        } catch (Exception $e){
+            echo $e->getMessage;
+        }
     }
 
     /**
@@ -95,16 +115,37 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
+    public function actionUpdate($id) {
+        try {
+            $model = $this->findModel($id);
+            $success = false;
+            $selectedRoleId = 0; $selectedDesignation = '';
+            $roleService = new RoleService();
+            $userService = new UserService();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+            $rolesMap = $roleService->getRolesMap();
+            $rolesMap[0] = '--Select Role--';
+            ksort($rolesMap);
+
+            //audit trail
+            (new Trailable($model))->registerUpdate(0);
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                $success = true;
+                $selectedRoleId = $model->role_id;
+                $selectedDesignation = $model->designation;
+                //return $this->redirect(['view', 'id' => $model->id]);
+            }
+
             return $this->render('update', [
                 'model' => $model,
+                'rolesMap' => $rolesMap,
+                'success' => $success,
+                'selectedRoleId' => $selectedRoleId,
+                'selectedDesignation' => $selectedDesignation,
             ]);
+        } catch (Exception $e){
+            echo $e->getMessage;
         }
     }
 

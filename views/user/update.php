@@ -5,17 +5,28 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
-$this->title = 'Update User: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Users';
+$subtitle = 'Edit User: ' . $model->firstname . ' ' . $model->lastname;
+//$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+//$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="user-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <h1>
+            <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
+            <?= Html::a('Create Role', ['create'], ['class' => 'btn btn-success pull-right']); ?>
+        </h1>
+    </p>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'rolesMap' => $rolesMap,
+        'success' => $success,
+        'selectedRoleId' => $selectedRoleId,
+        'selectedDesignation' => $selectedDesignation,
     ]) ?>
 
+    <?php //unset($model->role) ?>
 </div>

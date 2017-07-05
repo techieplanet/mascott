@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\views\helpers\Alert;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -19,8 +20,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'middlename')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'designation')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'designation')->dropDownList(
+            ['000'=>'-- Select --', 'Dr'=>'Dr', 'Mr'=>'Mr', 'Mrs'=>'Mrs'], 
+            array('options' => array($selectedDesignation=>array('selected'=>true)))
+         ) 
+    ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
