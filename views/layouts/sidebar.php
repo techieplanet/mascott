@@ -13,7 +13,10 @@
             <?= Html::img('@web/images/user.png', ['alt' => 'User Image']) ?>
         </div>
           <div class="padding10 text-center" style="color: #fff;">
-          <p>Firstname Lastname</p>
+          <?= 
+                Yii::$app->user->identity->firstname . ' ' . 
+                Yii::$app->user->identity->lastname;
+          ?>
           
         </div>
       </div>

@@ -355,3 +355,15 @@ li.user-header {
     width: 32px;
     height: 32px;
 }
+
+/*.skin-green.centered-layout.sidebar-mini.wysihtml5-supported .wrapper {
+    background: #E6E2C9 !important;
+}*/
+
+.centered-layout .wrapper {
+    background: #E6E2C9 !important;
+}
+
+.centered-layout .content {
+    background: none !important;
+}

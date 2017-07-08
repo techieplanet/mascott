@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Provider;
+use app\models\utils\Trailable;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -35,12 +36,10 @@ class ProviderController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Provider::find(),
-        ]);
+        $providers = Provider::find()->all();
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'providers' => $providers,
         ]);
     }
 
@@ -58,39 +57,48 @@ class ProviderController extends Controller
 
     /**
      * Creates a new Provider model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
         $model = new Provider();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
+        
+        if($model->load(Yii::$app->request->post())){
+            (new Trailable($model))->registerInsert(); //audit trail
+            if ($model->save()) {    
+                Yii::$app->session->setFlash('saved', 'CREATED');
+                return $this->redirect(['update', 'id' => $model->id, 'new' => true]);
+            }
+        } 
+        
+        return $this->render('create', [
                 'model' => $model,
-            ]);
-        }
+        ]);
+        
+        
     }
 
     /**
      * Updates an existing Provider model.
-     * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
+     * @param boolean $new
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $new = false)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
+        
+        if ($model->load(Yii::$app->request->post())) {
+            (new Trailable($model))->registerUpdate(); //audit trail
+            if ($model->save()) {
+                Yii::$app->session->setFlash('saved', 'UPDATED');
+            }
         }
+        
+        return $this->render('update', [
+                'model' => $model,
+        ]);   
     }
 
     /**

@@ -8,6 +8,8 @@
 
 namespace app\models\utils;
 
+use Yii;
+
 /**
  * Description of Trailable
  *
@@ -42,13 +44,13 @@ class Trailable {
         $this->model->modified_date = $date;
     }
     
-    public function registerInsert($userId){
-        $this->setCreatedBy($userId);
+    public function registerInsert(){
+        $this->setCreatedBy(Yii::$app->user->identity->id);
         $this->setCreatedDate(date('Y-m-d H:i:s'));
     }
     
-    public function registerUpdate($userId){
-        $this->setModifiedBy($userId);
+    public function registerUpdate(){
+        $this->setModifiedBy(Yii::$app->user->identity->id);
         $this->setModifiedDate(date('Y-m-d H:i:s'));
     }
 }

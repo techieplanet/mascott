@@ -16,7 +16,7 @@ $subtitle = 'Edit User: ' . $model->firstname . ' ' . $model->lastname;
     <p>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
-            <?= Html::a('Create Role', ['create'], ['class' => 'btn btn-success pull-right']); ?>
+            <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success pull-right']); ?>
         </h1>
     </p>
 

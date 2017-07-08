@@ -20,21 +20,23 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         
+        //datatables
+        'https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css',
+        
         //admin LTE
         'plugins/adminlte/dist/css/AdminLTE.min.css',
         'plugins/adminlte/dist/css/skins/_all-skins.min.css',
         
         //font-awesome
         'plugins/font-awesome-4.7.0/css/font-awesome.min.css',
-        
-        //datatables
-        'https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css',
-        //'https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css',
-        
+                
         //custom
 	'css/custom.css',
     ];
-    public $js = [
+    public $js = [         
+        //jquery UI
+        'js/jquery-ui.min.js',
+        
         //adminlte bootstrap
         'plugins/adminlte/bootstrap/js/bootstrap.min.js',
         
@@ -44,12 +46,14 @@ class AppAsset extends AssetBundle
         //datatables
         'https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js',
         'https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js',
-                
+        
+        //Custom JS
+        'js/custom.js',
     ];
     
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-        'yii\bootstrap\BootstrapPluginAsset',
+        //'yii\bootstrap\BootstrapPluginAsset',
     ];
 }
