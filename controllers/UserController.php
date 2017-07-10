@@ -87,8 +87,7 @@ class UserController extends Controller
             $model->password = $userService->hashPassword($model->tempPass);
             $model->access_token = $userService->generateRandomString(15);
             
-            //audit trail
-            (new Trailable($model))->registerInsert(0);
+            (new Trailable($model))->registerInsert(); //audit trail
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $success = true;
@@ -128,7 +127,7 @@ class UserController extends Controller
             ksort($rolesMap);
 
             //audit trail
-            (new Trailable($model))->registerUpdate(0);
+            (new Trailable($model))->registerUpdate();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $success = true;

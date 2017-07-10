@@ -5,14 +5,22 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Provider */
 
-$this->title = 'Update Provider: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Providers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Provider';
+$subtitle = 'Edit Provider: ' . $model->provider_name;
+
+//$this->params['breadcrumbs'][] = ['label' => 'Providers', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+//$this->params['breadcrumbs'][] = 'Update';
 ?>
+
 <div class="provider-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <h1>
+            <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
+            <?= Html::a('Create Provider', ['create'], ['class' => 'btn btn-success pull-right']); ?>
+        </h1>
+    </p>
 
     <?= $this->render('_form', [
         'model' => $model,

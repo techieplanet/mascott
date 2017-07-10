@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\web\View;
 use app\views\helpers\ActionButton;
+use app\models\ProductType;
+use app\models\HCR;
 
 $this->title = 'Products';
 //$this->params['breadcrumbs'][] = $this->title;
@@ -45,8 +47,8 @@ $this->title = 'Products';
                     <tr>
                         <td><?php echo ++$count; ?></td>
                         <td><?php echo $product->product_name; ?></td>
-                        <td><?php echo $product->product_type; ?></td>
-                        <td><?php echo $product->certificate_holder; ?></td>
+                        <td><?php echo ProductType::findOne($product->product_type)->title; ?></td>
+                        <td><?php echo HCR::findOne($product->certificate_holder)->name;?></td>
                         <td><?php echo $product->brand_name; ?></td>
                         <td><?php echo $product->generic_name; ?></td>
                         <td><?php echo $product->nrn; ?></td>

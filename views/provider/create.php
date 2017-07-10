@@ -7,12 +7,23 @@ use yii\helpers\Html;
 /* @var $model app\models\Provider */
 
 $this->title = 'Create Provider';
-$this->params['breadcrumbs'][] = ['label' => 'Providers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$subtitle = 'Create New Provider';
+//$this->params['breadcrumbs'][] = ['label' => 'Providers', 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="provider-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <h1>
+            <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
+            
+            <?= 
+                Yii::$app->session->hasFlash('saved') ?
+                Html::a('Create Provider', ['create'], ['class' => 'btn btn-success pull-right']) : 
+                ''
+            ?>
+        </h1>
+    </p>
 
     <?= $this->render('_form', [
         'model' => $model,

@@ -19,7 +19,7 @@ $subtitle = 'Create New Product';
             
             <?= 
                 $success == true ?
-                Html::a('Create Role', ['create'], ['class' => 'btn btn-success pull-right']) : 
+                Html::a('Create Product', ['create'], ['class' => 'btn btn-success pull-right']) :
                 ''
             ?>
         </h1>

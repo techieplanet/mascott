@@ -7,11 +7,19 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use yii\helpers\Url;
 use app\models\LoginForm;
 use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+    
+//    public function init(){
+//        echo Yii::$app->getHomeUrl(); exit;
+//        if(Yii::$app->user->isGuest);
+//            //$this->goHome();
+//    }
+    
     /**
      * @inheritdoc
      */
@@ -20,7 +28,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout', 'login'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
@@ -32,7 +40,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    //'logout' => ['post'],
                 ],
             ],
         ];
@@ -61,16 +69,40 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        //if logged in, redirect to dashboard page
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('site/dashboard');
+        }
+       
+        $this->layout = 'centered';
+        $model = new LoginForm();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $this->goBack();
+        }
+        
+        return $this->render('index',[
+            'model' => $model
+        ]);
+        
+        
     }
 
     /**
+     * This stands in for the dashoard for now
+     */
+    public function actionDashboard()
+    {
+        return $this->render('dashboard');
+    }
+    
+    /**
      * Login action.
-     *
      * @return Response|string
      */
     public function actionLogin()
     {
+        echo 'inside login'; exit;
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -122,5 +154,9 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+    
+    public function error(){
+        
     }
 }
