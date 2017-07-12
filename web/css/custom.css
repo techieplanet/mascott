@@ -425,6 +425,7 @@ h1>a:active{
 }
 
 h1>a:hover{ color: #008d4c}
+h1>a>.btn { color: #fff }
 /* Users view */
 section.content{
     padding: 20px 50px 100px 50px;
