@@ -74,7 +74,7 @@ use app\views\helpers\Alert;
             <?= 
                 Html::submitButton(
                         $model->isNewRecord ? 'Create' : 'Update', 
-                        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary' ]
+                        ['class' => $model->isNewRecord ? 'btn btn-success btn-mas' : 'btn btn-primary btn-mas' ]
                         ) 
             ?>
     </div>
