@@ -63,6 +63,7 @@ and open the template in the editor.
 .inlineblock{display: inline-block;}
 .bold {font-weight: bold !important;}
 .uppercase {text-transform: uppercase; }
+.lowercase {text-transform: lowercase; }
 .borderallccc{ border: 1px solid #ccc; }
 .borderbottom{ border-bottom: 1px solid #ccc; }
 
@@ -73,6 +74,7 @@ and open the template in the editor.
 .modal-title { color: #3c8dbc; font-weight: bold; }
 .form-control.medium { width: 60% !important; }
 .deleting{background: #ee4545 !important; border-color: #ee4545 !important;}
+.error-text{ color: #F00; }
 
 .updating{background: #008d4c !important; }
 .blacktext{ color: #000 !important; }
@@ -191,6 +193,21 @@ span.lodgementTitleSpan{
     text-align: center;
 }
 
+
+
+
+/********************* CENTERED LAYOUT *******************/
+/*.skin-green.centered-layout.sidebar-mini.wysihtml5-supported .wrapper {
+    background: #E6E2C9 !important;
+}*/
+
+.centered-layout .wrapper {
+    background: #E6E2C9 !important;
+}
+
+.centered-layout .content {
+    background: none !important;
+}
 
 /********************* ADMINLTE OVERRIDES *******************/
 .small-box h3{
@@ -471,4 +488,7 @@ legend {
     color: #333;
     border: 0;
     border-bottom: 1px solid #3D7359;
+
+.btn-success {
+   background-color: #2F9E69 !important;
 }

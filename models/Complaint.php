@@ -15,10 +15,14 @@ use Yii;
  * @property integer $modified_by
  * @property string $modified_date
  *
- * @property Report $report
+ * @property UsageReport $report
  */
 class Complaint extends \yii\db\ActiveRecord
 {
+    const UNRESOLVED = 'UNRESOLVED';
+    const CONFIRMED = 'TRUE';
+    const UNCONFIRMED = 'FALSE';
+    
     /**
      * @inheritdoc
      */
@@ -33,11 +37,10 @@ class Complaint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['report_id', 'validation_result', 'created_by', 'created_date', 'modified_by', 'modified_date'], 'required'],
-            [['report_id', 'created_by', 'modified_by'], 'integer'],
+            [['report_id', 'validation_result'], 'required'],
+            [['report_id', 'validation_result', 'created_by', 'modified_by'], 'integer'],
             [['created_date', 'modified_date'], 'safe'],
-            [['validation_result'], 'string', 'max' => 20],
-            [['report_id'], 'exist', 'skipOnError' => true, 'targetClass' => Report::className(), 'targetAttribute' => ['report_id' => 'id']],
+            [['report_id'], 'exist', 'skipOnError' => true, 'targetClass' => UsageReport::className(), 'targetAttribute' => ['report_id' => 'id']],
         ];
     }
 
@@ -62,6 +65,24 @@ class Complaint extends \yii\db\ActiveRecord
      */
     public function getReport()
     {
-        return $this->hasOne(Report::className(), ['id' => 'report_id']);
+        return $this->hasOne(UsageReport::className(), ['id' => 'report_id']);
+    }
+    
+    
+    
+     public function getResultAsText(){
+        switch($this->validation_result){
+            case 1: return self::CONFIRMED;
+            case 2: return self::UNCONFIRMED;
+            case 3: return self::UNRESOLVED;
+        }
+    }
+    
+    public function getComplaintStatuses(){
+        return [
+            1 => self::CONFIRMED,
+            2 => self::UNCONFIRMED,
+            3 => self::UNRESOLVED
+         ];
     }
 }
