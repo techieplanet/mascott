@@ -8,6 +8,8 @@
 
 namespace app\views\helpers;
 
+use yii\helpers\Html;
+
 /**
  * Description of Alerts
  *
@@ -25,5 +27,22 @@ class Alert {
             $msg .
           '</div>
         </div>';
+    }
+    
+    public static function showError($msg=''){
+        if($msg === '')
+            $msg = 'Error occurred!';
+        
+        return '<div class=" no-print">
+          <div class="callout callout-danger margintop10 marginbottom10">
+            <i class="glyphicon glyphicon-ban-circle" aria-hidden="true"></i> ' .
+            $msg .
+          '</div>
+        </div>';
+    }
+    
+    public static function showButton($text, $buttonType=''){
+        $buttonType = !empty($buttonType) ? 'btn-' . $buttonType : '';
+        return '<button class="btn btn-sm '.$buttonType.'">'.$text . '</button>';
     }
 }
