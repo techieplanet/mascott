@@ -11,7 +11,7 @@ $subtitle = 'Create New User';
 //$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-create">
+<div class="user-create x-create-padding">
 
     <p>
         <h1>

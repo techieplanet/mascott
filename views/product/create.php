@@ -11,7 +11,7 @@ $subtitle = 'Create New Product';
 //$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-create">
+<div class="product-create x-create-padding">
 
       <p>
         <h1>
@@ -19,7 +19,7 @@ $subtitle = 'Create New Product';
             
             <?= 
                 $success == true ?
-                Html::a('Create Product', ['create'], ['class' => 'btn btn-success pull-right']) :
+                Html::a('Create Product', ['create'], ['class' => 'btn btn-success btn-mas pull-right']) :
                 ''
             ?>
         </h1>

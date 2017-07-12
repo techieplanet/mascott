@@ -19,6 +19,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+     
         
         //datatables
         'https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css',

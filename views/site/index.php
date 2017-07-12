@@ -10,45 +10,58 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Login';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login" style="margin-top: 120px;">
-        
-        <?php $form = ActiveForm::begin([
-//            'id' => 'login-form',
-//            //'action' => 'site/login',
-//            //'layout' => 'horizontal',
-//            'fieldConfig' => [
-//                'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-//                'labelOptions' => ['class' => 'col-lg-1 control-label'],
-//            ],
-        ]); ?>
 
-        
-            <?= $form->field($model, 'email')->textInput([
-                'autofocus' => true, 
-                'placeholder' => $model->getAttributeLabel('email')
-             ])->label(false) 
-            ?>
-
-            <?= $form->field($model, 'password')->passwordInput([
-                    'placeholder' => $model->getAttributeLabel('password')
-                ])->label(false)  
-            ?>
-
-            <?php //$form->field($model, 'rememberMe')->checkbox([
-                //'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            //]) ?>
-    
-            <div class="form-group">
-                <div class="col-lg-offset-1 col-lg-11">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+<div class="row push-down">
+    <div class="col-md-1"></div>
+    <div class="col-md-10 bgwhite nopadding">
+            <div class="loginform-header text-center">
+                <div class="logo-icon">
+                    <img class="login-logo" src="../web/images/logo.png" alt="User Image">
                 </div>
+                <div class="logo-text nofloat" style="margin-top:-15px; padding-bottom: 10px;">
+                    NATIONAL AGENCY FOR FOOD AND DRUGS
+                    <br>
+                    ADMINISTRATION AND CONTROL (NAFDAC)
+                    <br>
+                    <span class="sub-logo-text">MAS Reporting System</span>
+                </div> <!-- green header -->
             </div>
+            
+                <div class="loginform text-center">
+                        <?php $form = ActiveForm::begin([
+                //            'id' => 'login-form',
+                //            //'action' => 'site/login',
+                //            //'layout' => 'horizontal',
+                //            'fieldConfig' => [
+                //                'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                //                'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                //            ],
+                        ]); ?>
 
-        <?php ActiveForm::end(); ?>
 
-    <!--    <div class="col-lg-offset-1" style="color:#999;">
-            You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-            To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-        </div>-->
-   
+                            <?= $form->field($model, 'email')->textInput([
+                                'autofocus' => true, 
+                                'placeholder' => $model->getAttributeLabel('email')
+                             ])->label(false) 
+                            ?>
+
+                            <?= $form->field($model, 'password')->passwordInput([
+                                    'placeholder' => $model->getAttributeLabel('password')
+                                ])->label(false)  
+                            ?>
+
+                            <?php //$form->field($model, 'rememberMe')->checkbox([
+                                //'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                            //]) ?>
+
+                            <div class="form-group">
+                                <div class="col-lg-12 text-center">
+                                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-mas uppercase', 'name' => 'login-button']) ?>
+                                </div>
+                            </div>
+
+                        <?php ActiveForm::end(); ?>
+                </div>
+    </div>
+    <div class="col-md-1"></div>
 </div>
