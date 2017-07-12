@@ -15,6 +15,7 @@ and open the template in the editor.
 }
 .homebackdrop img { width: 100% !important; }
 .noborder{border: 0 !important; }
+.nofloat{float: none !important;}
 .nomargin{ margin: 0 !important;}
 .marginauto{    margin: auto !important; }
 .margintop5{    margin-top: 5px !important; }
@@ -67,6 +68,7 @@ and open the template in the editor.
 .borderbottom{ border-bottom: 1px solid #ccc; }
 
 .bgeee {background-color: #eeeeee; }
+.bgwhite {background-color: #ffffff; }
 .primary-color {color: #3c8dbc; }
 .blockquote { font-weight: bold; line-height: 1.4; }
 .modal-title { color: #3c8dbc; font-weight: bold; }
@@ -112,6 +114,7 @@ and open the template in the editor.
 /*Bootstrap form-control class override*/
 .form-control{
     color: #000 !important;
+    border: 1px solid #2F9E69;
 }
 /**
  Css for process step
@@ -372,6 +375,119 @@ li.user-header {
     width: 32px;
     height: 32px;
 }
+
+/*.skin-green.centered-layout.sidebar-mini.wysihtml5-supported .wrapper {
+    background: #E6E2C9 !important;
+}*/
+
+.centered-layout .wrapper {
+    background: #E6E2C9 !important;
+}
+
+.centered-layout .content {
+    background: none !important;
+}
+
+
+/* Login page */
+
+.loginform-header {
+  background-color: #2F9E69;
+}
+
+.login-logo{
+    margin-top: -40px;
+}
+
+
+.loginform{
+    padding: 0px 50px 60px;
+}
+
+.push-down {
+    padding-top: 120px;
+}
+
+.btn-mas{ 
+    background-color: #2F9E69;
+    border: none;
+}
+
+.btn-mas:link,
+.btn-mas:hover,
+.btn-mas:active{
+    background-color: #008d4c !important;
+    border: 1px #2F9E69 solid !important;
+    
+}
+
+/* User registration form */
+
+.x-create-padding{ 
+    padding: 0 0 70px 30px;
+}
+
+.x-form-padding{
+    padding: 20px 80px 0 50px;
+}
+
+h1>a{
+    color: #000;
+}
+
+h1>a:link,
+h1>a:visited,
+h1>a:active{
+    color: #2F9E69;
+}
+
+h1>a:hover{ color: #008d4c}
+/* Users view */
+section.content{
+    padding: 20px 50px 100px 50px;
+}
+
+ul.pagination{
+    padding-top: 20px;
+}
+
+ul.pagination>.active>a{
+    background-color: #2F9E69;
+}
+ul.pagination>.active>a:link,
+ul.pagination>.active>a:active,
+ul.pagination>.active>a:hover{
+    background-color: #2F9E69;
+    border: none;
+}
+
+/* Glyphicon style */
+
+i.glyphicon.glyphicon-pencil{
+    color: #2F9E69 !important;
+}
+
+i.glyphicon.glyphicon-trash{
+    color: red !important;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #3D7359;
+}
+
+legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid #3D7359;
 
 .btn-success {
    background-color: #2F9E69 !important;

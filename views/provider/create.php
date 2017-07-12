@@ -11,7 +11,7 @@ $subtitle = 'Create New Provider';
 //$this->params['breadcrumbs'][] = ['label' => 'Providers', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="provider-create">
+<div class="provider-create x-create-padding">
 
     <p>
         <h1>

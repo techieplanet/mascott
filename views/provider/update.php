@@ -18,7 +18,7 @@ $subtitle = 'Edit Provider: ' . $model->provider_name;
     <p>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
-            <?= Html::a('Create Provider', ['create'], ['class' => 'btn btn-success pull-right']); ?>
+            <?= Html::a('Create Provider', ['create'], ['class' => 'btn btn-success btn-mas pull-right']); ?>
         </h1>
     </p>
 
