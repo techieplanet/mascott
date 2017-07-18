@@ -16,64 +16,84 @@ use app\views\helpers\Alert;
 
 <?= Yii::$app->session->hasFlash('saved') ? Alert::showSuccess() : ''; ?>
 
-<div class="usage-report-form">
+<div class="usage-report-form x-form-padding">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'batch_number')->textInput() ?>
-
-    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'response')->dropDownList(
-            [0 => '--Select--', 1 => 'Genuine', 2 => 'False', 3 => 'Invalid' ],
-            array('options' => array($model->response=>array('selected'=>true))) 
-        )
-    ?>
+    <div class="row">
+        <div class="col-md-4 paddingleft0">
+            <?= $form->field($model, 'batch_number')->textInput() ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'response')->dropDownList(
+                    [0 => '--Select--', 1 => 'Genuine', 2 => 'False', 3 => 'Invalid' ],
+                    array('options' => array($model->response=>array('selected'=>true))) 
+                )
+            ?>
+        </div>
+    </div>
+    <br>
    
     <!--
     NB: the geozone combo is populated here because the php variable 
     will not be accessible in an external JS file.
     Other associative functions for states and lgas are in the location-ops.js file
     -->
-    <?= Html::label( 'Geozone', $for = null, $options = [] ) ?>
-    <?= Html::dropDownList ( 'UsageReport[geozone_id]', 
-                                $selection = null,
-                                $items = ['--Select Zone--'], 
-                                $options = ['id'=>'geozone_id']
-            ) 
-    ?>
-    
-    <?= Html::label( 'State', $for = null, $options = [] ) ?>
-    <?= Html::dropDownList ( 'UsageReport[state_id]', 
-                                $selection = null,
-                                $items = ['--Select State--'], 
-                                $options = ['id'=>'state_id']
-            ) 
-    ?>
-    
-    <?= Html::label( 'LGA', $for = null, $options = [] ) ?>
-    <?= Html::dropDownList ( 'UsageReport[lga_id]', 
-                                $selection = null,
-                                $items = ['--Select LGA--'], 
-                                $options = ['id'=>'lga_id']
-            ) 
-    ?>
-            
-    <?php //$form->field($model, 'location_id')->hiddenInput()->label(false) ?>
-    
-
-    <?= $form->field($model, 'pin_4_digits')->textInput(['maxlength' => true]) ?>
-
-     <?= $form->field($model, 'date_reported')->widget(DatePicker::classname(), [
-        'language' => 'en',
-        'dateFormat' => 'yyyy-MM-dd',
-    ]) ?>
-
-    
-
-    <div class="form-group text-right">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    <div class="row">
+        <fieldset>
+            <legend>Address</legend>
+                <div class="col-md-4 paddingleft0">
+                    <?= Html::label( 'Geozone', $for = null, $options = [] ) ?>
+                    <?= Html::dropDownList ( 'UsageReport[geozone_id]', 
+                                                $selection = null,
+                                                $items = ['--Select Zone--'], 
+                                                $options = ['id'=>'geozone_id', 'class' => 'form-control']
+                            ) 
+                    ?>           
+                </div>
+                 <div class="col-md-4">    
+                    <?= Html::label( 'State', $for = null, $options = [] ) ?>
+                    <?= Html::dropDownList ( 'UsageReport[state_id]', 
+                                                $selection = null,
+                                                $items = ['--Select State--'], 
+                                                $options = ['id'=>'state_id', 'class' => 'form-control']
+                            ) 
+                    ?>
+                 </div>
+                 <div class="col-md-4">    
+                    <?= Html::label( 'LGA', $for = null, $options = [] ) ?>
+                    <?= Html::dropDownList ( 'UsageReport[lga_id]', 
+                                                $selection = null,
+                                                $items = ['--Select LGA--'], 
+                                                $options = ['id'=>'lga_id', 'class' => 'form-control']
+                            ) 
+                    ?>
+                 </div>
+        </fieldset>
     </div>
+        
+    <?php //$form->field($model, 'location_id')->hiddenInput()->label(false) ?>
+    <br><br>
+    <div class="row">
+        <br>
+        <fieldset>
+            <legend></legend>
+                <div class="col-md-4 paddingleft0">
+                    <?= $form->field($model, 'pin_4_digits')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-4">
+                    <?= $form->field($model, 'date_reported')->widget(DatePicker::classname(), [
+                       'language' => 'en',
+                       'dateFormat' => 'yyyy-MM-dd',
+                   ])->textInput(['placeholder' => 'yyyy-MM-dd']) ?>
+                </div>
+            </div>
+            <div class="form-group text-right">
+                <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-mas' : 'btn btn-primary btn-mas']) ?>
+            </div>
+    </fieldset>
 
     <?php ActiveForm::end(); ?>
 

@@ -14,11 +14,14 @@ use app\views\helpers\Alert;
 <div class="role-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-    
+    <div class="row">
+        <div class="col-lg-5">
+            <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-5">
+            <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
     <div class="row">
           <div class="col-md-12">
 
@@ -71,7 +74,7 @@ use app\views\helpers\Alert;
             <?= 
                 Html::submitButton(
                         $model->isNewRecord ? 'Create' : 'Update', 
-                        ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary' ]
+                        ['class' => $model->isNewRecord ? 'btn btn-success btn-mas' : 'btn btn-primary btn-mas' ]
                         ) 
             ?>
     </div>

@@ -29,6 +29,13 @@ use app\views\helpers\Alert;
     <br>
     <div class="row">
         <div class="col-md-4">
+            <?= $form->field($model, 'role_id')->dropDownList(
+                    $rolesMap, 
+                    array('options' => array($selectedRoleId=>array('selected'=>true)))
+                 ) 
+            ?>
+        </div>
+        <div class="col-md-4">
             <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">

@@ -15,7 +15,7 @@ use app\views\helpers\Alert;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 paddingleft0">
     <?= $form->field($model, 'provider_name')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
@@ -23,7 +23,7 @@ use app\views\helpers\Alert;
     <div class="row">
         <fieldset>
             <legend>Address</legend>
-            <div class="col-md-4">
+            <div class="col-md-4 paddingleft0">
                 <?= $form->field($model, 'street')->textInput(['maxlength' => false]) ?>
             </div>
             <div class="col-md-4">
@@ -38,7 +38,7 @@ use app\views\helpers\Alert;
     <div class="row">
         <fieldset>
             <legend>Contact</legend>
-            <div class="col-md-4">
+            <div class="col-md-4 paddingleft0">
                 <?= $form->field($model, 'contact_person')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-4">
