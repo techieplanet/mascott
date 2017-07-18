@@ -11,13 +11,13 @@ use Yii;
  * @property string $firstname
  * @property string $middlename
  * @property string $lastname
- * @property string $designation
  * @property string $email
  * @property string $phone
  * @property string $salt
  * @property string $password
  * @property string $access_token
  * @property integer $role_id
+ * @property integer $provider_id
  * @property integer $deleted
  * @property string $created_date
  * @property integer $created_by
@@ -52,13 +52,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['firstname', 'lastname', 'designation', 'email', 'phone' , 'role_id'], 'required'],
-            [['role_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
+            [['firstname', 'lastname', 'email', 'phone' , 'role_id', 'provider_id'], 'required'],
+            [['role_id', 'provider_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
             [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
-            [['firstname', 'middlename', 'lastname', 'designation'], 'string', 'max' => 30],
+            [['firstname', 'middlename', 'lastname'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 100],
             [['email'], 'email'],
-            //[['email'], 'unique'],
+            [['email'], 'unique'],
+            //[['provider_id'], 'integer', 'min'=>1, 'message'=>'{attribute} must select a provider'],
             [['phone'], 'string', 'max' => 11],
             [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
             [['salt'], 'string', 'max' => 6],
@@ -78,13 +79,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'firstname' => 'First Name',
             'middlename' => 'Middle Name',
             'lastname' => 'Last Name',
-            'designation' => 'Designation',
             'email' => 'Email',
             'phone' => 'Phone',
             'salt' => 'Salt',
             'password' => 'Password',
             'access_token' => 'Access Token',
             'role_id' => 'Role',
+            'provider_id' => 'Provider',
             'deleted' => 'Deleted',
             'created_date' => 'Created Date',
             'created_by' => 'Created By',
@@ -99,6 +100,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getRole()
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProvider()
+    {
+        return $this->hasOne(Provider::className(), ['id' => 'provider_id']);
     }
     
     /**

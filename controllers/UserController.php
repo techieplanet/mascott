@@ -7,6 +7,7 @@ use app\models\User;
 use app\models\Role;
 use app\controllers\services\RoleService;
 use app\controllers\services\UserService;
+use app\controllers\services\ProviderService;
 use app\models\utils\Trailable;
 use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
@@ -72,14 +73,14 @@ class UserController extends Controller
                 
         try {
             $model = new User();
-            $success = false;
-            $selectedRoleId = 0; $selectedDesignation = '';
+            //$success = false;
+            //$selectedRoleId = 0; $selectedDesignation = '';
             $roleService = new RoleService();
             $userService = new UserService();
-
-            $rolesMap = $roleService->getRolesMap();
-            $rolesMap[0] = '--Select Role--';
-            ksort($rolesMap);
+            $providerService = new ProviderService();
+            
+            $rolesMap = $roleService->getRolesMap(); $rolesMap[0] = '--Select Role--'; ksort($rolesMap);
+            $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
 
             //add generated fields
             $model->salt = $userService->generateRandomString(6);
@@ -87,21 +88,25 @@ class UserController extends Controller
             $model->password = $userService->hashPassword($model->tempPass);
             $model->access_token = $userService->generateRandomString(15);
             
-            (new Trailable($model))->registerInsert(); //audit trail
+            (new Trailable($model))->registerInsert();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $success = true;
-                $selectedRoleId = $model->role_id;
-                $selectedDesignation = $model->designation;
+                //$selectedRoleId = $model->role_id;
+                //$selectedDesignation = $model->designation;
                 $userService->sendNewUserEmail($model);
+                
+                Yii::$app->session->setFlash('saved', 'CREATED');
+                return $this->redirect(['update', 'id' => $model->id, 'new' => true]);
             }
                 
             return $this->render('create', [
                 'model' => $model,
                 'rolesMap' => $rolesMap,
-                'success' => $success,
-                'selectedRoleId' => $selectedRoleId,
-                'selectedDesignation' => $selectedDesignation
+                'providerMap' => $providerMap,
+                //'success' => $success,
+                //'selectedRoleId' => $selectedRoleId,
+                //'selectedDesignation' => $selectedDesignation
             ]);
         } catch (Exception $e){
             echo $e->getMessage;
@@ -114,34 +119,37 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id, $new = false) {
         try {
             $model = $this->findModel($id);
-            $success = false;
-            $selectedRoleId = 0; $selectedDesignation = '';
+            //$success = false;
+            //$selectedRoleId = 0; $selectedDesignation = '';
             $roleService = new RoleService();
             $userService = new UserService();
+            $providerService = new ProviderService();
+            
+            $rolesMap = $roleService->getRolesMap(); $rolesMap[0] = '--Select Role--'; ksort($rolesMap);
+            $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
 
-            $rolesMap = $roleService->getRolesMap();
-            $rolesMap[0] = '--Select Role--';
-            ksort($rolesMap);
-
-            //audit trail
+            $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
+            
             (new Trailable($model))->registerUpdate();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $success = true;
-                $selectedRoleId = $model->role_id;
-                $selectedDesignation = $model->designation;
+                //$success = true;
+                //$selectedRoleId = $model->role_id;
+                //$selectedDesignation = $model->designation;
                 //return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('saved', 'UPDATED');
             }
 
             return $this->render('update', [
                 'model' => $model,
                 'rolesMap' => $rolesMap,
-                'success' => $success,
-                'selectedRoleId' => $selectedRoleId,
-                'selectedDesignation' => $selectedDesignation,
+                'providerMap' => $providerMap,
+                //'success' => $success,
+                //'selectedRoleId' => $selectedRoleId,
+                //'selectedDesignation' => $selectedDesignation,
             ]);
         } catch (Exception $e){
             echo $e->getMessage;

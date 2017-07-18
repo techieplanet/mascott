@@ -96,6 +96,24 @@
           </ul>
         </li>
         
+        
+        <!--------  REPORTS   -------------->
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-files-o"></i>
+            <span>REPORTS</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+              <li>
+                  <a href="pages/layout/top-nav.html" style="word-wrap: normal; ">
+                      Product
+                  </a>
+              </li>
+          </ul>
+        </li>
+        
+        
         <li>
           <a href="pages/calendar.html">
             <i class="fa fa-calendar"></i> 

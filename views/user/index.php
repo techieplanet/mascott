@@ -34,7 +34,6 @@ $this->title = 'Users';
                     <th class="">SN</th>
                     <th class="">First Name</th>
                     <th class="">Last Name</th>
-                    <th class="">Designation</th>
                     <th class="">Email</th>
                     <th class="">Phone</th>
                     <th class="">Role</th>
@@ -52,7 +51,6 @@ $this->title = 'Users';
                         <td><?php echo ++$count; ?></td>
                         <td><?php echo $user->firstname; ?></td>
                         <td><?php echo $user->lastname; ?></td>
-                        <td><?php echo $user->designation; ?></td>
                         <td><?php echo $user->email; ?></td>
                         <td><?php echo $user->phone; ?></td>
                         <td><?php echo Role::findOne($user->role_id)->title ?></td>

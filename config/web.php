@@ -24,25 +24,17 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => false,
-            //'viewPath' => '@app/mail',
+            'class' => 'yii\swiftmailer\Mailer',
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                //'host' => 'smtp.gmail.com',
-                //'host' => 'tls://smtp.gmail.com',
                 'host' => 'mail.techieplanetltd.com',
-                //'host' => 'smtp.mail.yahoo.com',
-                //'host' => 'localhost',
-                //'username' => 'sewejeolaleke@gmail.com',
                 'username' => 'devtest@techieplanetltd.com',
-                //'username' => 'sewejeolaleke@yahoo.com',
                 'password' => 'devtest112',
                 'port' => '587',
-                //'encryption' => 'ssl',
             ],
         ],
         'log' => [

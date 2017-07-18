@@ -31,6 +31,8 @@ class AppAsset extends AssetBundle
         //font-awesome
         'plugins/font-awesome-4.7.0/css/font-awesome.min.css',
                 
+        'plugins/jqwidgets/jqwidgets/styles/jqx.base.css',
+        
         //custom
 	'css/custom.css',
     ];

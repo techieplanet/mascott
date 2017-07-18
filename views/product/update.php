@@ -23,17 +23,17 @@ $subtitle = 'Edit Product: ' . $model->product_name;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'success' => $success,
+//        'success' => $success,
         'hcrMap' => $hcrMap,
         'countryMap' => $countryMap,
         'providerMap' => $providerMap,
         'ptMap' => $ptMap,
-        'selectedHolderId' => $selectedHolderId,
-        'selectedProviderId' => $selectedProviderId,
-        'selectedCountryId' => $selectedCountryId,
-        'selectedPTId' => $selectedPTId,
-        'selectedMASCodeAssgn' => $selectedMASCodeAssgn,
-        'selectedMASCodeStatus' => $selectedMASCodeStatus
+//        'selectedHolderId' => $selectedHolderId,
+//        'selectedProviderId' => $selectedProviderId,
+//        'selectedCountryId' => $selectedCountryId,
+//        'selectedPTId' => $selectedPTId,
+//        'selectedMASCodeAssgn' => $selectedMASCodeAssgn,
+//        'selectedMASCodeStatus' => $selectedMASCodeStatus
     ]) ?>
 
 </div>

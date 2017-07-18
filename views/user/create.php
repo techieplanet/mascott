@@ -16,21 +16,16 @@ $subtitle = 'Create New User';
     <p>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
-            
-            <?= 
-                $success == true ?
-                Html::a('Create Role', ['create'], ['class' => 'btn btn-success pull-right']) : 
-                ''
-            ?>
         </h1>
     </p>
 
     <?= $this->render('_form', [
         'model' => $model,
         'rolesMap' => $rolesMap,
-        'success' => $success,
-        'selectedRoleId' => $selectedRoleId,
-        'selectedDesignation' => $selectedDesignation,
+        'providerMap' => $providerMap,
+        //'success' => $success,
+        //'selectedRoleId' => $selectedRoleId,
+        //'selectedDesignation' => $selectedDesignation,
     ]) ?>
 
 </div>

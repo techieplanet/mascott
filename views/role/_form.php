@@ -9,7 +9,7 @@ use app\views\helpers\Alert;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<?= $success == true ? Alert::showSuccess() : ''; ?>
+<?= Yii::$app->session->hasFlash('saved') ? Alert::showSuccess() : ''; ?>
 
 <div class="role-form">
 

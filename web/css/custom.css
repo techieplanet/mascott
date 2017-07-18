@@ -489,7 +489,22 @@ legend {
     color: #333;
     border: 0;
     border-bottom: 1px solid #3D7359;
+}
 
 .btn-success {
    background-color: #2F9E69 !important;
+}
+
+
+.loading-modal .modal-content{
+    background: transparent !important;
+}
+
+.loading-modal .modal-header {
+    border-bottom: 0px !important;
+}
+
+.loading-modal .gif-wrapper {
+    background: #ffffff;
+    padding: 20px;
 }

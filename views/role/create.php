@@ -16,12 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
-            
-            <?= 
-                $success == true ?
-                Html::a('Create Role', ['create'], ['class' => 'btn btn-success pull-right']) :
-                ''
-            ?>
         </h1>
     </p>
 
@@ -29,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'processedPermissions' => $processedPermissions,
         'rolePermissions' => $rolePermissions,
-        'success' => $success
     ]) ?>
 
 </div>
