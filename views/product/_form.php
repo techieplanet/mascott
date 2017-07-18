@@ -10,7 +10,7 @@ use app\views\helpers\Alert;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<?= $success == true ? Alert::showSuccess() : ''; ?>
+<?= Yii::$app->session->hasFlash('saved') ? Alert::showSuccess() : ''; ?>
 
 <div class="product-form x-form-padding">
 
@@ -19,7 +19,7 @@ use app\views\helpers\Alert;
        <div class="col-md-4">
             <?= $form->field($model, 'provider_id')->dropDownList(
                    $providerMap, 
-                   array('options' => array($selectedProviderId=>array('selected'=>true)))
+                   array('options' => array($model->provider_id=>array('selected'=>true)))
                 )
            ?>
         </div>
@@ -32,14 +32,14 @@ use app\views\helpers\Alert;
         <div class="col-md-4">
             <?= $form->field($model, 'mas_code_assigned')->dropDownList(
                     ['0'=>'-- Select --', '1'=>'No', '2'=>'Yes'], 
-                    array('options' => array($selectedMASCodeAssgn=>array('selected'=>true)))
+                    array('options' => array($model->mas_code_assigned=>array('selected'=>true)))
                  ) 
             ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'mas_code_status')->dropDownList(
                     ['0'=>'-- Select --', '1'=>'Not Activated', '2'=>'Activated'],
-                    array('options' => array($selectedMASCodeStatus=>array('selected'=>true)))
+                    array('options' => array($model->mas_code_status=>array('selected'=>true)))
                  ) 
             ?>
         </div>
@@ -52,7 +52,7 @@ use app\views\helpers\Alert;
         <div class="col-md-4">
             <?= $form->field($model, 'product_type')->dropDownList(
                     $ptMap, 
-                    array('options' => array($selectedPTId=>array('selected'=>true)))
+                    array('options' => array($model->product_type=>array('selected'=>true)))
                  ) 
             ?>
         </div>
@@ -65,14 +65,14 @@ use app\views\helpers\Alert;
         <div class="col-md-4">
             <?= $form->field($model, 'certificate_holder')->dropDownList(
                     $hcrMap, 
-                    array('options' => array($selectedHolderId=>array('selected'=>true)))
+                    array('options' => array($model->certificate_holder=>array('selected'=>true)))
                  ) 
             ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'production_country')->dropDownList(
                    $countryMap, 
-                   array('options' => array($selectedCountryId=>array('selected'=>true)))
+                   array('options' => array($model->production_country=>array('selected'=>true)))
                 ) 
            ?>
         </div>

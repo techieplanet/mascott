@@ -23,9 +23,10 @@ $subtitle = 'Edit User: ' . $model->firstname . ' ' . $model->lastname;
     <?= $this->render('_form', [
         'model' => $model,
         'rolesMap' => $rolesMap,
-        'success' => $success,
-        'selectedRoleId' => $selectedRoleId,
-        'selectedDesignation' => $selectedDesignation,
+        'providerMap' => $providerMap,
+        //'success' => $success,
+        //'selectedRoleId' => $selectedRoleId,
+        //'selectedDesignation' => $selectedDesignation,
     ]) ?>
 
     <?php //unset($model->role) ?>

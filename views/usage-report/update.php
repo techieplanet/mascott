@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\UsageReport */
 
 $this->title = 'Usage Report';
-$subtitle = 'Edit Report: ' . $model->batch_number;
+$subtitle = 'Edit Report';
 //$this->params['breadcrumbs'][] = ['label' => 'Usage Reports', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 //$this->params['breadcrumbs'][] = 'Update';

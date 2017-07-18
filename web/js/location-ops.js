@@ -51,9 +51,69 @@ function populateStatesSelect(states) {
             $('#lga_id').empty().append(new Option('--Select LGA--', 0)); 
     });
     
-//    $('#lga_id').change(function() {
-//        var lgaId = $('#lga_id').val();
-//    });
+    
+    
+    /***************************************************
+     * THIS IS THE JQWIDGETS LOCATION WIDGET PART
+     **************************************************/        
+    function populateStatesJqx(items) {
+        var selectedStateItems = $('#jqxStateBox').jqxComboBox('getSelectedItems');
+        states = new Array();
+        
+        $.each(items, function (index, item) {
+            var zoneId = item.value;
+            zoneStates = (lh[zoneId].states);
+            
+            $.each(zoneStates, function(index, element){
+                states.push({value: index, label: element.location_name, zoneId: zoneId});
+            });
+        });
+        $('#jqxStateBox').jqxComboBox('clear'); //clear all items in state combo first
+        
+        states = jqxArraySorter(states); //sort
+        
+        $('#jqxStateBox').jqxComboBox({source: states, multiSelect: true, width: 200, height: 25});
+                
+        jqxSetSelectedItems('jqxStateBox', selectedStateItems); //set selected items: custom.js
+        
+     }
+ 
+    
+    function populateLGAJqx(items) {
+        var selectedLGAItems = $('#jqxLGABox').jqxComboBox('getSelectedItems');
+        LGAs = new Array();
+        //console.log('Items: ' + JSON.stringify(items));
+        $.each(items, function (index, item) {
+            var stateId = item.value;
+            stateLGAS = (lh[item.originalItem.zoneId].states[stateId].lgas);
+            //console.log(stateLGAS); return;
+            $.each(stateLGAS, function(index, element){
+                console.log('LGA: ' + element);
+                LGAs.push({value: index, label: element, stateId: stateId});
+            });
+        });
+        
+        $('#jqxLGABox').jqxComboBox('clear'); //clear all items in state combo first
+                
+        LGAs = jqxArraySorter(LGAs);
+        
+        $('#jqxLGABox').jqxComboBox({source: LGAs, multiSelect: true, width: 200, height: 25});
+        
+        jqxSetSelectedItems('jqxLGABox', selectedLGAItems); //set selected items: custom.js
+    }
+    
+    
+    $('#jqxZoneBox').on('change', function (event) {
+        console.log('inside zone drop down');
+        var items = $('#jqxZoneBox').jqxComboBox('getSelectedItems');
+        populateStatesJqx(items);
+    });
+    
+    
+    //on change of the state box
+    $('#jqxStateBox').on('change', function (event) {
+        var items = $('#jqxStateBox').jqxComboBox('getSelectedItems');
+        populateLGAJqx(items);
+    });
     
  });
-    

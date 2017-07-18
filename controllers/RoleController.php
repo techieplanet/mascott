@@ -6,6 +6,7 @@ use Yii;
 use app\models\Role;
 use app\models\RoleAcl;
 use app\models\Permission;
+use app\models\utils\Trailable;
 use app\controllers\services\RoleService;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -85,11 +86,11 @@ class RoleController extends Controller
     public function actionCreate()
     {
         $model = new Role();
-        $success = false;
         
         //load all permission and their actions
         $processedPermissions = $this->service->getEntitiesAndPermissions();
-        $rolePermissions = array();
+        
+        (new Trailable($model))->registerInsert();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
@@ -104,15 +105,14 @@ class RoleController extends Controller
               }
             }
             
-            $rolePermissions = $model->getPermissionIDs(); //get/load the permissions entered for the tole
-            $success = true;
-        } 
+            Yii::$app->session->setFlash('saved', 'CREATED');
+            return $this->redirect(['update', 'id' => $model->id, 'new' => true]);
+        }
         
         return $this->render('create', [
             'model' => $model,
             'processedPermissions' => $processedPermissions,
-            'rolePermissions' => $rolePermissions,
-            'success' => $success
+            'rolePermissions' => array(), //the form needs this array. Actually used in edit mode
         ]);
     }
 
@@ -122,21 +122,24 @@ class RoleController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $new = false)
     {
         $model = $this->findModel($id);
-        $success = false;
         
         //load all permission and their actions
         $processedPermissions = $this->service->getEntitiesAndPermissions();
         $rolePermissions = $model->getPermissionIDs(); //get/load the permissions entered for the role
-        //var_dump($rolePermissions); exit;
+        
+        $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
+        
+        (new Trailable($model))->registerUpdate(); 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             
             RoleAcl::deleteAll(['role_id' => $id]); //clear all permissions first 
             
             $permissions = Yii::$app->request->post('Permission'); //permissions from from
-            //var_dump($permissions); exit;
+            
             if(!empty($permissions)){
               foreach($permissions as $permissionId){
                   $roleAcl = new RoleAcl();
@@ -146,15 +149,15 @@ class RoleController extends Controller
               }
             }
             
+            Yii::$app->session->setFlash('saved', 'UPDATED');
+            
             $rolePermissions = $model->getPermissionIDs(); 
-            $success = true;
         } 
         
         return $this->render('update', [
             'model' => $model,
             'processedPermissions' => $processedPermissions,
             'rolePermissions' => $rolePermissions,
-            'success' => $success
         ]);
     }
 

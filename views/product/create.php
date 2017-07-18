@@ -16,28 +16,15 @@ $subtitle = 'Create New Product';
       <p>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
-            
-            <?= 
-                $success == true ?
-                Html::a('Create Product', ['create'], ['class' => 'btn btn-success btn-mas pull-right']) :
-                ''
-            ?>
         </h1>
     </p>
 
     <?= $this->render('_form', [
         'model' => $model,
-        'success' => $success,
         'hcrMap' => $hcrMap,
         'countryMap' => $countryMap,
         'providerMap' => $providerMap,
         'ptMap' => $ptMap,
-        'selectedHolderId' => $selectedHolderId,
-        'selectedProviderId' => $selectedProviderId,
-        'selectedCountryId' => $selectedCountryId,
-        'selectedPTId' => $selectedPTId,
-        'selectedMASCodeAssgn' => $selectedMASCodeAssgn,
-        'selectedMASCodeStatus' => $selectedMASCodeStatus
     ]) ?>
 
 </div>

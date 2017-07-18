@@ -24,7 +24,6 @@ $this->params['breadcrumbs'][] = 'Update';
         'model' => $model,
         'processedPermissions' => $processedPermissions,
         'rolePermissions' => $rolePermissions,
-        'success' => $success
     ]) ?>
 
 </div>
