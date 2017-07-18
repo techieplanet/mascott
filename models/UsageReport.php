@@ -20,7 +20,7 @@ use Yii;
  * @property string $modified_date
  * @property integer $modified_by
  *
- * @property Complaint[] $complaints
+ * @property Complaint $complaint
  * @property Location $location
  */
 class UsageReport extends \yii\db\ActiveRecord
@@ -29,6 +29,10 @@ class UsageReport extends \yii\db\ActiveRecord
     public $state_id;
     public $lga_id;
     
+    const GENUINE = 'GENUINE';
+    const FAKE = 'FAKE';
+    const INVALID = 'INVALID';
+                
     /**
      * @inheritdoc
      */
@@ -78,9 +82,9 @@ class UsageReport extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getComplaints()
+    public function getComplaint()
     {
-        return $this->hasMany(Complaint::className(), ['report_id' => 'id']);
+        return $this->hasOne(Complaint::className(), ['report_id' => 'id']);
     }
 
     /**
@@ -88,6 +92,38 @@ class UsageReport extends \yii\db\ActiveRecord
      */
     public function getLocation()
     {
+        unset($this->complaint);
         return $this->hasOne(Location::className(), ['id' => 'location_id']);
+    }
+    
+    
+    /**
+     * get all reports that are fake
+     * @return array of reports 
+     */
+    public static function getFakeReports()
+    {
+        return UsageReport::find()->where(['response' => 2])->all();
+    }
+    
+    /**
+     * get all reports that are fake or invalid
+     * @return array of reports 
+     */
+    public static function getFalseReports()
+    {
+        return UsageReport::find()->where(['>', 'response', 1])->all();
+    }
+    
+    public function getResponseAsText(){
+        switch($this->response){
+            case 1: return self::GENUINE;
+            case 2: return self::FAKE;
+            case 3: return self::INVALID;
+        }
+    }
+    
+    public function getComplaintResultAsText(){
+        return is_object($this->complaint) ? $this->complaint->getResultAsText() : Complaint::UNRESOLVED;
     }
 }

@@ -38,6 +38,7 @@ class ActionButton {
                             'data-pjax' => '0'
                          ]
                         );
-    }
+    }       
+    
     
 }

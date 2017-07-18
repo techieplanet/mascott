@@ -85,7 +85,7 @@ class Location extends \yii\db\ActiveRecord
     /**
      * 
      * @param type $id
-     * @return type
+     * @return array of containing IDs or 0 if no ID
      */
     public static function traceLocationParents($location_id) {
         $location = Location::findOne($location_id);
@@ -97,6 +97,27 @@ class Location extends \yii\db\ActiveRecord
         if($location->tier == 3)
             return [$location->parent->parent->id, $location->parent->id, $location->id];
     }
+    
+    
+    /**
+     * 
+     * @param type $id
+     * @return array of containing IDs or 0 if no ID
+     */
+    public static function getLocationTraceText($location_id) {
+        $location = Location::findOne($location_id);
+        $arr = array();
+        
+        if($location->tier == 1)
+            $arr = [$location->location_name, 0, 0];
+        if($location->tier == 2)
+            $arr =  [$location->parent->location_name, $location->location_name, 0];
+        if($location->tier == 3)
+            $arr = [$location->parent->parent->location_name, $location->parent->location_name, $location->location_name];
+        
+        return $arr;
+    }
+    
     
     public static function getZoneChildrenHierachyAsArray($id) {
         return Location::find()
