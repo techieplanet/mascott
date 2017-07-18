@@ -28,9 +28,9 @@ use app\views\helpers\Alert;
     <br>
     <div class="row">
         <div class="col-md-4">
-            <?= $form->field($model, 'designation')->dropDownList(
-                    ['000'=>'-- Select --', 'Dr'=>'Dr', 'Mr'=>'Mr', 'Mrs'=>'Mrs'], 
-                    array('options' => array($selectedDesignation=>array('selected'=>true)))
+            <?= $form->field($model, 'role_id')->dropDownList(
+                    $rolesMap, 
+                    array('options' => array($selectedRoleId=>array('selected'=>true)))
                  ) 
             ?>
         </div>
@@ -39,16 +39,6 @@ use app\views\helpers\Alert;
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'role_id')->dropDownList(
-                    $rolesMap, 
-                    array('options' => array($selectedRoleId=>array('selected'=>true)))
-                 ) 
-            ?>
         </div>
     </div>
     <br>

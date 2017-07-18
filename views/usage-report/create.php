@@ -11,7 +11,7 @@ $subtitle = 'Create New Usage Report';
 //$this->params['breadcrumbs'][] = ['label' => 'Usage Reports', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="usage-report-create">
+<div class="usage-report-create x-create-padding">
 
     <p>
         <h1>
