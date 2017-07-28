@@ -113,6 +113,7 @@ $homeUrl = Yii::$app->homeUrl;
 ?>
 <?php
     $this->registerJs("
+              
             $('#filterButton').on('click', function(){
                 $('#myModal').modal();
                 $.ajax({
@@ -131,7 +132,7 @@ $homeUrl = Yii::$app->homeUrl;
                     }
                 });
             });
-            
+        
             function updateTable(jsonResponse){
                 var products = JSON.parse(jsonResponse);
                 var table = $('#productsList').DataTable();

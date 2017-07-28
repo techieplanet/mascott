@@ -9,7 +9,7 @@ use app\views\helpers\ActionButton;
 use app\models\ProductType;
 use app\models\HCR;
 
-$this->title = 'Products';
+$this->title = 'MAS Registration Update Report';
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 

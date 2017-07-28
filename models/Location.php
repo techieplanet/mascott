@@ -14,6 +14,12 @@ use yii\helpers\ArrayHelper;
  * @property string $parent_id
  * @property integer $tier
  * @property integer $is_default
+ * @property integer $geozone_id
+ * @property integer $geozone_name
+ * @property integer $state_id
+ * @property integer $state_name
+ * @property integer $lga_id
+ * @property integer $lga_name
  * @property integer $modified_by
  * @property integer $created_by
  * @property integer $is_deleted
@@ -82,6 +88,30 @@ class Location extends \yii\db\ActiveRecord
         return $this->hasOne(Location::className(), ['id' => 'parent_id']);
     }
     
+    public static function getTierLocations($tierId, $asArray=false) {
+        return Location::find()
+                ->where(['tier'=>$tierId])
+                ->asArray($asArray)
+                ->all();
+    }
+    
+    public function getTierText($tierId){
+        switch ($tierId){
+            case 1: return 'geozone_id';
+            case 2: return 'state_id';
+            case 3: return 'lga_id';
+        }
+    }
+    
+    public function getTierFieldName($tierId){
+        switch ($tierId){
+            case 1: return 'geozone_name';
+            case 2: return 'state_name';
+            case 3: return 'lga_name';
+        }
+    }
+
+
     /**
      * 
      * @param type $id
@@ -164,6 +194,101 @@ class Location extends \yii\db\ActiveRecord
         }
         
         return $locationsArray;
+    }
+    
+    /*
+     * This utility method will operate on the post array from form and 
+     * derive the location ID list that will be used to call model report methods
+     * LGA --> LGAs
+     * States --> states
+     * GPZ --> geozones
+     */
+    public static function getGeoLevelData($geozones, $states, $lgas){
+        $selectionLimit = 6;
+        $geoList='';
+        $tierValue = 0;
+
+        if(!empty($lgas)){
+            if(count($lgas) > $selectionLimit) 
+                $lgas = array_slice ($lgas, 0, $selectionLimit);
+            $tierValue = 3;
+            return array($lgas, $tierValue);
+            
+        } else if(!empty($states)) {
+            if(count($states) > $selectionLimit) 
+                $states = array_slice ($states, 0, $selectionLimit);
+            $tierValue = 2;
+            return array($states, $tierValue);
+
+        } else if(!empty($geozones)) {
+            if(count($geozones) > $selectionLimit) 
+                $geozones = array_slice ($geozones, 0, $selectionLimit);
+            $tierValue = 1;
+            return array($geozones, $tierValue);
+        }
+        else { //no geo selection
+            $tierValue = 1;
+            $geozoneIds = array();
+            $geoZones = Location::getTierLocations($tierValue); //geozones
+            foreach($geoZones as $geoZone) 
+                $geozoneIds[] = $geoZone->id;
+            
+            return array($geozoneIds, $tierValue);
+            
+        }
+    }
+      
+      
+    
+    /**
+     * One time script to set the geozone ID, state ID and LGA ID for each location
+     * This wil help us to do report queries easily and faster.
+     * Keep for reference and unforeseeable future need.
+     */
+    public static function setUp(){
+        $location = new Location();
+        $lhArray = Location::getLocationsHierachy();
+        
+        foreach($lhArray as $gz){
+            $location = Location::findOne($gz['id']);
+            $location->geozone_id = $gz['id'];
+            $location->geozone_name = $gz['location_name'];
+            $location->save();
+            echo 'Saved GEOZONE: ' . $gz['id'];
+            
+            $states = $gz['states'];
+            foreach($states as $state){
+                $location = Location::findOne($state['id']);
+                
+                $location->geozone_id = $gz['id'];
+                $location->geozone_name = $gz['location_name'];
+                
+                $location->state_id = $state['id'];
+                $location->state_name = $state['location_name'];
+                
+                $location->save();
+                
+                $lgas = $state['lgas'];
+                foreach($lgas as $lga_id=>$lga){
+                    $location = Location::findOne($lga_id);
+                    $location->geozone_id = $gz['id'];
+                    $location->geozone_name = $gz['location_name'];
+                    
+                    $location->state_id = $state['id'];
+                    $location->state_name = $state['location_name'];
+                    
+                    $location->lga_id = $lga_id;
+                    $location->lga_name = $lga;
+                    $location->save();
+                }
+                echo '<br/>Saved LGAs: ' . count($lgas);
+                
+            }
+            echo '<br/>Saved STATES: ' . count($states);
+            echo '<br/>---------------- COMPLETED ZONE: ' . $gz['location_name'] . ' ---------------------<br/><br/>';
+        }
+        
+        echo '<br/><br/>COMPLETED';
     }
     
 }

@@ -15,10 +15,10 @@ $this->title = 'Login';
     <div class="col-md-1"></div>
     <div class="col-md-10 bgwhite nopadding">
             <div class="loginform-header text-center">
-                <div class="logo-icon">
-                    <img class="login-logo" src="../web/images/logo.png" alt="User Image">
+                <div class="logo-icon logo-pull-up">
+                    <?= Html::img('@web/images/logo.png', ['alt' => 'Logo']) ?>
                 </div>
-                <div class="logo-text nofloat" style="margin-top:-15px; padding-bottom: 10px;">
+                <div class="logo-text nofloat" style="padding-bottom: 10px;">
                     NATIONAL AGENCY FOR FOOD AND DRUGS
                     <br>
                     ADMINISTRATION AND CONTROL (NAFDAC)

@@ -72,7 +72,6 @@ $homeUrl = Yii::$app->homeUrl;
                 'options' => ['id'=>'from_date']
             ])->label('From') ?>
         </div>
-        
     
         <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [

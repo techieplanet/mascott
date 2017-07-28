@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 use yii\web\View;
+use yii\jui\AutoComplete;
+
 use app\views\helpers\Alert;
 
 //use yii\web\JqueryAsset;
@@ -21,7 +23,7 @@ use app\views\helpers\Alert;
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
         <div class="col-md-4 paddingleft0">
-            <?= $form->field($model, 'batch_number')->textInput() ?>
+            <?= $form->field($model, 'batch_number')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-4">
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>

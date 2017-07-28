@@ -82,13 +82,12 @@ function populateStatesSelect(states) {
     function populateLGAJqx(items) {
         var selectedLGAItems = $('#jqxLGABox').jqxComboBox('getSelectedItems');
         LGAs = new Array();
-        //console.log('Items: ' + JSON.stringify(items));
+
         $.each(items, function (index, item) {
             var stateId = item.value;
             stateLGAS = (lh[item.originalItem.zoneId].states[stateId].lgas);
-            //console.log(stateLGAS); return;
+            
             $.each(stateLGAS, function(index, element){
-                console.log('LGA: ' + element);
                 LGAs.push({value: index, label: element, stateId: stateId});
             });
         });
@@ -104,7 +103,6 @@ function populateStatesSelect(states) {
     
     
     $('#jqxZoneBox').on('change', function (event) {
-        console.log('inside zone drop down');
         var items = $('#jqxZoneBox').jqxComboBox('getSelectedItems');
         populateStatesJqx(items);
     });
@@ -117,3 +115,13 @@ function populateStatesSelect(states) {
     });
     
  });
+ 
+ 
+ function extractJQXItemsValues(items){
+        var valuesArray = [];
+        $.each(items, function(index, element){
+            valuesArray.push(element.value);
+        });
+        
+        return valuesArray;
+    }

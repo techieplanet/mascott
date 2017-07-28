@@ -19,6 +19,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['index/site']
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -54,9 +55,15 @@ $config = [
             'showScriptName' => false,
             'rules' => [
             ],
-        ],
-        
+        ],        
     ],
+    
+    'modules' => [
+        'debug' => [
+            'class' => 'yii\debug\Module',
+        ],
+    ],
+    
     'params' => $params,
 ];
 

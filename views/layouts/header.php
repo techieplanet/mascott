@@ -9,7 +9,7 @@
         <!-- Logo -->
         <a href="<?= Url::home(true) ?>" class="logo-anchor text-center">
             <div class="logo-icon pull-left">
-                <?= Html::img('@web/images/logo.png', ['alt' => 'User Image']) ?>
+                <?= Html::img('@web/images/logo.png', ['alt' => 'Logo']) ?>
             </div>
             <span class="logo-text">
                 NATIONAL AGENCY FOR FOODS AND DRUGS<br/> ADMINISTRATION AND CONTROL (NAFDAC)<br/>

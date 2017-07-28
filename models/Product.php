@@ -31,13 +31,14 @@ use app\models\reports\ProductReport;
  * 
  * @property Batch[] $batches
  * @property Country $productionCountry
- * @property Hcr $certificateHolder
+ * @property HCR $certificateHolder
  * @property Provider $provider
  * @property ProductType $productType
  * 
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const SCENARIO_PRODUCT = 'product';
     /**
      * @inheritdoc
      */
@@ -52,16 +53,15 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_name', 'product_type', 'dosage_form', 'certificate_holder', 'production_country', 'brand_name', 'generic_name', 'nrn', 'manufacturing_date', 'expiry_date', 'mas_code_assigned', 'mas_code_status', 'batch_number', 'provider_id'], 'required'],
+            [['product_name', 'product_type', 'dosage_form', 'certificate_holder', 'production_country', 'brand_name', 'generic_name', 'nrn', 'mas_code_assigned', 'mas_code_status', 'provider_id'], 'required'],
             [['product_type', 'certificate_holder', 'production_country', 'mas_code_assigned', 'mas_code_status', 'provider_id'], 'integer'],
             [['deleted', 'created_by', 'modified_by'], 'integer'],
-            [['manufacturing_date', 'expiry_date','created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
+            [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
             [['product_name', 'dosage_form', 'generic_name'], 'string', 'max' => 100],
             [['brand_name'], 'string', 'max' => 50],
-            [['nrn', 'batch_number'], 'string', 'max' => 10],
-            [['batch_number'], 'unique'],
+            [['nrn'], 'string', 'max' => 10],
             [['production_country'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['production_country' => 'id']],
-            [['certificate_holder'], 'exist', 'skipOnError' => true, 'targetClass' => Hcr::className(), 'targetAttribute' => ['certificate_holder' => 'id']],
+            [['certificate_holder'], 'exist', 'skipOnError' => true, 'targetClass' => HCR::className(), 'targetAttribute' => ['certificate_holder' => 'id']],
             [['provider_id'], 'exist', 'skipOnError' => true, 'targetClass' => Provider::className(), 'targetAttribute' => ['provider_id' => 'id']],
             [['product_type'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['product_type' => 'id']],
         ];
@@ -82,11 +82,8 @@ class Product extends \yii\db\ActiveRecord
             'brand_name' => 'Brand Name',
             'generic_name' => 'Generic Name',
             'nrn' => 'NAFDAC Reg. Number',
-            'manufacturing_date' => 'Manufacturing Date',
-            'expiry_date' => 'Expiry Date',
             'mas_code_assigned' => 'Mas Code Assigned',
             'mas_code_status' => 'Mas Code Status',
-            'batch_number' => 'Batch Number',
             'provider_id' => 'MAS Provider',
             'deleted' => 'Deleted',
             'created_date' => 'Created Date',
@@ -117,7 +114,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getCertificateHolder()
     {
-        return $this->hasOne(Hcr::className(), ['id' => 'certificate_holder']);
+        return $this->hasOne(HCR::className(), ['id' => 'certificate_holder']);
     }
 
     /**
@@ -153,4 +150,6 @@ class Product extends \yii\db\ActiveRecord
                 ->asArray()
                 ->all();
     }
+    
+    
 }
