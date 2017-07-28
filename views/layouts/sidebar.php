@@ -41,9 +41,7 @@
           </a>
           <ul class="treeview-menu">
               <li>
-                  <a href="pages/layout/top-nav.html" style="word-wrap: normal; ">
-                      Product
-                  </a>
+                <?= Html::a('Product','@web/product', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
               </li>
               <li>
                   <a href="pages/layout/boxed.html">
@@ -100,16 +98,39 @@
         <!--------  REPORTS   -------------->
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>REPORTS</span>
+            <i class="fa fa-files-o"></i> <span>REPORTS</span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-              <li>
-                  <a href="pages/layout/top-nav.html" style="word-wrap: normal; ">
-                      Product
-                  </a>
-              </li>
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Products <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li>
+                    <?= Html::a('<i class="fa fa-circle-o"></i>MAS Registration Update','@web/product/report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+                <li>
+                  <?= Html::a('<i class="fa fa-circle-o"></i>Product Expiry Status','@web/product/expiring', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+              </ul>
+            </li>
+            
+            <li>
+              <a href="#"><i class="fa fa-circle-o"></i> Usage <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li>
+                    <?= Html::a('<i class="fa fa-circle-o"></i>Number of MAS requests <br/>received',
+                                '@web/usage-report/requests-received', 
+                                ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+                <li>
+                    <?= Html::a('<i class="fa fa-circle-o"></i>Percentage MAS activated <br/>products used',
+                                '@web/product/expiring', 
+                                ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+              </ul>
+            </li>
+            
+            <li><a href="#"><i class="fa fa-circle-o"></i>Resolution</a></li>
           </ul>
         </li>
         

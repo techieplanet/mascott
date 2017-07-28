@@ -31,7 +31,7 @@ use app\views\helpers\Alert;
         <div class="col-md-4">
             <?= $form->field($model, 'role_id')->dropDownList(
                     $rolesMap, 
-                    array('options' => array($selectedRoleId=>array('selected'=>true)))
+                    array('options' => array($model->role_id=>array('selected'=>true)))
                  ) 
             ?>
         </div>

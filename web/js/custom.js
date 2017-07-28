@@ -65,3 +65,8 @@ function jqxArraySorter(items){
         $('#'+jqxComboId).jqxComboBox('selectItem', item );
     });
  }
+ 
+ 
+ function log(str){
+     console.log(str);
+ }

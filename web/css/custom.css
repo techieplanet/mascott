@@ -70,6 +70,8 @@ and open the template in the editor.
 
 .bgeee {background-color: #eeeeee; }
 .bgwhite {background-color: #ffffff; }
+.bg-sidebar { background-color: #3D7359; }
+.bg-header{ background-color: #2F9E69; }
 .primary-color {color: #3c8dbc; }
 .blockquote { font-weight: bold; line-height: 1.4; }
 .modal-title { color: #3c8dbc; font-weight: bold; }
@@ -335,6 +337,10 @@ body .modal .modal-lg {
     height: 83px;
 }
 
+.logo-pull-up img {
+    margin-top: -40px;
+}
+
 .logo-anchor {
     /*margin-left: 20px;*/
 }
@@ -504,7 +510,7 @@ legend {
     border-bottom: 0px !important;
 }
 
-.loading-modal .gif-wrapper {
+.loading-modal .gif-wrapper, .loading-gif-wrapper {
     background: #ffffff;
     padding: 20px;
 }

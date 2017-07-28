@@ -47,8 +47,16 @@ class AppAsset extends AssetBundle
         'plugins/adminlte/dist/js/app.min.js',
         
         //datatables
-        'https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js',
-        'https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js',
+        //'https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js',
+        //'https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js',
+        
+        'plugins/DataTables/DataTables-1.10.15/js/jquery.dataTables.min.js',
+        'plugins/DataTables/DataTables-1.10.15/js/dataTables.bootstrap.min.js',
+        
+        //highcharts
+        'plugins/Highcharts/code/highcharts.js',
+        'plugins/Highcharts/code/modules/exporting.js',
+        'plugins/Highcharts/code/modules/no-data-to-display.js',
         
         //Custom JS
         'js/custom.js',

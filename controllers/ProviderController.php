@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * ProviderController implements the CRUD actions for Provider model.
  */
-class ProviderController extends Controller
+class ProviderController extends BaseController
 {
     /**
      * @inheritdoc

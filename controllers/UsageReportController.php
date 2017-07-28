@@ -7,15 +7,23 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use app\models\UsageReport;
+use app\models\service\UsageReportService;
 use app\models\Location;
+use app\models\Product;
 use app\controllers\services\LocationService;
+use app\controllers\services\ProviderService;
+use app\controllers\services\ProductTypeService;
+use app\controllers\services\ProductService;
+use app\controllers\services\AlertsService;
 use app\models\utils\Trailable;
+use app\models\Permission;
 
 /**
  * UsageReportController implements the CRUD actions for UsageReport model.
  */
-class UsageReportController extends Controller
+class UsageReportController extends BaseController
 {
     /**
      * @inheritdoc
@@ -76,6 +84,13 @@ class UsageReportController extends Controller
             );
             (new Trailable($model))->registerInsert(); //audit trail
             if($model->save()){
+                //send email if response is NOT Genuine i.e. fake or invalid
+                if($model->getResponseAsText() != UsageReport::GENUINE){
+                    $permission = Permission::find()->where(['alias'=>'resolution_reminder'])->one();
+                    $permissionUsers = $permission->getMyUsers();
+                    (new AlertsService())->sendResolutionRequestEmail($permissionUsers, $model);
+                }
+                
                 Yii::$app->session->setFlash('saved', 'CREATED');
                 return $this->redirect(['update', 'id' => $model->id, 'new' => true]);
             }
@@ -153,4 +168,67 @@ class UsageReportController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionRequestsReceived(){
+        $filtersArray = array();
+        $usageReport = new UsageReport();
+        
+        $ptService = new ProductTypeService();
+        $providerService = new ProviderService();
+        $locationService = new LocationService();
+       
+        $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+        $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
+                
+        if($post = Yii::$app->request->post()){
+            
+            Yii::$app->response->format = Response::FORMAT_JSON;     
+            $filteredReports = $usageReport->getUsageRequestsReceived($post, true);
+            return $filteredReports;
+        }
+        
+        $filteredReports = $usageReport->getUsageRequestsReceived($filtersArray, true);
+        
+        return $this->render('requests_received', [
+            'product' => new Product(),
+            'model' => new UsageReport(),
+            'location' => new Location(),
+            'ptMap' => $ptMap,
+            'providerMap' => $providerMap,
+            'lh' => $locationService->getLocationsHierachyAsJson(),
+            'usageData' => json_encode($filteredReports)
+        ]);
+    }
+    
+    
+    
+    public function actionActivatedUsed(){
+        $filtersArray = array();
+        $reportService = new UsageReportService();
+        
+        $productService = new ProductService();
+        $ptService = new ProductTypeService();
+        $providerService = new ProviderService();
+        
+        $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
+        $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
+               
+        if($post = Yii::$app->request->post()){
+            Yii::$app->response->format = Response::FORMAT_JSON;     
+            $filteredReports = $reportService->getActivatedProductsUsed($post, true);
+            return $filteredReports;
+        }
+        
+        $filteredReports = $reportService->getActivatedProductsUsed($filtersArray, true);
+        
+        return $this->render('activated-used', [
+            'product' => new Product(),
+            'model' => new UsageReport(),
+            'ptMap' => $ptMap,
+            'providerMap' => $providerMap,
+            'productMap' => $productMap,
+            'usageData' => json_encode($filteredReports)
+        ]);
+    }   
 }

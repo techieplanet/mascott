@@ -9,13 +9,17 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Complaint;
 use app\models\UsageReport;
+use app\models\Permission;
 use app\models\utils\Trailable;
+use app\controllers\services\AlertsService;
 
 /**
  * ComplaintController implements the CRUD actions for Complaint model.
  */
-class ComplaintController extends Controller
+class ComplaintController extends BaseController
 {
+    
+    
     /**
      * @inheritdoc
      */
@@ -85,6 +89,12 @@ class ComplaintController extends Controller
         (new Trailable($model))->registerInsert();
                 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            //if complaint is confirmed as true, send email for update
+            if($model->getResultAsText() == Complaint::CONFIRMED){
+                $permission = Permission::find()->where(['alias'=>'resolution_update'])->one();
+                $permissionUsers = $permission->getMyUsers();
+                (new AlertsService())->sendResolutionUpdateEmail($permissionUsers, $model->report);
+            }
             Yii::$app->session->setFlash('saved', 'CREATED');
         } else {
             $model->addError('validation_result', 'Could not save. Ensure to select a verification result');
@@ -106,6 +116,11 @@ class ComplaintController extends Controller
         (new Trailable($model))->registerUpdate();
                 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($model->getResultAsText() == Complaint::CONFIRMED){
+                $permission = Permission::find()->where(['alias'=>'resolution_update'])->one();
+                $permissionUsers = $permission->getMyUsers();
+                (new AlertsService())->sendResolutionUpdateEmail($permissionUsers, $model->report);
+            }
             Yii::$app->session->setFlash('saved', 'UPDATED');
         } else {
             $model->addError('validation_result', 'Could not update. Ensure to select a verification result');

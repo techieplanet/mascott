@@ -14,7 +14,9 @@ use app\views\helpers\Alert;
 
 <div class="product-form x-form-padding">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id'=>'update-form'
+    ]); ?>
     <div class="row">
        <div class="col-md-4">
             <?= $form->field($model, 'provider_id')->dropDownList(
@@ -86,28 +88,18 @@ use app\views\helpers\Alert;
             <?= $form->field($model, 'generic_name')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
-    <hr>
-    <div class="row">       
-        <div class="col-md-4">
-            <?= $form->field($model, 'batch_number')->textInput(['maxlength' => true]) ?>
-        </div>        
-        <div class="col-md-3">
-            <?= $form->field($model, 'manufacturing_date')->widget(DatePicker::classname(), [
-                'language' => 'en',
-                'dateFormat' => 'yyyy-MM-dd',
-            ])->textInput(['placeholder' => 'yyyy-MM-dd']) ?>
+    <br>    
+    <?php if($model->isNewRecord) { ?>
+        <div class="form-group text-right">
+            <?= Html::submitButton('Create', ['class' => 'btn btn-success btn-mas']) ?>
         </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'expiry_date')->widget(DatePicker::classname(), [
-                'language' => 'en',
-                'dateFormat' => 'yyyy-MM-dd',
-            ])->textInput(['placeholder' => 'yyyy-MM-dd']) ?>
-        </div>        
-    </div>
-<br>    
-    <div class="form-group text-right">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success btn-mas' : 'btn btn-primary btn-mas']) ?>
-    </div>
+    <?php } else { ?>
+        <hr>
+        <?php require_once 'batch_form.php'; ?>
+        <div class="form-group text-right">
+            <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-mas']) ?>
+        </div>
+    <?php } ?>
 
     <?php ActiveForm::end(); ?>
 

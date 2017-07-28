@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Product;
+use app\models\ProductType;
+use app\models\Batch;
 use app\models\Location;
 use app\models\utils\Trailable;
 use app\controllers\services\HCRService;
@@ -22,7 +24,7 @@ use app\controllers\services\LocationService;
 /**
  * ProductController implements the CRUD actions for Product model.
  */
-class ProductController extends Controller
+class ProductController extends BaseController
 {
     /**
      * @inheritdoc
@@ -52,10 +54,6 @@ class ProductController extends Controller
         ]);
     }
 
-    public function actionReport2(){
-        echo 'report2'; exit;
-    }
-    
     public function actionReport()
     {
         $products = Product::find()->all();
@@ -138,6 +136,9 @@ class ProductController extends Controller
     public function actionUpdate($id, $new = false)
     {
         $model = $this->findModel($id);
+        $batchModel = new Batch();
+        $batches = $model->batches;
+        
         $hcrService = new HCRService();
         $countryService = new CountryService();
         $providerService = new ProviderService();
@@ -147,12 +148,14 @@ class ProductController extends Controller
         $countryMap = $countryService->getCountryMap(); $countryMap[0] = '--Select Country--'; ksort($countryMap);
         $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
         $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
-
+        
         $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
-            
+        
         if ($model->load(Yii::$app->request->post())) {
+            //if($model->validate()) echo 'validated'; else var_dump($model->getErrors()); exit;
             (new Trailable($model))->registerUpdate();
             if($model->save()) {
+                //echo 'saved'; exit;
                 Yii::$app->session->setFlash('saved', 'UPDATED');
             }
         }
@@ -162,7 +165,9 @@ class ProductController extends Controller
             'hcrMap' => $hcrMap,
             'countryMap' => $countryMap,
             'providerMap' => $providerMap,
-            'ptMap' => $ptMap
+            'ptMap' => $ptMap,
+            'batchModel' => $batchModel,
+            'batches' => $batches
         ]);
         
     }
@@ -194,5 +199,127 @@ class ProductController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    
+    
+    /*************************************************
+     * BATCH ACTIONS
+     ************************************************/
+    
+    /**
+     * AJAX ACTION
+     * Creates a new Batch model.
+     * If creation is successful, echo batch JSON of model attributes as return
+     */
+    public function actionCreateBatch()
+    {
+        $model = new Batch(['scenario' => Batch::SCENARIO_AJAX]);
+        
+        (new Trailable($model))->registerInsert();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->manufacturing_date = date('Y-m-d', strtotime($model->manufacturing_date));
+            $model->expiry_date = date('Y-m-d', strtotime($model->expiry_date));
+            if($model->save())
+                echo json_encode([
+                    'result' => json_encode($model->attributes),
+                    'status' => 'OK'
+                ]);
+            else
+                echo json_encode([
+                    'result' => json_encode($model->getErrors ()),
+                    'status' => 'ERROR'
+                ]);
+        } else {
+            echo json_encode($model->attributes); 
+        }
+        exit;
+    }
+
+    /**
+     * AJAX
+     * Updates an existing Batch model.
+     * @return JSON
+     */
+    public function actionUpdateBatch()
+    {
+        $id = $_POST['Batch']['id'];
+        $model = $this->findBatchModel($id);
+        //$model->scenario = Batch::SCENARIO_AJAX;
+        
+        (new Trailable($model))->registerUpdate();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $model->scenario = Batch::SCENARIO_AJAX;
+            $model->manufacturing_date = date('Y-m-d', strtotime($model->manufacturing_date));
+            $model->expiry_date = date('Y-m-d', strtotime($model->expiry_date));
+            if($model->save())
+                echo json_encode([
+                    'result' => json_encode($model->attributes),
+                    'status' => 'OK'
+                ]);
+            else
+                echo json_encode([
+                    'result' => json_encode($model->getErrors ()),
+                    'status' => 'ERROR'
+                ]);
+        } else {
+            echo json_encode($model->attributes); 
+        }
+    }
+
+    /**
+     * Deletes an existing Batch model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDeleteBatch()
+    {
+        $id = $_POST['id'];
+        $this->findBatchModel($id)->delete();
+        echo 'OK';
+    }
+    
+    
+    protected function findBatchModel($id)
+    {
+        if (($model = Batch::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    public function actionExpiring()
+    {
+       $model = new Batch();
+       $productService = new ProductService();
+       $ptService = new ProductTypeService();
+       
+       $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
+       $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+       
+        if ($model->load(Yii::$app->request->post())) {
+            $filtersArray = array();
+
+            if($_POST['Batch']['product_id'] > 0) $filtersArray['product_id'] = $_POST['Batch']['product_id'];
+            if($_POST['Product']['product_type'] > 0) $filtersArray['product_type'] = $_POST['Product']['product_type'];
+            if($_POST['Batch']['batch_number'] != '') $filtersArray['batch_number'] = $_POST['Batch']['batch_number'];
+
+            echo json_encode($model->getExpiringBatches($filtersArray));
+            exit;
+        }
+
+        return $this->render('expiry', [
+            'batches' => $model->getExpiringBatches([]),
+            'model' => $model,
+            'product' => new Product(),
+            'productType' => new ProductType(),
+            'productMap' => $productMap,
+            'ptMap' => $ptMap
+        ]);
+       
     }
 }

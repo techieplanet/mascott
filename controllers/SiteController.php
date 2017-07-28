@@ -68,7 +68,7 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
-    {
+    {        
         //if logged in, redirect to dashboard page
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('site/dashboard');
@@ -78,13 +78,14 @@ class SiteController extends Controller
         $model = new LoginForm();
         
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            $this->goBack();
+            $url = (isset($_GET['r']) && (!empty($_GET['r']))) ? $_GET['r'] : 'site/dashboard';
+            return $this->redirect([$url]); //does Url::to([])
+            
         }
         
         return $this->render('index',[
             'model' => $model
-        ]);
-        
+        ]);  
         
     }
 
@@ -93,28 +94,32 @@ class SiteController extends Controller
      */
     public function actionDashboard()
     {
-        return $this->render('dashboard');
+        if (!Yii::$app->user->isGuest) {
+            return $this->render('dashboard');
+        } else {
+            $this->redirect('index');
+        }
     }
     
     /**
      * Login action.
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        echo 'inside login'; exit;
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
+//    public function actionLogin()
+//    {
+//        echo 'inside login'; exit;
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
+//
+//        $model = new LoginForm();
+//        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+//            return $this->goBack();
+//        }
+//        return $this->render('login', [
+//            'model' => $model,
+//        ]);
+//    }
 
     /**
      * Logout action.

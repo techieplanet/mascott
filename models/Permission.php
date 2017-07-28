@@ -65,4 +65,14 @@ class Permission extends \yii\db\ActiveRecord
     {
         return $this->hasMany(RoleAcl::className(), ['permission_id' => 'id']);
     }
+    
+    /*
+     * get the users that have this permission 
+     */
+    public function getMyUsers(){
+        return User::find()
+                ->innerJoinWith(['role', 'role.roleAcls'])
+                ->where(['permission_id'=>$this->id])
+                ->all();
+    }
 }
