@@ -21,36 +21,49 @@ use app\views\helpers\Alert;
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'cc-form'
+        'id' => 'cc-form',
+        'options' => ['class' => 'x-form-padding']
 ]); ?>
-    <div class="row">
-       <div class="col-md-4">
+    <div class="row marginbottom15">
+       <div class="col-md-5">
             <?= $form->field($product, 'product_name')->dropDownList(
                    $productMap
                 )
            ?>
         </div>
         
-       <div class="col-md-4">
+       <div class="col-md-5">
             <?= $form->field($product, 'product_type')->dropDownList(
                    $ptMap, 
                    array('options' => array(0=>array('selected'=>true)))
                 )
            ?>
         </div>
-        
+    </div>        
+    <div class="row marginbottom15">
         <div class="col-md-4">
-            <div style="margin-top: 5px;" id='jqxZoneBox'></div>
-            <div style="margin-top: 5px;" id='jqxStateBox'></div>
-            <div style="margin-top: 5px;" id='jqxLGABox'></div>
+            <label for="Zone"> Zone
+                <div class="form-control multi-select-box" style="margin-top: 5px;" id='jqxZoneBox'></div>
+            </label>
         </div>
-        
+        <div class="col-md-4">
+            <label for="State"> State
+                <div class="form-control" style="margin-top: 5px;" id='jqxStateBox'></div>
+            </label>
+        </div>
+        <div class="col-md-4">
+            <label for="LGA"> LGA
+                <div class="form-control" style="margin-top: 5px;" id='jqxLGABox'></div>
+            </label>
+        </div>
+    </div>
+    <div class="row">        
         <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'from_date']
+                'options' => ['id'=>'from_date', 'placeholder' => 'yyyy-MM-dd', 'class' => 'form-control']
             ])->label('From') ?>
         </div>
         
@@ -60,22 +73,29 @@ use app\views\helpers\Alert;
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'to_date']
+                'options' => ['id'=>'to_date', 'placeholder' => 'yyyy-MM-dd', 'class' => 'form-control']
             ])->label('To') ?>
         </div>
-        
-        <div class="col-md-12 marginbottom20 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
-        </div>
-        
+    </div>
+<hr>
+    <div class="row">        
+        <div class="col-md-12 margintop10 marginbottom20 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
+        </div>        
     </div>
 <?php ActiveForm::end(); ?>
-
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-9" id="container" style="height: 400px; margin: 0 auto"></div>
-    <div class="col-md-2"></div>
-</div>
+     <div class="row">
+        <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">MAS Usage</div>
+                    <div class="panel-body">
+                        <div id="container" class="paddingtop20"></div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-1"></div>
+    </div>
 
 <?php
     Modal::begin([
@@ -173,7 +193,7 @@ use app\views\helpers\Alert;
                         type: 'column'
                     },
                     title: {
-                        text: 'Confirmed counterfeit reports'
+                        text: ' '
                     },
                     lang: {
                         noData: 'No data to display'

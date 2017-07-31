@@ -46,6 +46,17 @@ $this->title = 'MAS Registration Update Report';
                     <th class="sorting">NAFDAC Reg. Number</th>                    
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
+                    <th class="sorting">Product Type</th>
+                    <th class="sorting">Certificate Holder</th>
+                    <th class="sorting">Brand Name</th>
+                    <th class="sorting">Generic Name</th>
+                    <th class="sorting">NAFDAC Reg. Number</th>                    
+                </tr>
+            </tfoot>
                 <tbody>
         <?php
             //echo is_array($roles) ? 'array' : 'scalar'; exit;
@@ -79,8 +90,10 @@ $this->title = 'MAS Registration Update Report';
 
 <?php
     $this->registerJs(
-        "$('#reports-menu, #reports_product-report-menu, #reports_product-reg-update-menu').addClass('active');",
-        View::POS_LOAD,
+        "$('#reports-menu, #reports_product-report-menu').addClass('active');
+         $('#reports_product-reg-update-menu').addClass('active2');
+    
+        ",View::POS_LOAD,
         'pur-menu'
     );
 ?>

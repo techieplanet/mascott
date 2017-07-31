@@ -19,60 +19,81 @@ $homeUrl = Yii::$app->homeUrl;
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'request-form'
+        'id' => 'request-form',
+        'options' => ['class' => 'x-form-padding']
 ]); ?>
-    <div class="row">
-       <div class="col-md-4">
+    <div class="row marginbottom15">
+        <div class="col-md-5">
             <?= $form->field($product, 'product_type')->dropDownList(
                    $ptMap, 
                    array('options' => array(0=>array('selected'=>true)))
                 )
            ?>
         </div>
-        
-       <div class="col-md-4">
+        <div class="col-md-5">
             <?= $form->field($product, 'provider_id')->dropDownList(
                    $providerMap, 
                    array('options' => array(0=>array('selected'=>true)))
                 )
            ?>
-        </div>
-        
+       </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
-            <div style="margin-top: 5px;" id='jqxZoneBox'></div>
-            <div style="margin-top: 5px;" id='jqxStateBox'></div>
-            <div style="margin-top: 5px;" id='jqxLGABox'></div>
+            <label for="Zone"> Zone
+                <div class="form-control" style="margin-top: 5px;" id='jqxZoneBox'></div>
+            </label>
         </div>
-        
+        <div class="col-md-4">
+            <label for="State"> State
+                <div class="form-control" style="margin-top: 5px;" id='jqxStateBox'></div>
+            </label>
+        </div>
+        <div class="col-md-4">
+            <label for="LGA"> LGA
+                <div class="form-control" style="margin-top: 5px;" id='jqxLGABox'></div>
+            </label>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'from_date']
+                'options' => ['id'=>'from_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
             ])->label('From') ?>
         </div>
-        
-    
         <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'to_date']
+                'options' => ['id'=>'to_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
             ])->label('To') ?>
         </div>
-        
-        <div class="col-md-12 marginbottom20 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
-        </div>
-        
     </div>
-<?php ActiveForm::end(); ?>
-
-<div class="row">
-    <div class="col-md-12" id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+<hr>
+    <div class="col-md-12 margintop10 marginbottom20 text-center">
+        <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
+    </div>
+        <?php ActiveForm::end(); ?>
 </div>
+<!-- END of Filter -->
+
+<!-- CHART -->
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <div class=" panel panel-default text-center">
+                <div class="panel-heading">MAS Usage</div>
+                <div class="panel-body">
+                    <div id="container" class="paddingtop20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 
 <?php
     Modal::begin([
@@ -200,7 +221,7 @@ $homeUrl = Yii::$app->homeUrl;
                         type: 'column'
                     },
                     title: {
-                        text: 'MAS Usage'
+                        text: ' '
                     },
                     lang: {
                         noData: 'No data to display'
@@ -227,6 +248,8 @@ $homeUrl = Yii::$app->homeUrl;
                     },
                     yAxis: {
                         min: 0,
+                        lineWidth: 1,
+                        tickWidth: 1,
                         title: {
                             text: 'Number of MAS Requests',
                             align: 'middle',

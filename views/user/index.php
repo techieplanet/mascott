@@ -40,6 +40,17 @@ $this->title = 'Users';
                     <th class="">Actions</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th class="">SN</th>
+                    <th class="">First Name</th>
+                    <th class="">Last Name</th>
+                    <th class="">Email</th>
+                    <th class="">Phone</th>
+                    <th class="">Role</th>
+                    <th class="">Actions</th>
+                </tr>
+            </tfoot>
             
             <tbody>
         <?php

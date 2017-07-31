@@ -19,21 +19,26 @@ and open the template in the editor.
 .nomargin{ margin: 0 !important;}
 .marginauto{    margin: auto !important; }
 .margintop5{    margin-top: 5px !important; }
+.margintop0 {margin-top: 0px !important;}
 .margintop10 {margin-top: 10px !important;}
 .margintop15 {margin-top: 15px !important;}
 .margintop20 {margin-top: 20px !important;}
+.margintop25 { margin-top: 25px !important; }
 .margintop40 {margin-top: 40px !important;}
 .marginbottom5 {margin-bottom: 5px !important;}
 .marginbottom10 {margin-bottom: 10px !important;}
 .marginbottom15 {margin-bottom: 15px !important;}
 .marginbottom20 {margin-bottom: 20px !important;}
+.marginbottom50 {margin-bottom: 50px !important;}
 .marginleft5 {margin-left: 5px !important;}
+.marginleftneg20 {margin-left: -20px !important;}
 
 .marginleft10 {margin-left: 10px !important;}
-.marginleft20 {margin-left: 20% !important;}
+.marginleft20 {margin-left: 20px !important;}
 .marginleft25 {margin-left: 25px !important;}
 .marginright15 {margin-right: 15px !important;}
-.marginleft15 {margin-left: 20px !important;}
+.marginleft15 {margin-left: 15px !important; }
+.marginleft19 {margin-left: 19px !important;}
 .marginright10 {margin-right: 10px !important;}
 .marginleft20px {margin-left: 20px !important;}
 .marginright20 {margin-right: 20px !important;}
@@ -50,6 +55,8 @@ and open the template in the editor.
 .paddingbottom20{padding-bottom: 20px !important;}
 .paddingbottom30{padding-bottom: 30px !important;}
 .paddingleft10{ padding-left: 10px !important;}
+.paddingleft0 { padding-left: 0px !important; }
+.paddingright0 { padding-right: 0px !important; }
 .paddingleft0 { padding-left: 0px !important; }
 
 .width10{width: 10px !important;}
@@ -74,7 +81,7 @@ and open the template in the editor.
 .bg-header{ background-color: #2F9E69; }
 .primary-color {color: #3c8dbc; }
 .blockquote { font-weight: bold; line-height: 1.4; }
-.modal-title { color: #3c8dbc; font-weight: bold; }
+.modal-title { color: #2F9E69; font-weight: bold; } /*color: #3c8dbc*/
 .form-control.medium { width: 60% !important; }
 .deleting{background: #ee4545 !important; border-color: #ee4545 !important;}
 .error-text{ color: #F00; }
@@ -119,6 +126,37 @@ and open the template in the editor.
     color: #000 !important;
     border: 1px solid #2F9E69;
 }
+
+/* form-group class override */
+.form-group.has-success label {
+    color: #000 !important;
+}
+
+/*Bootstrap panel class override*/
+.panel-default{
+    margin: 0 auto;
+    margin-bottom: 100px;
+    border: 1px #2F9E69 solid !important;
+}
+
+.panel-heading{
+    color: #fff !important;
+    background-color: #2F9E69 !important;
+    font-size: 18px !important;
+}
+
+/*help-block class override */
+.help-block{
+    display: none !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+/* form-group override */
+.form-group{
+    margin-bottom: 0px !important;
+}
+
 /**
  Css for process step
 **/
@@ -417,6 +455,7 @@ li.user-header {
 
 .btn-mas{ 
     background-color: #2F9E69;
+    color: #fff !important;
     border: none;
 }
 
@@ -425,6 +464,7 @@ li.user-header {
 .btn-mas:active{
     background-color: #008d4c !important;
     border: 1px #2F9E69 solid !important;
+    
     
 }
 
@@ -435,7 +475,7 @@ li.user-header {
 }
 
 .x-form-padding{
-    padding: 20px 80px 0 50px;
+    padding: 0px 80px 0 50px;
 }
 
 h1>a{
@@ -451,7 +491,11 @@ h1>a>.btn { color: #fff }
 
 /* Users view */
 section.content{
-    padding: 20px 50px 100px 50px;
+    padding: 30px 50px 100px 50px;
+}
+.content-header > h1 {
+    color: #2F9E69;
+    margin-bottom: 20px !important;
 }
 
 ul.pagination{
@@ -520,11 +564,12 @@ legend {
 }
 
 .treeview-menu li.active {
-    background-color:  green !important;
+    background-color: #00363a  !important;/* #006f3e #003300 #2C3B41*/
+    border-left: 2px solid #00A65A !important;
 }
 
 .treeview-menu li.active2 {
-    background-color:  #D6AB4F !important;
+    background-color:  #2f9e69 !important; /*#4c8c4a #48B782*/
 }
 
 .active2 a {

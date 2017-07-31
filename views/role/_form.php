@@ -11,10 +11,10 @@ use app\views\helpers\Alert;
 
 <?= Yii::$app->session->hasFlash('saved') ? Alert::showSuccess() : ''; ?>
 
-<div class="role-form">
+<div class="role-form x-form-padding">
 
     <?php $form = ActiveForm::begin(); ?>
-    <div class="row">
+    <div class="row marginbottom20">
         <div class="col-lg-5">
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
         </div>
@@ -70,7 +70,7 @@ use app\views\helpers\Alert;
     
         
 
-    <div class="form-group text-right">
+    <div class="text-right">
             <?= 
                 Html::submitButton(
                         $model->isNewRecord ? 'Create' : 'Update', 

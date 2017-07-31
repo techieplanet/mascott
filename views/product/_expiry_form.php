@@ -17,7 +17,8 @@ $homeUrl = Yii::$app->homeUrl;
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'exp-report-form'
+        'id' => 'exp-report-form',
+        'options'=> ['class' => 'x-form-padding']
 ]); ?>
     <div class="row">   
         <div class="col-md-4">
@@ -39,11 +40,12 @@ $homeUrl = Yii::$app->homeUrl;
                  )
             ?>
         </div>
-        
-        <div class="col-md-12 marginbottom20 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
+    </div>
+<hr>
+    <div class="row">
+        <div class="col-md-12 margintop10 marginbottom20 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
         </div>
-        
     </div>
 <?php ActiveForm::end(); ?>
 

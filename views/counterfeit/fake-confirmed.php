@@ -14,56 +14,61 @@ use app\views\helpers\Alert;
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'fc-form'
+        'id' => 'fc-form',
+        'options' => ['class' => 'x-form-padding']
 ]); ?>
-    <div class="row">
-       <div class="col-md-4">
+    <div class="row marginbottom15">
+       <div class="col-md-3">
             <?= $form->field($product, 'product_name')->dropDownList(
                    $productMap
                 )
            ?>
-        </div>
-        
-       <div class="col-md-4">
+        </div>        
+       <div class="col-md-3">
             <?= $form->field($product, 'product_type')->dropDownList(
                    $ptMap, 
                    array('options' => array(0=>array('selected'=>true)))
                 )
            ?>
         </div>
-        
-        
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'from_date']
+                'options' => ['id'=>'from_date', 'placeholder' => 'yyyy-MM-dd', 'class' => 'form-control']
             ])->label('From') ?>
         </div>
         
     
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'to_date']
+                'options' => ['id'=>'to_date', 'placeholder' => 'yyyy-MM-dd', 'class' => 'form-control']
             ])->label('To') ?>
         </div>
-        
-        <div class="col-md-12 marginbottom20 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
-        </div>
-        
+    </div>
+<hr>
+    <div class="row">        
+        <div class="col-md-12 margintop10 marginbottom20 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
+        </div>        
     </div>
 <?php ActiveForm::end(); ?>
-
-<div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-9" id="container" style="height: 400px; margin: 0 auto"></div>
-    <div class="col-md-2"></div>
-</div>
+    <div class="row">
+        <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">MAS Usage</div>
+                    <div class="panel-body">
+                        <div id="container" class="paddingtop20" ></div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-1"></div>
+    </div>
 
 <?php
     Modal::begin([
@@ -139,7 +144,7 @@ use app\views\helpers\Alert;
                         type: 'column'
                     },
                     title: {
-                        text: 'Confirmed counterfeit products'
+                        text: ' '
                     },
                     lang: {
                         noData: 'No data to display'

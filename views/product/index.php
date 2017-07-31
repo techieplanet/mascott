@@ -38,6 +38,8 @@ $this->title = 'Products';
                     <th>Actions</th>
                 </tr>
             </thead>
+           
+            
                 <tbody>
         <?php
             //echo is_array($roles) ? 'array' : 'scalar'; exit;
