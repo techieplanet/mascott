@@ -43,15 +43,7 @@ use app\views\helpers\Alert;
         </div>
     </div>
     <br>
-    <div class="row">
-        <div class="col-md-4">
-            <?= $form->field($model, 'role_id')->dropDownList(
-                    $rolesMap, 
-                    array('options' => array($model->role_id=>array('selected'=>true)))
-                 )
-            ?>
-        </div>
-        
+    <div class="row">        
         <div class="col-md-4 hidden" id="provider-box">
             <?= $form->field($model, 'provider_id')->dropDownList(
                     $providerMap, 

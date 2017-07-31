@@ -17,56 +17,77 @@ use app\views\helpers\Alert;
         'id' => 'activated-form'
 ]); ?>
     <div class="row">
-       <div class="col-md-4">
-            <?= $form->field($product, 'product_name')->dropDownList(
-                   $productMap
-                )
-           ?>
+        <div class="col-md-12 marginbottom10">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="col-md-4">
+                      <?= $form->field($product, 'product_name')->dropDownList(
+                             $productMap
+                          )
+                     ?>
+                    </div>
+                    <div class="col-md-4">
+                         <?= $form->field($product, 'product_type')->dropDownList(
+                                $ptMap
+                             )
+                        ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?= $form->field($product, 'provider_id')->dropDownList(
+                               $providerMap
+                            )
+                       ?>
+                    </div> 
+                </div>
+                <div class="col-md-1"></div>
+            </div>
         </div>
+    </div>
         
-       <div class="col-md-4">
-            <?= $form->field($product, 'product_type')->dropDownList(
-                   $ptMap
-                )
-           ?>
-        </div>
-        
-        <div class="col-md-4">
-            <?= $form->field($product, 'provider_id')->dropDownList(
-                   $providerMap
-                )
-           ?>
-        </div>
-        
-        <div class="col-md-4">
+<div class="row">
+    <div class="col-md-3"></div>
+        <div class="col-md-3">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'from_date']
+                'options' => ['id'=>'from_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
             ])->label('From') ?>
-        </div>
-        
-    
-        <div class="col-md-4">
+        </div>    
+        <div class="col-md-3">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'to_date']
+                'options' => ['id'=>'to_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
             ])->label('To') ?>
         </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row">
         
-        <div class="col-md-12 marginbottom20 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
+        <div class="col-md-12 margintop15 marginbottom50 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
         </div>
         
     </div>
 <?php ActiveForm::end(); ?>
 
-<div class="row">
-    <div class="col-md-12" id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-</div>
+    <div class="row">
+<!--    <div class="col-md-12" id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>-->
+        <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">MAS Usage</div>
+                    <div class="panel-body">
+                        <div id="container"></div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-1"></div>
+    </div>
 
 <?php
     Modal::begin([
