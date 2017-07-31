@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\UsageReport */
@@ -27,3 +28,11 @@ $subtitle = 'Edit Report';
     ]) ?>
 
 </div>
+
+<?php
+    $this->registerJs(
+            "$('#usage-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'reports-update-menu'
+    );
+?>

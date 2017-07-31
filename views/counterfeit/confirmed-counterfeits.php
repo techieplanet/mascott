@@ -11,83 +11,71 @@ use app\views\helpers\Alert;
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
+
+//"Product type, MAS provider, geographical location
+//Month/year -multiple  selection
+//Geographic location- multiple selection"
+
+//MAS provider,( multiple selection0 Product type
+        //Month/year -multiple selection, Geographic location- multiple selection"
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'activated-form'
+        'id' => 'cc-form'
 ]); ?>
     <div class="row">
-        <div class="col-md-12 marginbottom10">
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <div class="col-md-4">
-                      <?= $form->field($product, 'product_name')->dropDownList(
-                             $productMap
-                          )
-                     ?>
-                    </div>
-                    <div class="col-md-4">
-                         <?= $form->field($product, 'product_type')->dropDownList(
-                                $ptMap
-                             )
-                        ?>
-                    </div>
-                    <div class="col-md-4">
-                        <?= $form->field($product, 'provider_id')->dropDownList(
-                               $providerMap
-                            )
-                       ?>
-                    </div> 
-                </div>
-                <div class="col-md-1"></div>
-            </div>
+       <div class="col-md-4">
+            <?= $form->field($product, 'product_name')->dropDownList(
+                   $productMap
+                )
+           ?>
         </div>
-    </div>
         
-<div class="row">
-    <div class="col-md-3"></div>
-        <div class="col-md-3">
+       <div class="col-md-4">
+            <?= $form->field($product, 'product_type')->dropDownList(
+                   $ptMap, 
+                   array('options' => array(0=>array('selected'=>true)))
+                )
+           ?>
+        </div>
+        
+        <div class="col-md-4">
+            <div style="margin-top: 5px;" id='jqxZoneBox'></div>
+            <div style="margin-top: 5px;" id='jqxStateBox'></div>
+            <div style="margin-top: 5px;" id='jqxLGABox'></div>
+        </div>
+        
+        <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'from_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
+                'options' => ['id'=>'from_date']
             ])->label('From') ?>
-        </div>    
-        <div class="col-md-3">
+        </div>
+        
+    
+        <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
                 'language' => 'en',
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'to_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
+                'options' => ['id'=>'to_date']
             ])->label('To') ?>
         </div>
-    <div class="col-md-3"></div>
-</div>
-
-<div class="row">
         
-        <div class="col-md-12 margintop15 marginbottom50 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
+        <div class="col-md-12 marginbottom20 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
         </div>
         
     </div>
 <?php ActiveForm::end(); ?>
 
-    <div class="row">
-<!--    <div class="col-md-12" id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>-->
-        <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <div class=" panel panel-default text-center">
-                    <div class="panel-heading">MAS Usage</div>
-                    <div class="panel-body">
-                        <div id="container"></div>
-                    </div>
-                </div>
-            </div>
-        <div class="col-md-1"></div>
-    </div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-9" id="container" style="height: 400px; margin: 0 auto"></div>
+    <div class="col-md-2"></div>
+</div>
 
 <?php
     Modal::begin([
@@ -112,25 +100,56 @@ use app\views\helpers\Alert;
 ?>
 
 
-<?php    
+<?php
+    
+    //JQWIDGETS FILES
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxcore.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxbuttons.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxscrollbar.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxlistbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxcombobox.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxpanel.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxcheckbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
+    
     $this->registerJs("
+            lh = $lh;
             usageData = $usageData;
-           
-            drawChart(usageData); //draw initial chart
+            
+            var zones = new Array();
+            var states = new Array();
+            var LGAs = new Array();
+            
+            //parse zones
+            for(key in lh){
+                gzObject = lh[key];
+                zones.push({value: gzObject.id, label: gzObject.location_name});
+            }
+            
+
+            zones = jqxArraySorter(zones);
+            
+            // Create a jqxComboBox
+            $('#jqxZoneBox').jqxComboBox({source: zones, multiSelect: true, width: 200, height: 25});
+            $('#jqxStateBox').jqxComboBox({source: states, multiSelect: true, width: 200, height: 25});
+            $('#jqxLGABox').jqxComboBox({source: LGAs, multiSelect: true, width: 200, height: 25});
+            
+            drawChart(usageData);
             
             $('#filterButton').on('click', function(){
                 $('#myModal').modal();
                 data = {
-                    product_id: $('#product-product_name').val(),
                     product_type: $('#product-product_type').val(),
-                    provider_id: $('#product-provider_id').val(),
+                    product_id: $('#product-product_name').val(),
+                    geozones: JSON.stringify(extractJQXItemsValues($('#jqxZoneBox').jqxComboBox('getSelectedItems'))),
+                    states: JSON.stringify(extractJQXItemsValues($('#jqxStateBox').jqxComboBox('getSelectedItems'))),
+                    lgas: JSON.stringify(extractJQXItemsValues($('#jqxLGABox').jqxComboBox('getSelectedItems'))),
                     from_date: $('#from_date').val(),
                     to_date: $('#to_date').val()
                 };
                 
 
                 $.ajax({
-                    url: 'activated-used',
+                    url: 'confirmed-counterfeits',
                     type: 'POST',
                     data: data,
                     success: function(jsonResponse){
@@ -144,8 +163,8 @@ use app\views\helpers\Alert;
                     }
                 });
             });
-            
-            
+
+
             function drawChart(usageData){
                 log(usageData);
                 
@@ -154,7 +173,7 @@ use app\views\helpers\Alert;
                         type: 'column'
                     },
                     title: {
-                        text: 'MAS Usage'
+                        text: 'Confirmed counterfeit reports'
                     },
                     lang: {
                         noData: 'No data to display'
@@ -173,7 +192,7 @@ use app\views\helpers\Alert;
                     xAxis: {
                         categories:  Object.keys(usageData),
                         title: {
-                            text: '',
+                            text: 'Geographic Locations',
                             align: 'middle',
                             offset: 40,
                             style: {'fontWeight': 'bold',  'color': '#363636'}
@@ -181,16 +200,19 @@ use app\views\helpers\Alert;
                     },
                     yAxis: {
                         min: 0,
+                        max: 100,
+                        lineWidth: 1,
+                        tickWidth: 1,
                         title: {
-                            text: 'Percentage MAS requests received <br/>on activated products',
+                            text: 'Percentage MAS requests <br/>confirmed counterfeits',
                             align: 'middle',
                             offset: 60,
                             style: {'fontWeight': 'bold', 'color': '#363636'}
                         },
                         labels: {
+                            format: '{value}%',
                             overflow: 'justify'
                         },
-                        tickAmount: 5
                     },
                     tooltip: {
                         valueSuffix: ' requests',
@@ -227,9 +249,15 @@ use app\views\helpers\Alert;
             
         ",
         View::POS_READY,
-        'activated-form-js'
+        'cc-form-js'
     );    
     
+    $this->registerJsFile(
+        '@web/js/location-ops.js',
+        ['depends' => [\yii\web\JqueryAsset::className()]]
+    );
+        
+        
     $this->registerJs("
         (function() {
                         //set high charts global color scheme for all high charts instances on this page
@@ -244,12 +272,10 @@ use app\views\helpers\Alert;
 ?>
 
 
-
 <?php
     $this->registerJs("
-            //$(li).removeClass('active'); $(li).removeClass('active2');
-            $('#reports-menu, #reports_usage-report-menu').addClass('active');
-            $('#reports_usage-mas-activated-menu').addClass('active2');
+            $('#reports-menu, #reports_counterfeits-report-menu').addClass('active');
+            $('#reports_counterfeits-confirmed-menu').addClass('active2');
         ", 
         View::POS_LOAD,
         'per-menu'

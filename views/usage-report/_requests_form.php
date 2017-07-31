@@ -229,11 +229,9 @@ $homeUrl = Yii::$app->homeUrl;
             }
             
             function drawChart(usageData){
-                log(usageData);
                 var categories = extractCategories(usageData);
                 var dataArray = extractData(usageData);
-                log(categories);
-                log(dataArray);
+                //log(categories); log(dataArray);
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'

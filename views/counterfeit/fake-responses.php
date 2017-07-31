@@ -170,10 +170,6 @@ use app\views\helpers\Alert;
 
 
             function drawChart(usageData){
-                log(usageData);
-                log(Object.keys(usageData));
-                log(Object.values(usageData));
-                
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'
@@ -272,4 +268,15 @@ use app\views\helpers\Alert;
                 View::POS_END,
                 'highcharts-colors'
             );   
+?>
+
+
+<?php
+    $this->registerJs("
+            $('#reports-menu, #reports_counterfeits-report-menu').addClass('active');
+            $('#reports_counterfeits-fake-responses-menu').addClass('active2');
+        ", 
+        View::POS_LOAD,
+        'per-menu'
+    );
 ?>

@@ -23,6 +23,10 @@ class Complaint extends \yii\db\ActiveRecord
     const CONFIRMED = 'TRUE';
     const UNCONFIRMED = 'FALSE';
     
+    const UNRESOLVED_DBVALUE = 0;
+    const CONFIRMED_DBVALUE = 1;
+    const UNCONFIRMED_DBVALUE = 2;
+    
     /**
      * @inheritdoc
      */

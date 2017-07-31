@@ -171,7 +171,7 @@ class UsageReportController extends BaseController
     
     public function actionRequestsReceived(){
         $filtersArray = array();
-        $usageReport = new UsageReport();
+        $reportService = new UsageReportService();
         
         $ptService = new ProductTypeService();
         $providerService = new ProviderService();
@@ -183,11 +183,11 @@ class UsageReportController extends BaseController
         if($post = Yii::$app->request->post()){
             
             Yii::$app->response->format = Response::FORMAT_JSON;     
-            $filteredReports = $usageReport->getUsageRequestsReceived($post, true);
+            $filteredReports = $reportService->getUsageRequestsReceived($post, true);
             return $filteredReports;
         }
         
-        $filteredReports = $usageReport->getUsageRequestsReceived($filtersArray, true);
+        $filteredReports = $reportService->getUsageRequestsReceived($filtersArray, true);
         
         return $this->render('requests_received', [
             'product' => new Product(),

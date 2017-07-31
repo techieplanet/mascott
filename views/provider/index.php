@@ -74,3 +74,11 @@ $this->title = 'Providers';
         'product-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs(
+            "$('#reg-menu, #reg_provider-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'product-list-data-table'
+    );
+?>

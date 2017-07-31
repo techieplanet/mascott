@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
@@ -28,3 +28,10 @@ $subtitle = 'Create New Product';
     ]) ?>
 
 </div>
+<?php
+    $this->registerJs(
+            "$('#reg-menu, #reg_product-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'products-create-menu'
+    );
+?>

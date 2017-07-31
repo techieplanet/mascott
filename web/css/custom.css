@@ -563,3 +563,36 @@ legend {
     background: #ffffff;
     padding: 20px;
 }
+
+.sidebar-menu .treeview-menu{
+    padding-left: 0px !important;
+}
+
+.treeview-menu li.active {
+    background-color:  green !important;
+}
+
+.treeview-menu li.active2 {
+    background-color:  #D6AB4F !important;
+}
+
+.active2 a {
+    color: #ffffff !important;
+}
+
+.indicator-text{
+    background-color: #E6E2C9;
+    color: #000000;
+    font-weight: normal;
+    font-size: 16px;
+    padding: 12px 5px;
+}
+
+.indicator-value{
+    color: #FFFFFF;
+    background: #3D7359;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 20px 2px;
+    /*margin-top: 20px;*/
+}
