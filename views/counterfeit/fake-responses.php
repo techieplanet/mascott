@@ -21,9 +21,10 @@ use app\views\helpers\Alert;
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'fr-form'
+        'id' => 'fr-form',
+        'options' => ['class' => 'x-form-padding']
 ]); ?>
-    <div class="row">
+    <div class="row marginbottom15">
        <div class="col-md-4">
             <?= $form->field($product, 'product_type')->dropDownList(
                    $ptMap, 
@@ -33,44 +34,67 @@ use app\views\helpers\Alert;
         </div>
         
        <div class="col-md-4">
-            <div style="margin-top: 5px;" id='jqxProviderBox'></div>
+           <label for="MAS Provider"> MAS Provider
+           <div class="form-control" style="margin-top: 5px;" id='jqxProviderBox'></div>
+           </label>
         </div>
-        
+    </div>
+    <div class="row marginbottom15">
         <div class="col-md-4">
-            <div style="margin-top: 5px;" id='jqxZoneBox'></div>
-            <div style="margin-top: 5px;" id='jqxStateBox'></div>
-            <div style="margin-top: 5px;" id='jqxLGABox'></div>
+            <label for="Zone"> Zone
+                <div class="form-control multi-select-box" style="margin-top: 5px;" id='jqxZoneBox'></div>
+            </label>
         </div>
-        
         <div class="col-md-4">
-            <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
-                'language' => 'en',
-                'dateFormat' => 'yyyy-MM-dd',
-                'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'from_date']
-            ])->label('From') ?>
+            <label for="State"> State
+                <div class="form-control" style="margin-top: 5px;" id='jqxStateBox'></div>
+            </label>
         </div>
-        
-    
         <div class="col-md-4">
-            <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
-                'language' => 'en',
-                'dateFormat' => 'yyyy-MM-dd',
-                'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                'options' => ['id'=>'to_date']
-            ])->label('To') ?>
+            <label for="LGA"> LGA
+                <div class="form-control" style="margin-top: 5px;" id='jqxLGABox'></div>
+            </label>
         </div>
-        
-        <div class="col-md-12 marginbottom20 text-center">
-            <?= Html::button('Filter', ['id'=>'filterButton',]); ?>
+    </div>
+    <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
+                    'language' => 'en',
+                    'dateFormat' => 'yyyy-MM-dd',
+                    'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
+                    'options' => ['id'=>'from_date', 'placeholder' => 'yyyy-MM-dd', 'class' => 'form-control']
+                ])->label('From') ?>
+            </div>
+
+
+            <div class="col-md-4">
+                <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
+                    'language' => 'en',
+                    'dateFormat' => 'yyyy-MM-dd',
+                    'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
+                    'options' => ['id'=>'to_date', 'placeholder' => 'yyyy-MM-dd', 'class' => 'form-control']
+                ])->label('To') ?>
+            </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12 margintop10 marginbottom20 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
         </div>
-        
     </div>
 <?php ActiveForm::end(); ?>
-
-<div class="row">
-    <div class="col-md-12" id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-</div>
+    <div class="row">
+        <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">MAS Usage</div>
+                    <div class="panel-body">
+                        <div id="container" class="paddingtop20"></div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-1"></div>
+    </div>
 
 <?php
     Modal::begin([
@@ -175,7 +199,7 @@ use app\views\helpers\Alert;
                         type: 'column'
                     },
                     title: {
-                        text: 'Failed query responses reported via MAS'
+                        text: ' '
                     },
                     lang: {
                         noData: 'No data to display'
@@ -202,6 +226,8 @@ use app\views\helpers\Alert;
                     },
                     yAxis: {
                         min: 0,
+                        lineWidth: 1,
+                        tickWidth: 1,
                         title: {
                             text: 'Percentage fake responses',
                             align: 'middle',
@@ -209,6 +235,7 @@ use app\views\helpers\Alert;
                             style: {'fontWeight': 'bold', 'color': '#363636'}
                         },
                         labels: {
+                            format: '{value}%',
                             overflow: 'justify'
                         },
                         tickAmount: 5

@@ -90,8 +90,10 @@ $this->title = 'MAS Registration Update Report';
 
 <?php
     $this->registerJs(
-        "$('#reports-menu, #reports_product-report-menu, #reports_product-reg-update-menu').addClass('active');",
-        View::POS_LOAD,
+        "$('#reports-menu, #reports_product-report-menu').addClass('active');
+         $('#reports_product-reg-update-menu').addClass('active2');
+    
+        ",View::POS_LOAD,
         'pur-menu'
     );
 ?>

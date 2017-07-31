@@ -18,23 +18,21 @@ $homeUrl = Yii::$app->homeUrl;
         'id' => 'product-report-form',
         'options'=> ['class' => 'x-form-padding']
 ]); ?>
-    <div class="row marginbottom10">
+    <div class="row marginbottom15">
        <div class="col-md-4">
             <?= $form->field($model, 'provider_id')->dropDownList(
                    $providerMap, 
                    array('options' => array($model->provider_id=>array('selected'=>true)))
                 )
            ?>
-        </div>
-        
+        </div>        
         <div class="col-md-4">
             <?= $form->field($model, 'product_name')->dropDownList(
                    $productMap, 
                    array('options' => array($model->id=>array('selected'=>true)))
                 )
            ?>
-        </div>
-        
+        </div>        
         <div class="col-md-4">
             <?= $form->field($model, 'product_type')->dropDownList(
                     $ptMap, 
@@ -44,61 +42,42 @@ $homeUrl = Yii::$app->homeUrl;
         </div>
     </div>
     <div class="row marginbottom10">
-            <div class="col-md-1"></div>
-            <div class="`col-md-10">
-                <div class="row">
-                   <div class="col-md-4">
-                        <?= $form->field($model, 'production_country')->dropDownList(
-                               $countryMap, 
-                               array('options' => array($model->production_country=>array('selected'=>true)))
-                            ) 
-                       ?>
-                    </div>        
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'mas_code_status')->dropDownList(
-                                ['0'=>'-- Select --', '1'=>'Not Activated', '2'=>'Activated'],
-                                array('options' => array($model->mas_code_status=>array('selected'=>true)))
-                             ) 
-                        ?>
-                    </div>
-                    <div class="col-md-4">
-                        <div style="margin-top: 5px;" id='jqxZoneBox'></div>
-                        <div style="margin-top: 5px;" id='jqxStateBox'></div>
-                        <div style="margin-top: 5px;" id='jqxLGABox'></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-1"></div>
+        <div class="col-md-3">
+             <?= $form->field($model, 'production_country')->dropDownList(
+                    $countryMap, 
+                    array('options' => array($model->production_country=>array('selected'=>true)))
+                 ) 
+            ?>
+         </div>        
+         <div class="col-md-3">
+             <?= $form->field($model, 'mas_code_status')->dropDownList(
+                     ['0'=>'-- Select --', '1'=>'Not Activated', '2'=>'Activated'],
+                     array('options' => array($model->mas_code_status=>array('selected'=>true)))
+                  ) 
+             ?>
+         </div>
+         <div class="col-md-3">
+            <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
+                'language' => 'en',
+                'dateFormat' => 'yyyy-MM-dd',
+                'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
+                'options' => ['id'=>'from_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
+            ])->label('From') ?>
         </div>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-5">
-                        <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
-                            'language' => 'en',
-                            'dateFormat' => 'yyyy-MM-dd',
-                            'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                            'options' => ['id'=>'from_date', 'class' => 'form-control', 'placeholder' => 'yyyy-MM-dd']
-                        ])->label('From') ?>
-                    </div>
-                    <div class="col-md-5">
-                        <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
-                            'language' => 'en',
-                            'dateFormat' => 'yyyy-MM-dd',
-                            'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
-                            'options' => ['id'=>'to_date', 'class' => 'form-control','placeholder' => 'yyyy-MM-dd']
-                        ])->label('To') ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2"></div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
+                'language' => 'en',
+                'dateFormat' => 'yyyy-MM-dd',
+                'clientOptions' => ['changeYear' => true, 'changeMonth' => true],
+                'options' => ['id'=>'to_date', 'class' => 'form-control','placeholder' => 'yyyy-MM-dd']
+            ])->label('To') ?>
         </div>
-        <div class="row">
-            <div class="col-md-12 margintop25 marginbottom50 text-center">
-                <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
-            </div>
-        
+    </div>
+<hr>
+    <div class="row">
+        <div class="col-md-12 margintop10 marginbottom20 text-center">
+            <?= Html::button('Filter', ['id'=>'filterButton', 'class' => 'btn btn-mas']); ?>
+        </div>        
     </div>
 <?php ActiveForm::end(); ?>
 

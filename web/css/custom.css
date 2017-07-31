@@ -136,7 +136,7 @@ and open the template in the editor.
 .panel-default{
     margin: 0 auto;
     margin-bottom: 100px;
-    border: 2px #2F9E69 solid !important;
+    border: 1px #2F9E69 solid !important;
 }
 
 .panel-heading{
@@ -468,11 +468,6 @@ li.user-header {
     
 }
 
-.multi-select-box { 
-    display: inline !important; 
-    float: left;
-    margin-right: 10px;
-}
 /* User registration form */
 
 .x-create-padding{ 
@@ -480,7 +475,7 @@ li.user-header {
 }
 
 .x-form-padding{
-    padding: 20px 80px 0 50px;
+    padding: 0px 80px 0 50px;
 }
 
 h1>a{
@@ -496,7 +491,7 @@ h1>a>.btn { color: #fff }
 
 /* Users view */
 section.content{
-    padding: 80px 50px 100px 50px;
+    padding: 30px 50px 100px 50px;
 }
 .content-header > h1 {
     color: #2F9E69;
@@ -569,11 +564,12 @@ legend {
 }
 
 .treeview-menu li.active {
-    background-color:  green !important;
+    background-color: #00363a  !important;/* #006f3e #003300 #2C3B41*/
+    border-left: 2px solid #00A65A !important;
 }
 
 .treeview-menu li.active2 {
-    background-color:  #D6AB4F !important;
+    background-color:  #2f9e69 !important; /*#4c8c4a #48B782*/
 }
 
 .active2 a {
