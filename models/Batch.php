@@ -92,4 +92,27 @@ class Batch extends \yii\db\ActiveRecord
                 ->asArray(!empty($filtersArray) ? true : false)
                 ->all();
     }
+    
+    /**
+     * Returns for all products if products list array is empty
+     * 
+     * @param type $productsList
+     * @return type array
+     */
+    public function getBatchesCountByproduct(){
+        $productIDs = Product::find()->select('id')->asArray()->all();
+        $productIDsArray = array();
+        foreach($productIDs as $productID)
+            $productIDsArray[] = $productID['id'];
+        
+        return Batch::find()
+                ->select(['count(batch.id) AS batchCount', 'product_name', 'product_id'])
+                ->innerJoinWith('product')
+                ->where(['in', 'product.id', $productIDsArray])
+                ->asArray()
+                ->indexBy('product_name')
+                ->orderBy('product_name')
+                ->groupBy('product_id')
+                ->all();
+    }
 }

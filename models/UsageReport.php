@@ -144,42 +144,4 @@ class UsageReport extends \yii\db\ActiveRecord
         return UsageReport::find()->orderBy(['date_reported'=>SORT_DESC])->limit(1)->one();
     }
     
-    /**
-     * Move to service class later
-     */
-    public function getUsageRequestsReceived($filtersArray, $asArray=true) {
-        $whereArray = array(); $geozoneIds = array(); $location = new Location();
-        list($locationIDArray, $tiervalue) = Location::getGeoLevelData(
-                array_key_exists('geozones', $filtersArray) ? json_decode($filtersArray['geozones']) : [],
-                array_key_exists('states',$filtersArray) ? json_decode($filtersArray['states']) : [],
-                array_key_exists('lgas',$filtersArray) ? json_decode($filtersArray['lgas']) : []
-        ); 
-        
-        if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type'])) 
-                $whereArray['product_type'] =  $filtersArray['product_type'];
-        
-        if(array_key_exists('provider_id', $filtersArray) && !empty($filtersArray['provider_id'])) 
-                $whereArray['provider_id'] = $filtersArray['provider_id'];
-        
-        $fromDate = array_key_exists('from_date', $filtersArray) && !empty($filtersArray['from_date']) ? 
-                $filtersArray['from_date'] : 
-                $this->getEarliestReported()->date_reported;
-        
-        $toDate = array_key_exists('to_date', $filtersArray) && !empty($filtersArray['to_date']) ? 
-                $filtersArray['to_date'] : 
-                $this->getLastReported()->date_reported;
-        
-        $tierText = $location->getTierText($tiervalue);
-        $tierFieldName = $location->getTierFieldName($tiervalue);
-        
-        return UsageReport::find()
-                ->select(['COUNT(*) AS requests', $tierFieldName . ' AS location_name', 'batch.batch_number', 'location_id'])
-                ->innerJoinWith(['batch', 'location', 'batch.product.productType', 'batch.product.provider'])
-                ->where($whereArray)
-                ->andWhere(['in', $tierText, $locationIDArray])
-                ->andWhere(['between', 'date_reported', $fromDate, $toDate])
-                ->groupBy([$tierText])
-                ->asArray($asArray)
-                ->all();        
-    }
 }

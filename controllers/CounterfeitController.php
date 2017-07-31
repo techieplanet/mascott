@@ -15,6 +15,7 @@ use yii\filters\VerbFilter;
 use yii\web\Response;
 use app\models\UsageReport;
 use app\models\service\UsageReportService;
+use app\models\service\ComplaintService;
 use app\models\Location;
 use app\models\Product;
 use app\controllers\services\LocationService;
@@ -70,4 +71,64 @@ class CounterfeitController extends BaseController {
             'usageData' => json_encode($filteredReports)
         ]);
     }
+    
+    
+    public function actionConfirmedCounterfeits(){
+        $filtersArray = array();
+        $complaintService = new ComplaintService();
+        
+        $productService = new ProductService();
+        $ptService = new ProductTypeService();
+        $locationService = new LocationService();
+        
+        $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
+               
+        if($post = Yii::$app->request->post()){
+            Yii::$app->response->format = Response::FORMAT_JSON;     
+            $filteredReports = $complaintService->getPercentageConfirmedCounterfeits($post, true);
+            return $filteredReports;
+        }
+        
+        $filteredReports = $complaintService->getPercentageConfirmedCounterfeits($post, true);
+        
+        return $this->render('confirmed-counterfeits', [
+            'product' => new Product(),
+            'model' => new UsageReport(),
+            'location' => new Location(),
+            'ptMap' => $ptMap,
+            'productMap' => $productMap,
+            'lh' => $locationService->getLocationsHierachyAsJson(),
+            'usageData' => json_encode($filteredReports)
+        ]);
+    }   
+    
+    
+    public function actionFakeConfirmed(){
+        $filtersArray = array();
+        $complaintService = new ComplaintService();
+        
+        $productService = new ProductService();
+        $ptService = new ProductTypeService();
+        
+        $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
+               
+        if($post = Yii::$app->request->post()){
+            Yii::$app->response->format = Response::FORMAT_JSON;     
+            $filteredReports = $complaintService->getPercentageFakeConfirmed($post, true);
+            return $filteredReports;
+        }
+        
+        $filteredReports = $complaintService->getPercentageFakeConfirmed($post, true);
+        
+        return $this->render('fake-confirmed', [
+            'product' => new Product(),
+            'model' => new UsageReport(),
+            'ptMap' => $ptMap,
+            'productMap' => $productMap,
+            'usageData' => json_encode($filteredReports)
+        ]);
+    }   
+    
 }

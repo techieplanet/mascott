@@ -221,3 +221,16 @@ use app\views\helpers\Alert;
                 'highcharts-colors'
             );   
 ?>
+
+
+
+<?php
+    $this->registerJs("
+            //$(li).removeClass('active'); $(li).removeClass('active2');
+            $('#reports-menu, #reports_usage-report-menu').addClass('active');
+            $('#reports_usage-mas-activated-menu').addClass('active2');
+        ", 
+        View::POS_LOAD,
+        'per-menu'
+    );
+?>

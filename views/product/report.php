@@ -76,3 +76,11 @@ $this->title = 'MAS Registration Update Report';
         'product-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs(
+        "$('#reports-menu, #reports_product-report-menu, #reports_product-reg-update-menu').addClass('active');",
+        View::POS_LOAD,
+        'pur-menu'
+    );
+?>

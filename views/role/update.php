@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Role */
@@ -27,3 +28,12 @@ $this->params['breadcrumbs'][] = 'Update';
     ]) ?>
 
 </div>
+
+
+<?php
+    $this->registerJs(
+            "$('#role-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'role-update-menu'
+    );
+?>

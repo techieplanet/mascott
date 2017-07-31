@@ -73,3 +73,11 @@ $this->title = 'Roles';
         'roles-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs(
+            "$('#role-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'role-menu'
+    );
+?>

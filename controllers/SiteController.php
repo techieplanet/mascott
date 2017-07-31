@@ -10,7 +10,15 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use app\models\LoginForm;
 use app\models\ContactForm;
-
+use app\models\Provider;
+use app\models\Product;
+use app\models\Batch;
+use app\models\Complaint;
+use app\models\UsageReport;
+use app\models\service\ComplaintService;
+use app\models\service\UsageReportService;
+use app\models\service\ProductService;
+        
 class SiteController extends Controller
 {
     
@@ -85,7 +93,7 @@ class SiteController extends Controller
         
         return $this->render('index',[
             'model' => $model
-        ]);  
+        ]);
         
     }
 
@@ -95,7 +103,30 @@ class SiteController extends Controller
     public function actionDashboard()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->render('dashboard');
+            $complaintService = new ComplaintService();
+                    
+            $providersCount = count(Provider::find()->all());
+            $productCount = count(Product::find()->all());
+            $confirmedCounterfeitsCount = Complaint::find()->where(['validation_result' => Complaint::CONFIRMED_DBVALUE])->count();
+            $unresolvedComplaintsCount = Complaint::find()->where(['validation_result' => Complaint::UNRESOLVED_DBVALUE])->count();
+            
+            
+            $MASRequests = (new UsageReportService())->getUsageRequestsReceived([], true);
+            $productBatches = (new Batch())->getBatchesCountByproduct();
+            $confirmedCounterfeits = $complaintService->getPercentageConfirmedCounterfeits([], true);
+            $counterfeitsCountByProduct = $complaintService->getCounterfeitsCountByProduct();
+                    
+            return $this->render('dashboard', [
+                'providersCount' => $providersCount,
+                'productCount' => $productCount,
+                'confirmedCounterfeitsCount' => $confirmedCounterfeitsCount,
+                'unresolvedComplaintsCount' => $unresolvedComplaintsCount,
+
+                'MASRequestsByGeo' => json_encode($MASRequests),
+                'productBatches' => json_encode($productBatches),
+                'confirmedCounterfeits' => json_encode($confirmedCounterfeits),
+                'counterfeitsCountByProduct' => json_encode($counterfeitsCountByProduct)
+            ]);
         } else {
             $this->redirect('index');
         }
