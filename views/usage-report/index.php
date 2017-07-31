@@ -86,3 +86,11 @@ $this->title = 'Usage Reports';
         'reports-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs(
+            "$('#usage-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'reports-menu'
+    );
+?>

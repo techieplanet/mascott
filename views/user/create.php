@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -29,3 +29,11 @@ $subtitle = 'Create New User';
     ]) ?>
 
 </div>
+
+<?php
+    $this->registerJs(
+            "$('#user-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'user-create-menu'
+    );
+?>

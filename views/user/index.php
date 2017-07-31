@@ -78,3 +78,11 @@ $this->title = 'Users';
         'users-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs(
+            "$('#user-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'user-menu'
+    );
+?>

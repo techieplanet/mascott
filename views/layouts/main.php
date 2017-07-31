@@ -50,9 +50,6 @@ AppAsset::register($this);
     
                 
     <footer class="main-footer">
-<!--        <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
-        </div>-->
         <div class="text-right"><strong>Copyright &copy; <?= date('Y') ?></strong> All rights reserved.</div>
     </footer>
     

@@ -150,6 +150,4 @@ class Product extends \yii\db\ActiveRecord
                 ->asArray()
                 ->all();
     }
-    
-    
 }

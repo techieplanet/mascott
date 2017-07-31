@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -31,3 +32,12 @@ $subtitle = 'Edit User: ' . $model->firstname . ' ' . $model->lastname;
 
     <?php //unset($model->role) ?>
 </div>
+
+
+<?php
+    $this->registerJs(
+            "$('#user-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'user-update-menu'
+    );
+?>

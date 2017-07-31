@@ -70,9 +70,18 @@ $this->title = 'Products';
 </div>
 
 <?php
-    $this->registerJs(
-        "$('#productsList').DataTable();",
+    $this->registerJs("
+            $('#productsList').DataTable();",
         View::POS_READY,
         'product-list-data-table'
+    );
+    
+?>
+
+<?php
+    $this->registerJs(
+            "$('#reg-menu, #reg_product-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'products-menu'
     );
 ?>

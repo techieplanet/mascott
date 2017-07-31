@@ -26,134 +26,137 @@
       <ul class="sidebar-menu">
         
         <!--------  DASHBOARD   -------------->
-        <li class="active">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>DASHBOARD</span></i>
-          </a>
+        <li id="dashboard-menu" class="">
+          <?= Html::a('<i class="fa fa-dashboard"></i> DASHBOARD',
+                  '@web/site/dashboard', 
+                  ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
         <!--------  REGISTRATION   -------------->
-        <li class="treeview">
+        <li id="reg-menu" class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>REGISTRATION</span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-              <li>
+              <li id="reg_product-menu" class="">
                 <?= Html::a('Product','@web/product', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
               </li>
-              <li>
-                  <a href="pages/layout/boxed.html">
-                      MAS Provider
-                  </a>
+              <li id="reg_provider-menu">
+                <?= Html::a('MAS Provider','@web/provider', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
               </li>
           </ul>
         </li>
         
         <!--------  USAGE   -------------->
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>USAGE</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-              <li>
-                  <a href="pages/layout/top-nav.html" style="word-wrap: normal; ">
-                      Number of MAS requests <br/>received
-                  </a>
-              </li>
-              <li>
-                  <a href="pages/layout/boxed.html">
-                      Percentage MAS activated <br/>products used
-                  </a>
-              </li>
-          </ul>
+        <li id="usage-menu" class="">
+            <?= Html::a('<i class="fa fa-files-o"></i>USAGE REPORT','@web/usage-report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
+        <li id="hcr-menu" class="">
+            <?= Html::a('<i class="fa fa-files-o"></i> HCRs',
+                    '@web/usage-report', 
+                    ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+        </li>
         
-        <!--------  COUNTERFEITS   -------------->
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>COUNTERFEITS</span>
-            <i class="fa fa-angle-left pull-right"></i>
-          </a>
-          <ul class="treeview-menu">
-              <li>
-                  <a href="pages/layout/top-nav.html" style="word-wrap: normal; ">
-                      Percentage MAS requests <br/>confirmed counterfeits
-                  </a>
-              </li>
-              <li>
-                  <a href="pages/layout/boxed.html">
-                      Percentage of reported fake <br/>responses confirmed as <br/>counterfeits
-                  </a>
-              </li>
-          </ul>
+        <li id="resolution-menu" class="">
+            <?= Html::a('<i class="fa fa-files-o"></i> RESOLUTION',
+                    '@web/usage-report', 
+                    ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
         
         <!--------  REPORTS   -------------->
-        <li class="treeview">
+        <li id="reports-menu" class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i> <span>REPORTS</span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li>
+            <li id="reports_product-report-menu">
               <a href="#"><i class="fa fa-circle-o"></i> Products <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li>
-                    <?= Html::a('<i class="fa fa-circle-o"></i>MAS Registration Update','@web/product/report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                  <li id="reports_product-reg-update-menu" class="paddingleft10">
+                    <?= Html::a('<i class="fa fa-circle-o"></i> MAS Registration Update','@web/product/report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
                 </li>
-                <li>
-                  <?= Html::a('<i class="fa fa-circle-o"></i>Product Expiry Status','@web/product/expiring', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                <li id="reports_product-expiry-menu" class="paddingleft10">
+                  <?= Html::a('<i class="fa fa-circle-o"></i> Product Expiry Status','@web/product/expiring', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
                 </li>
               </ul>
             </li>
             
-            <li>
+            <li id="reports_usage-report-menu">
               <a href="#"><i class="fa fa-circle-o"></i> Usage <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu">
-                <li>
+                <li id="reports_usage-mas-requests-menu">
                     <?= Html::a('<i class="fa fa-circle-o"></i>Number of MAS requests <br/>received',
                                 '@web/usage-report/requests-received', 
                                 ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
                 </li>
-                <li>
+                <li id="reports_usage-mas-activated-menu">
                     <?= Html::a('<i class="fa fa-circle-o"></i>Percentage MAS activated <br/>products used',
-                                '@web/product/expiring', 
+                                '@web/usage-report/activated-used', 
                                 ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
                 </li>
               </ul>
             </li>
             
-            <li><a href="#"><i class="fa fa-circle-o"></i>Resolution</a></li>
+            <li id="reports_counterfeits-report-menu">
+              <a href="#"><i class="fa fa-circle-o"></i> Counterfeits <i class="fa fa-angle-left pull-right"></i></a>
+              <ul class="treeview-menu">
+                <li id="reports_counterfeits-fake-responses-menu">
+                    <?= Html::a('<i class="fa fa-circle-o"></i>Percentage of MAS requests <br/>that returned fake responses',
+                            '@web/counterfeit/fake-responses', 
+                            ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+                <li id="reports_counterfeits-confirmed-menu">
+                    <?= Html::a('<i class="fa fa-circle-o"></i>Percentage MAS requests <br/>confirmed counterfeits',
+                            '@web/counterfeit/confirmed-counterfeits', 
+                            ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+                <li id="reports_counterfeits-fake-menu">
+                    <?= Html::a('<i class="fa fa-circle-o"></i>Percentage of reported fake <br/>responses confirmed as <br/>counterfeits',
+                            '@web/counterfeit/fake-confirmed', 
+                            ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                    </a>
+                </li>
+              </ul>
+            </li>
+            
           </ul>
         </li>
         
         
-        <li>
-          <a href="pages/calendar.html">
-            <i class="fa fa-calendar"></i> 
-            <span>USERS</span>
-          </a>
+        <li id="role-menu">
+          <?= Html::a('<i class="fa fa-user"></i> ROLES','@web/role', 
+                    ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
-        <li>
-          <a href="pages/calendar.html">
-            <i class="fa fa-user"></i> 
-            <span>ROLES</span>
-          </a>
+        <li id="user-menu">
+            <?= Html::a('<i class="fa fa-user"></i> USERS','@web/user', 
+                    ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
-        <li>
-          <a href="pages/calendar.html">
-            <i class="fa fa-user"></i> 
-            <span>PROFILE</span>
-          </a>
+        <li id="profile-menu" class="treeview">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span>PROFILE</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li id="">
+                    <?= Html::a('<i class="fa fa-circle-o"></i> Change Profile',
+                            '#', 
+                            ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                </li>
+                <li id="">
+                    <?= Html::a('<i class="fa fa-circle-o"></i> Change Password',
+                            '#', 
+                            ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                    </a>
+                </li>
+              </ul>
         </li>
         
       </ul>

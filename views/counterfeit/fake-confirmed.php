@@ -11,17 +11,19 @@ use app\views\helpers\Alert;
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
-$homeUrl = Yii::$app->homeUrl;
-//"Product type, MAS provider, geographical location
-//Month/year -multiple  selection
-//Geographic location- multiple selection"
-
 ?>
 
 <?php $form = ActiveForm::begin([
-        'id' => 'request-form'
+        'id' => 'fc-form'
 ]); ?>
     <div class="row">
+       <div class="col-md-4">
+            <?= $form->field($product, 'product_name')->dropDownList(
+                   $productMap
+                )
+           ?>
+        </div>
+        
        <div class="col-md-4">
             <?= $form->field($product, 'product_type')->dropDownList(
                    $ptMap, 
@@ -30,19 +32,6 @@ $homeUrl = Yii::$app->homeUrl;
            ?>
         </div>
         
-       <div class="col-md-4">
-            <?= $form->field($product, 'provider_id')->dropDownList(
-                   $providerMap, 
-                   array('options' => array(0=>array('selected'=>true)))
-                )
-           ?>
-        </div>
-        
-        <div class="col-md-4">
-            <div style="margin-top: 5px;" id='jqxZoneBox'></div>
-            <div style="margin-top: 5px;" id='jqxStateBox'></div>
-            <div style="margin-top: 5px;" id='jqxLGABox'></div>
-        </div>
         
         <div class="col-md-4">
             <?= $form->field($model, 'created_date')->widget(DatePicker::classname(), [
@@ -71,7 +60,9 @@ $homeUrl = Yii::$app->homeUrl;
 <?php ActiveForm::end(); ?>
 
 <div class="row">
-    <div class="col-md-12" id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+    <div class="col-md-1"></div>
+    <div class="col-md-9" id="container" style="height: 400px; margin: 0 auto"></div>
+    <div class="col-md-2"></div>
 </div>
 
 <?php
@@ -98,7 +89,7 @@ $homeUrl = Yii::$app->homeUrl;
 
 
 <?php
-
+    
     //JQWIDGETS FILES
     $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxcore.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
     $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxbuttons.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
@@ -107,34 +98,9 @@ $homeUrl = Yii::$app->homeUrl;
     $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxcombobox.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
     $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxpanel.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
     $this->registerJsFile('@web/plugins/jqwidgets/jqwidgets/jqxcheckbox.js', ['depends' => [\yii\web\JqueryAsset::className()]]);
-
-    $this->registerJsFile(
-        '@web/js/location-ops.js',
-        ['depends' => [\yii\web\JqueryAsset::className()]]
-    );
     
     $this->registerJs("
-        
-            lh = $lh;
-            homeUrl = '$homeUrl'; 
             usageData = $usageData;
-            
-            
-            var zones = new Array();
-            var states = new Array();
-            var LGAs = new Array();
-
-            for(key in lh){
-                gzObject = lh[key];
-                zones.push({value: gzObject.id, label: gzObject.location_name});
-            }
-
-            zones = jqxArraySorter(zones);
-            
-            // Create a jqxComboBox
-            $('#jqxZoneBox').jqxComboBox({source: zones, multiSelect: true, width: 200, height: 25});
-            $('#jqxStateBox').jqxComboBox({source: states, multiSelect: true, width: 200, height: 25});
-            $('#jqxLGABox').jqxComboBox({source: LGAs, multiSelect: true, width: 200, height: 25});
             
             drawChart(usageData);
             
@@ -142,23 +108,18 @@ $homeUrl = Yii::$app->homeUrl;
                 $('#myModal').modal();
                 data = {
                     product_type: $('#product-product_type').val(),
-                    provider_id: $('#product-provider_id').val(),
-                    geozones: JSON.stringify(extractJQXItemsValues($('#jqxZoneBox').jqxComboBox('getSelectedItems'))),
-                    states: JSON.stringify(extractJQXItemsValues($('#jqxStateBox').jqxComboBox('getSelectedItems'))),
-                    lgas: JSON.stringify(extractJQXItemsValues($('#jqxLGABox').jqxComboBox('getSelectedItems'))),
+                    product_id: $('#product-product_name').val(),
                     from_date: $('#from_date').val(),
                     to_date: $('#to_date').val()
                 };
                 
 
                 $.ajax({
-                    url: 'requests-received',
+                    url: 'fake-confirmed',
                     type: 'POST',
                     data: data,
                     success: function(jsonResponse){
-                        //console.log('jsonResponse: '+ JSON.stringify(jsonResponse));
                         drawChart(jsonResponse);
-                        //updateTable(jsonResponse);
                         $('#myModal').modal('hide')
                     },
                     error: function(jqXHR, textStatus, errorThrown ){
@@ -168,39 +129,17 @@ $homeUrl = Yii::$app->homeUrl;
                     }
                 });
             });
-            
 
-            function extractCategories(jsonData) {
-                var categories = []
-                for(key in jsonData){
-                    categories.push(jsonData[key].location_name);
-                }
-                return categories;
-            }
-            
-            function extractData(jsonData){
-                var data = [];
-                var arrayOfObjects = [];
-                var dataObj = { data: [] };
-                
-                for(key in jsonData){                    
-                    dataObj.data.push(parseInt(jsonData[key].requests));
-                }
-                
-                arrayOfObjects.push(dataObj);
-                return arrayOfObjects;
-            }
-            
+
             function drawChart(usageData){
-                var categories = extractCategories(usageData);
-                var dataArray = extractData(usageData);
-                //log(categories); log(dataArray);
+                log(usageData);
+                
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'
                     },
                     title: {
-                        text: 'MAS Usage'
+                        text: 'Confirmed counterfeit products'
                     },
                     lang: {
                         noData: 'No data to display'
@@ -217,9 +156,9 @@ $homeUrl = Yii::$app->homeUrl;
                         //text: 'Source: <a href=\"https://en.wikipedia.org/wiki/World_population\">Wikipedia.org</a>'
                     },
                     xAxis: {
-                        categories:  categories,
+                        categories:  Object.keys(usageData),
                         title: {
-                            text: 'Geographic Locations',
+                            text: '',
                             align: 'middle',
                             offset: 40,
                             style: {'fontWeight': 'bold',  'color': '#363636'}
@@ -227,21 +166,24 @@ $homeUrl = Yii::$app->homeUrl;
                     },
                     yAxis: {
                         min: 0,
+                        max: 100,
+                        lineWidth: 1,
+                        tickWidth: 1,
                         title: {
-                            text: 'Number of MAS Requests',
+                            text: 'Percentage MAS requests <br/>confirmed counterfeits',
                             align: 'middle',
                             offset: 60,
                             style: {'fontWeight': 'bold', 'color': '#363636'}
                         },
                         labels: {
+                            format: '{value}%',
                             overflow: 'justify'
                         },
-                        tickAmount: 5
                     },
                     tooltip: {
                         valueSuffix: ' requests',
                         formatter: function (){
-                            return this.x + ': ' + '<strong>' + this.y + (this.y==1? ' request':' requests')+ '</strong>';
+                            return this.x + ': ' + '<strong>' + this.y + '%' + '</strong>';
                         }
                     },
                     plotOptions: {
@@ -266,16 +208,22 @@ $homeUrl = Yii::$app->homeUrl;
                     credits: {
                         enabled: false
                     },
-                    series: dataArray
+                    series: [{ data: Object.values(usageData)}]
                 });
             }
             
             
         ",
         View::POS_READY,
-        'req-form'
+        'fc-form-js'
     );    
     
+    $this->registerJsFile(
+        '@web/js/location-ops.js',
+        ['depends' => [\yii\web\JqueryAsset::className()]]
+    );
+        
+        
     $this->registerJs("
         (function() {
                         //set high charts global color scheme for all high charts instances on this page
@@ -287,4 +235,15 @@ $homeUrl = Yii::$app->homeUrl;
                 View::POS_END,
                 'highcharts-colors'
             );   
+?>
+
+
+<?php
+    $this->registerJs("
+            $('#reports-menu, #reports_counterfeits-report-menu').addClass('active');
+            $('#reports_counterfeits-fake-menu').addClass('active2');
+        ", 
+        View::POS_LOAD,
+        'per-menu'
+    );
 ?>

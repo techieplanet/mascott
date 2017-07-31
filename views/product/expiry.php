@@ -91,3 +91,13 @@ $this->title = 'Product Expiry Status';
         'exp-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs("
+            $('#reports-menu, #reports_product-report-menu').addClass('active');
+            $('#reports_product-expiry-menu').addClass('active2');
+        ", 
+        View::POS_LOAD,
+        'per-menu'
+    );
+?>
