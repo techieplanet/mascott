@@ -10,7 +10,7 @@ function drawMASRequestsChart(masRequestsByGeo){
             type: 'column'
         },
         title: {
-            text: 'MAS Requests Received By GeoZones'
+            text: ' '
         },
         lang: {
             noData: 'No data to display'
@@ -94,7 +94,7 @@ function drawProductBatchesChart(productBatches){
             type: 'column'
         },
         title: {
-            text: 'Batches registered per product'
+            text: ' '
         },
         lang: {
             noData: 'No data to display'
@@ -175,7 +175,7 @@ function drawConfirmedCounterfeitsChart(usageData){
             type: 'column'
         },
         title: {
-            text: 'Confirmed counterfeit reports'
+            text: ' '
         },
         lang: {
             noData: 'No data to display'
@@ -260,7 +260,7 @@ function drawCounterfeitsCountByProductChart(usageData){
             type: 'column'
         },
         title: {
-            text: 'Confirmed counterfeits per product'
+            text: ' '
         },
         lang: {
             noData: 'No data to display'

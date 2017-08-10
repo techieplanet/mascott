@@ -22,6 +22,9 @@ $homeUrl = Yii::$app->homeUrl;
         'id' => 'request-form',
         'options' => ['class' => 'x-form-padding']
 ]); ?>
+    <div class="content-header">
+        <h1>Number of MAS Requests Received</h1>
+    </div>
     <div class="row marginbottom15">
         <div class="col-md-5">
             <?= $form->field($product, 'product_type')->dropDownList(
