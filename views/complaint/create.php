@@ -19,3 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+
+
+<?php
+    $this->registerJs(
+            "$('#complaint-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'complaint-create-menu'
+    );
+?>

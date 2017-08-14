@@ -33,6 +33,10 @@ class UsageReport extends \yii\db\ActiveRecord
     const GENUINE = 'GENUINE';
     const FAKE = 'FAKE';
     const INVALID = 'INVALID';
+    
+    const GENUINE_DBVALUE = 1;
+    const FAKE_DBVALUE = 2;
+    const INVALID_DBVALUE = 3;
                 
     /**
      * @inheritdoc

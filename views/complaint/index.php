@@ -203,3 +203,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'reports-list-data-table'
     );
 ?>
+
+<?php
+    $this->registerJs(
+            "$('#complaint-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'complaint-menu'
+    );
+?>

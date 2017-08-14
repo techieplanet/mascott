@@ -45,6 +45,7 @@ and open the template in the editor.
 .margintop5negative {margin-top: -5px !important;}
 
 .nopadding {padding: 0 !important;}
+.padding5{ padding: 5px !important;}
 .padding10{ padding: 10px !important;}
 .padding15{padding: 15px !important;}
 .padding30{ padding: 30px !important;}
@@ -128,9 +129,9 @@ and open the template in the editor.
 }
 
 /* form-group class override */
-.form-group.has-success label {
+/*.form-group.has-success label {
     color: #000 !important;
-}
+}*/
 
 /*Bootstrap panel class override*/
 .panel-default{
@@ -145,17 +146,17 @@ and open the template in the editor.
     font-size: 18px !important;
 }
 
-/*help-block class override */
+/*help-block class override 
 .help-block{
     display: none !important;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
-}
+}*/
 
 /* form-group override */
-.form-group{
+/*.form-group{
     margin-bottom: 0px !important;
-}
+}*/
 
 /**
  Css for process step
