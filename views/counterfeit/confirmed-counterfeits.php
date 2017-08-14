@@ -24,6 +24,9 @@ use app\views\helpers\Alert;
         'id' => 'cc-form',
         'options' => ['class' => 'x-form-padding']
 ]); ?>
+    <div class="content-header">
+        <h1>Percentage MAS Request Confirmed Counterfeits</h1>
+    </div>
     <div class="row marginbottom15">
        <div class="col-md-5">
             <?= $form->field($product, 'product_name')->dropDownList(

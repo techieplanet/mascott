@@ -38,6 +38,14 @@ $this->title = 'Roles';
                     <th>Actions</th>
                 </tr>
             </thead>
+              <tfoot>
+                <tr>
+                    <th class="sorting">SN</th>
+                    <th class="sorting">Title</th>
+                    <th class="sorting">Description</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
                 <tbody>
         <?php
             //echo is_array($roles) ? 'array' : 'scalar'; exit;

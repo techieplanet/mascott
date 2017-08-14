@@ -24,6 +24,9 @@ use app\views\helpers\Alert;
         'id' => 'fr-form',
         'options' => ['class' => 'x-form-padding']
 ]); ?>
+    <div class="content-header">
+        <h1>Percentage of MAS Requests that Returned Fake Responses</h1>
+    </div>
     <div class="row marginbottom15">
        <div class="col-md-4">
             <?= $form->field($product, 'product_type')->dropDownList(

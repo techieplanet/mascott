@@ -97,7 +97,7 @@ use app\views\helpers\Alert;
         <hr>
         <?php require_once 'batch_form.php'; ?>
         <div class="form-group text-right">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-mas']) ?>
+            <?= Html::submitButton('Update', ['class' => 'btn btn-mas']) ?>
         </div>
     <?php } ?>
 
