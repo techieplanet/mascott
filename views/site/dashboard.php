@@ -16,7 +16,7 @@ $this->title = 'Dashboard';
         
         <div class="col-md-3">
             <div class="row">
-                <div class="col-md-8 indicator-text">Total Number of Products</div>
+                <div class="col-md-8 indicator-text">Total Number of Products<br/><br/></div>
                 <div class="col-md-3 indicator-value text-center"><?= $productCount; ?></div>
             </div>
         </div>

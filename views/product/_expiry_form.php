@@ -68,6 +68,7 @@ $homeUrl = Yii::$app->homeUrl;
 
     Modal::end();
 ?>
+
 <?php
     $this->registerJs("
               
@@ -94,9 +95,11 @@ $homeUrl = Yii::$app->homeUrl;
                 var batches = JSON.parse(jsonResponse);
                 var table = $('#expList').DataTable();
                 table.clear().draw();
-
+                log(batches);
                 var count = 0;
                 $.each(batches, function(index,element){
+                   //return non-false. could be 1, true, 'a' - anything that does not evaluate to false
+                   $.isEmptyObject({}); return 'continue'; 
                    table.row.add([
                             ++count,
                             element.product.product_name,

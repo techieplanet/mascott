@@ -51,7 +51,7 @@ use app\views\helpers\Alert;
     </div>
     <br>
     <div class="form-group text-right">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-mas btn-success' : 'btn btn-mas']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-mas btn-success' : 'btn btn-primary btn-mas']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

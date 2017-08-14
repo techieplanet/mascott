@@ -39,12 +39,12 @@ class UsageReportService extends UsageReport {
         $tierFieldName = $location->getTierFieldName($tiervalue);
         
         return UsageReport::find()
-                ->select(['COUNT(*) AS requests', $tierFieldName . ' AS location_name', 'batch.batch_number', 'location_id'])
+                ->select(['COUNT(*) AS requests', $tierFieldName . ' AS location_name'])
                 ->innerJoinWith(['batch', 'location', 'batch.product.productType', 'batch.product.provider'])
                 ->where($whereArray)
                 ->andWhere(['in', $tierText, $locationIDArray])
                 ->andWhere(['between', 'date_reported', $fromDate, $toDate])
-                ->groupBy([$tierText])
+                ->groupBy([$tierFieldName])
                 ->indexBy('location_name')
                 ->asArray($asArray)
                 ->orderBy('location_name ASC')

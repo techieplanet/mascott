@@ -45,6 +45,7 @@ and open the template in the editor.
 .margintop5negative {margin-top: -5px !important;}
 
 .nopadding {padding: 0 !important;}
+.padding5{ padding: 5px !important;}
 .padding10{ padding: 10px !important;}
 .padding15{padding: 15px !important;}
 .padding30{ padding: 30px !important;}
@@ -127,9 +128,15 @@ and open the template in the editor.
     border: 1px solid #2F9E69;
 }
 
+/* form-group class override */
+/*.form-group.has-success label {
+    color: #000 !important;
+}*/
+
 /*Bootstrap panel class override*/
 .panel-default{
     margin: 0 auto;
+    margin-bottom: 100px;
     border: 1px #2F9E69 solid !important;
 }
 
@@ -138,6 +145,18 @@ and open the template in the editor.
     background-color: #2F9E69 !important;
     font-size: 18px !important;
 }
+
+/*help-block class override 
+.help-block{
+    display: none !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}*/
+
+/* form-group override */
+/*.form-group{
+    margin-bottom: 0px !important;
+}*/
 
 /**
  Css for process step
@@ -478,8 +497,6 @@ section.content{
 .content-header > h1 {
     color: #2F9E69;
     margin-bottom: 20px !important;
-    font-size: 36px !important; 
-    margin-left: -17px;
 }
 
 ul.pagination{

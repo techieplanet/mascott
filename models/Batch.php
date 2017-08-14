@@ -115,4 +115,21 @@ class Batch extends \yii\db\ActiveRecord
                 ->groupBy('product_id')
                 ->all();
     }
+    
+    /**
+     * Check if a matching record can be found.
+     * for a product name and type
+     */
+    public function hasMatch($pname, $pt_title, $nrn, $batchnum){
+        $obj = Batch::find()
+                ->innerJoinWith(['product', 'product.productType'])
+                ->where([
+                    'UPPER(product_name)' => strtoupper($pname),
+                    'UPPER(title)' => strtoupper($pt_title),
+                    'UPPER(nrn)' => strtoupper($nrn),
+                    'UPPER(batch_number)' => strtoupper($batchnum)
+                ])->one();
+        
+        return is_object($obj);
+    }
 }

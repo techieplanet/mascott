@@ -53,18 +53,18 @@ class RoleController extends BaseController
         ]);
     }
     
-    public function actionIndexGii()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Role::find(),
-        ]);
-        
-        $roles = Role::find()->all();
-
-        return $this->render('indexgii', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
+//    public function actionIndexGii()
+//    {
+//        $dataProvider = new ActiveDataProvider([
+//            'query' => Role::find(),
+//        ]);
+//        
+//        $roles = Role::find()->all();
+//
+//        return $this->render('indexgii', [
+//            'dataProvider' => $dataProvider,
+//        ]);
+//    }
 
     /**
      * Displays a single Role model.

@@ -311,7 +311,7 @@ class ProductController extends BaseController
             echo json_encode($model->getExpiringBatches($filtersArray));
             exit;
         }
-
+        
         return $this->render('expiry', [
             'batches' => $model->getExpiringBatches([]),
             'model' => $model,
