@@ -18,7 +18,7 @@ $this->title = 'Products';
 <div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Create New Product', ['create'], ['class' => 'btn btn-mas']) ?>
         </p>
     </div>
 </div>
@@ -38,7 +38,18 @@ $this->title = 'Products';
                     <th>Actions</th>
                 </tr>
             </thead>
-           
+           <tfoot>
+                <tr>
+                    <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
+                    <th class="sorting">Product Type</th>
+                    <th class="sorting">Certificate Holder</th>
+                    <th class="sorting">Brand Name</th>
+                    <th class="sorting">Generic Name</th>
+                    <th class="sorting">NAFDAC Reg. Number</th>                    
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
             
                 <tbody>
         <?php

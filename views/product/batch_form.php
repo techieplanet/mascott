@@ -35,7 +35,7 @@ use yii\web\View;
             <?= $form->field($batchModel, 'id')->hiddenInput()->label(false) ?>
         </div>
         <div class="col-md-3" style="margin-top: 25px;">
-            <?= Html::button('Add', ['id'=>'add-batch','class'=>'btn btn-success btn-mas']) ?>
+            <?= Html::button('Add', ['id'=>'add-batch','class'=>'btn btn-mas']) ?>
             <?= Html::button('Clear', ['id'=>'clear-form','class'=>'btn btn-default marginleft10']) ?>
         </div>
         

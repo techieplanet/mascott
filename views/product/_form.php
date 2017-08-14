@@ -90,14 +90,14 @@ use app\views\helpers\Alert;
     </div>
     <br>    
     <?php if($model->isNewRecord) { ?>
-        <div class="form-group text-right">
-            <?= Html::submitButton('Create', ['class' => 'btn btn-success btn-mas']) ?>
+        <div class="text-right">
+            <?= Html::submitButton('Create', ['class' => 'btn btn-mas']) ?>
         </div>
     <?php } else { ?>
         <hr>
         <?php require_once 'batch_form.php'; ?>
-        <div class="form-group text-right">
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary btn-mas']) ?>
+        <div class="text-right">
+            <?= Html::submitButton('Update', ['class' => 'btn btn-mas']) ?>
         </div>
     <?php } ?>
 
