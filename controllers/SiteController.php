@@ -11,9 +11,11 @@ use yii\helpers\Url;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Provider;
+use app\models\User;
 use app\models\Product;
 use app\models\Batch;
 use app\models\Complaint;
+use app\models\Permission;
 use app\models\UsageReport;
 use app\models\service\ComplaintService;
 use app\models\service\UsageReportService;
@@ -86,6 +88,10 @@ class SiteController extends Controller
         $model = new LoginForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            //load permissions into session 
+            $user = User::findOne(Yii::$app->user->id);
+            Yii::$app->session['user_permissions'] = $user->getMyPermissions();
+            
             $url = (isset($_GET['r']) && (!empty($_GET['r']))) ? $_GET['r'] : 'site/dashboard';
             return $this->redirect([$url]); //does Url::to([])
 

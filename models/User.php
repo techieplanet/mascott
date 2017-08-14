@@ -31,6 +31,7 @@ use Yii;
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $tempPass = '';
+    //public $permissions = [];
     
     //public $id;
     //public $username;
@@ -161,5 +162,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     
     public static function findByEmail($email){
         return User::find()->where(['email' => $email])->one(); 
+    }
+    
+    public function getMyPermissions(){
+        $userPermissions =  User::find()
+                ->select(['alias'])
+                ->innerJoinWith(['role.roleAcls.permission'])
+                ->where(['user.id' => $this->id])
+                ->asArray()
+                ->all();
+        
+        $permissions = array_map(function($value){
+                                    return $value['alias'];
+                       }, $userPermissions);
+                       
+        return $permissions;
+                                
     }
 }

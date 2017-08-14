@@ -46,6 +46,9 @@
               <li id="reg_provider-menu">
                 <?= Html::a('MAS Provider','@web/provider', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
               </li>
+              <li id="reg_hcr-menu">
+                <?= Html::a('HCR','@web/hcr', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+              </li>
           </ul>
         </li>
         
