@@ -14,6 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="role-create">
 
     <p>
+        <?= Html::a('<span class="glyphicon glyphicon-chevron-left"></span>Back', 
+                ['index'], ['class'=>'btn btn-mas pull-right margintop5']) ?>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
         </h1>

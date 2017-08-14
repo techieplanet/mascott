@@ -36,12 +36,13 @@ and open the template in the editor.
 .marginleft10 {margin-left: 10px !important;}
 .marginleft20 {margin-left: 20px !important;}
 .marginleft25 {margin-left: 25px !important;}
-.marginright15 {margin-right: 15px !important;}
 .marginleft15 {margin-left: 15px !important; }
 .marginleft19 {margin-left: 19px !important;}
+.marginright5 {margin-right: 5px !important;}
 .marginright10 {margin-right: 10px !important;}
-.marginleft20px {margin-left: 20px !important;}
+.marginright15 {margin-right: 15px !important;}
 .marginright20 {margin-right: 20px !important;}
+
 .margintop5negative {margin-top: -5px !important;}
 
 .nopadding {padding: 0 !important;}
@@ -442,8 +443,15 @@ li.user-header {
 }
 
 .btn-mas:link,
-.btn-mas:hover,
-.btn-mas:active{
+.btn-mas:visited{
+    background-color: #2F9E69  !important;
+    border: 1px #2F9E69 solid !important;
+    
+    
+}
+
+.btn-mas:active,
+.btn-mas:hover{
     background-color: #008d4c !important;
     border: 1px #2F9E69 solid !important;
     
@@ -460,11 +468,9 @@ li.user-header {
     padding: 0px 80px 0 50px;
 }
 
-h1>a{
-    color: #2F9E69;
-}
-
-div h1>a:active{
+h1>a:link,
+h1>a:visited,
+h1>a:active{
     color: #2F9E69;
 }
 

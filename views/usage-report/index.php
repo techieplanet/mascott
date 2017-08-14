@@ -18,7 +18,7 @@ $this->title = 'Usage Reports';
 <div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create Report', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Create New Report', ['create'], ['class' => 'btn btn-mas']) ?>
         </p>
     </div>
 </div>

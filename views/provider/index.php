@@ -19,7 +19,7 @@ $this->title = 'Providers';
 <div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create Provider', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Create New Provider', ['create'], ['class' => 'btn btn-mas']) ?>
         </p>
     </div>
 </div>
