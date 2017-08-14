@@ -11,23 +11,25 @@ use yii\helpers\Url;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Provider;
+use app\models\User;
 use app\models\Product;
 use app\models\Batch;
 use app\models\Complaint;
+use app\models\Permission;
 use app\models\UsageReport;
 use app\models\service\ComplaintService;
 use app\models\service\UsageReportService;
 use app\models\service\ProductService;
-        
+
 class SiteController extends Controller
 {
-    
+
 //    public function init(){
 //        echo Yii::$app->getHomeUrl(); exit;
 //        if(Yii::$app->user->isGuest);
 //            //$this->goHome();
 //    }
-    
+
     /**
      * @inheritdoc
      */
@@ -76,25 +78,29 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
-    {        
+    {
         //if logged in, redirect to dashboard page
-        if (!Yii::$app->user->isGuest) {
-            return $this->redirect('site/dashboard');
-        }
-       
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->redirect('site/dashboard');
+//        }
+
         $this->layout = 'centered';
         $model = new LoginForm();
-        
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            //load permissions into session 
+            $user = User::findOne(Yii::$app->user->id);
+            Yii::$app->session['user_permissions'] = $user->getMyPermissions();
+            
             $url = (isset($_GET['r']) && (!empty($_GET['r']))) ? $_GET['r'] : 'site/dashboard';
             return $this->redirect([$url]); //does Url::to([])
-            
+
         }
-        
+
         return $this->render('index',[
             'model' => $model
         ]);
-        
+
     }
 
     /**
@@ -102,20 +108,21 @@ class SiteController extends Controller
      */
     public function actionDashboard()
     {
+      
         if (!Yii::$app->user->isGuest) {
             $complaintService = new ComplaintService();
-                    
+
             $providersCount = count(Provider::find()->all());
             $productCount = count(Product::find()->all());
             $confirmedCounterfeitsCount = Complaint::find()->where(['validation_result' => Complaint::CONFIRMED_DBVALUE])->count();
             $unresolvedComplaintsCount = Complaint::find()->where(['validation_result' => Complaint::UNRESOLVED_DBVALUE])->count();
-            
-            
+
+
             $MASRequests = (new UsageReportService())->getUsageRequestsReceived([], true);
             $productBatches = (new Batch())->getBatchesCountByproduct();
             $confirmedCounterfeits = $complaintService->getPercentageConfirmedCounterfeits([], true);
             $counterfeitsCountByProduct = $complaintService->getCounterfeitsCountByProduct();
-                    
+
             return $this->render('dashboard', [
                 'providersCount' => $providersCount,
                 'productCount' => $productCount,
@@ -131,7 +138,7 @@ class SiteController extends Controller
             $this->redirect('index');
         }
     }
-    
+
     /**
      * Login action.
      * @return Response|string
@@ -191,8 +198,8 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    
+
     public function error(){
-        
+
     }
 }

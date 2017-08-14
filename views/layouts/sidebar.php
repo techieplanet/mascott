@@ -46,6 +46,9 @@
               <li id="reg_provider-menu">
                 <?= Html::a('MAS Provider','@web/provider', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
               </li>
+              <li id="reg_hcr-menu">
+                <?= Html::a('HCR','@web/hcr', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+              </li>
           </ul>
         </li>
         
@@ -54,18 +57,17 @@
             <?= Html::a('<i class="fa fa-files-o"></i>USAGE REPORT','@web/usage-report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
-        <li id="hcr-menu" class="">
+        <!--<li id="hcr-menu" class="">
             <?= Html::a('<i class="fa fa-files-o"></i> HCRs',
                     '@web/usage-report', 
                     ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
-        </li>
+        </li>-->
         
-        <li id="resolution-menu" class="">
-            <?= Html::a('<i class="fa fa-files-o"></i> RESOLUTION',
-                    '@web/usage-report', 
+        <li id="complaint-menu" class="">
+            <?= Html::a('<i class="fa fa-files-o"></i> COMPLAINTS RESOLUTION',
+                    '@web/complaint', 
                     ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
-        
         
         <!--------  REPORTS   -------------->
         <li id="reports-menu" class="treeview">

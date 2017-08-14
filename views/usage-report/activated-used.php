@@ -17,9 +17,6 @@ use app\views\helpers\Alert;
         'id' => 'activated-form',
         'options'=> ['class' => 'x-form-padding']
 ]); ?>
-    <div class="content-header">
-        <h1>Percentage MAS Activated Products Used</h1>
-    </div>
     <div class="row marginbottom15">
         <div class="col-md-4">
         <?= $form->field($product, 'product_name')->dropDownList(

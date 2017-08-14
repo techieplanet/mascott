@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use app\models\UsageReport;
 use app\models\service\UsageReportService;
 use app\models\Location;
@@ -17,8 +18,11 @@ use app\controllers\services\ProviderService;
 use app\controllers\services\ProductTypeService;
 use app\controllers\services\ProductService;
 use app\controllers\services\AlertsService;
+use app\models\service\ExcelParser;
 use app\models\utils\Trailable;
 use app\models\Permission;
+use app\models\utils\Uploader;
+
 
 /**
  * UsageReportController implements the CRUD actions for UsageReport model.
@@ -231,4 +235,43 @@ class UsageReportController extends BaseController
             'usageData' => json_encode($filteredReports)
         ]);
     }   
+    
+    
+    public function actionImportUsageData(){
+        $model = new Uploader(['scenario' => Uploader::SCENARIO_EXCEL]);
+        $startRow = 10;
+        $uploadErrors = array(); $parseResponse = array(); 
+        
+        if (Yii::$app->request->isPost) {
+            $model->excelFile = UploadedFile::getInstance($model, 'excelFile');
+            if ($model->uploadExcelFile()) {
+                /**
+                 * HURRAY!
+                 * file is uploaded successfully
+                 */
+                
+                $fileName = $model->excelFile->baseName . '.' . $model->excelFile->extension;
+                
+                /**
+                * $parseResponse is an array.
+                * Will contain errors if any
+                * Will be empty of no errors.
+                */
+                $parseResponse = (new ExcelParser($startRow, $fileName))->run();
+                
+                //Yii::$app->session->setFlash('uploaded', 'UPLOADED');
+                
+            } else {
+                $uploadErrors[] = $model->getErrors();
+            }
+            
+        }
+
+        return $this->render('import-usage-data', [
+            'model' => $model,
+            'uploadErrors' => $uploadErrors,
+            'excelErrors' => $parseResponse
+        ]);
+        
+    }
 }
