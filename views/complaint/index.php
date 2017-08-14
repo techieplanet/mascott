@@ -153,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-mas">Save changes</button>
       </div>-->
     </div>
   </div>
@@ -201,13 +201,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ",
         View::POS_READY,
         'reports-list-data-table'
-    );
-?>
-
-<?php
-    $this->registerJs(
-            "$('#complaint-menu').addClass('active');"
-        ,View::POS_LOAD,
-        'complaint-menu'
     );
 ?>

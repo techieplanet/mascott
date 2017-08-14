@@ -102,5 +102,4 @@ use app\views\helpers\Alert;
     <?php } ?>
 
     <?php ActiveForm::end(); ?>
-
 </div>
