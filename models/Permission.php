@@ -37,7 +37,7 @@ class Permission extends \yii\db\ActiveRecord
             [['weight', 'active'], 'integer'],
             [['entity'], 'string', 'max' => 50],
             [['alias'], 'string', 'max' => 60],
-            [['title'], 'string', 'max' => 30],
+            [['title'], 'string', 'max' => 60],
             [['description'], 'string', 'max' => 250],
         ];
     }

@@ -36,16 +36,16 @@ and open the template in the editor.
 .marginleft10 {margin-left: 10px !important;}
 .marginleft20 {margin-left: 20px !important;}
 .marginleft25 {margin-left: 25px !important;}
+.marginright15 {margin-right: 15px !important;}
 .marginleft15 {margin-left: 15px !important; }
 .marginleft19 {margin-left: 19px !important;}
-.marginright5 {margin-right: 5px !important;}
 .marginright10 {margin-right: 10px !important;}
-.marginright15 {margin-right: 15px !important;}
+.marginleft20px {margin-left: 20px !important;}
 .marginright20 {margin-right: 20px !important;}
-
 .margintop5negative {margin-top: -5px !important;}
 
 .nopadding {padding: 0 !important;}
+.padding5{ padding: 5px !important;}
 .padding10{ padding: 10px !important;}
 .padding15{padding: 15px !important;}
 .padding30{ padding: 30px !important;}
@@ -128,9 +128,15 @@ and open the template in the editor.
     border: 1px solid #2F9E69;
 }
 
+/* form-group class override */
+/*.form-group.has-success label {
+    color: #000 !important;
+}*/
+
 /*Bootstrap panel class override*/
 .panel-default{
     margin: 0 auto;
+    margin-bottom: 100px;
     border: 1px #2F9E69 solid !important;
 }
 
@@ -139,6 +145,18 @@ and open the template in the editor.
     background-color: #2F9E69 !important;
     font-size: 18px !important;
 }
+
+/*help-block class override 
+.help-block{
+    display: none !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}*/
+
+/* form-group override */
+/*.form-group{
+    margin-bottom: 0px !important;
+}*/
 
 /**
  Css for process step
@@ -443,15 +461,8 @@ li.user-header {
 }
 
 .btn-mas:link,
-.btn-mas:visited{
-    background-color: #2F9E69  !important;
-    border: 1px #2F9E69 solid !important;
-    
-    
-}
-
-.btn-mas:active,
-.btn-mas:hover{
+.btn-mas:hover,
+.btn-mas:active{
     background-color: #008d4c !important;
     border: 1px #2F9E69 solid !important;
     
@@ -468,9 +479,11 @@ li.user-header {
     padding: 0px 80px 0 50px;
 }
 
-h1>a:link,
-h1>a:visited,
-h1>a:active{
+h1>a{
+    color: #2F9E69;
+}
+
+div h1>a:active{
     color: #2F9E69;
 }
 
@@ -484,8 +497,6 @@ section.content{
 .content-header > h1 {
     color: #2F9E69;
     margin-bottom: 20px !important;
-    font-size: 36px !important; 
-    margin-left: -17px;
 }
 
 ul.pagination{

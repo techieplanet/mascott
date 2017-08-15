@@ -14,14 +14,12 @@ $subtitle = 'Create New Provider';
 <div class="provider-create x-create-padding">
 
     <p>
-        <?= Html::a('<span class="glyphicon glyphicon-chevron-left"></span>Back', 
-                ['index'], ['class'=>'btn btn-mas pull-right margintop5']) ?>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
             
             <?= 
                 Yii::$app->session->hasFlash('saved') ?
-                Html::a('Create Provider', ['create'], ['class' => 'btn btn-mas pull-right']) : 
+                Html::a('Create Provider', ['create'], ['class' => 'btn btn-success pull-right']) : 
                 ''
             ?>
         </h1>

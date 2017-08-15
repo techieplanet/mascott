@@ -18,6 +18,7 @@ use Yii;
  * @property string $access_token
  * @property integer $role_id
  * @property integer $provider_id
+ * @property integer $zone_id
  * @property integer $deleted
  * @property string $created_date
  * @property integer $created_by
@@ -54,7 +55,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['firstname', 'lastname', 'email', 'phone' , 'role_id', 'provider_id'], 'required'],
-            [['role_id', 'provider_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
+            [['role_id', 'provider_id', 'zone_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
             [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
             [['firstname', 'middlename', 'lastname'], 'string', 'max' => 30],
             [['email'], 'string', 'max' => 100],
@@ -62,6 +63,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['email'], 'unique'],
             //[['provider_id'], 'integer', 'min'=>1, 'message'=>'{attribute} must select a provider'],
             [['phone'], 'string', 'max' => 11],
+            [['phone'], 'string', 'min' => 11],
             [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
             [['salt'], 'string', 'max' => 6],
             [['password'], 'string', 'max' => 128],
@@ -87,6 +89,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'access_token' => 'Access Token',
             'role_id' => 'Role',
             'provider_id' => 'Provider',
+            'zone_id' => 'Zone',
             'deleted' => 'Deleted',
             'created_date' => 'Created Date',
             'created_by' => 'Created By',
@@ -110,6 +113,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasOne(Provider::className(), ['id' => 'provider_id']);
     }
+    
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getZone()
+    {
+        return $this->hasOne(Location::className(), ['id' => 'zone_id']);
+    }
+    
     
     /**
      * @inheritdoc

@@ -14,8 +14,6 @@ $subtitle = 'Create New User';
 <div class="user-create x-create-padding">
 
     <p>
-        <?= Html::a('<span class="glyphicon glyphicon-chevron-left"></span>Back', 
-                ['index'], ['class'=>'btn btn-mas pull-right margintop5']) ?>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
         </h1>
@@ -25,9 +23,7 @@ $subtitle = 'Create New User';
         'model' => $model,
         'rolesMap' => $rolesMap,
         'providerMap' => $providerMap,
-        //'success' => $success,
-        //'selectedRoleId' => $selectedRoleId,
-        //'selectedDesignation' => $selectedDesignation,
+        'zonesMap' => $zonesMap
     ]) ?>
 
 </div>

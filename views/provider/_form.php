@@ -50,9 +50,10 @@ use app\views\helpers\Alert;
         </fieldset>
     </div>
     <br>
-    <div class="text-right">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-mas' : 'btn btn-mas']) ?>
+    <div class="form-group text-right">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-mas btn-success' : 'btn btn-primary btn-mas']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
 </div>

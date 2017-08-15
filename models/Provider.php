@@ -46,6 +46,7 @@ class Provider extends \yii\db\ActiveRecord
             [['contact_email'], 'email'],
             [['contact_email'], 'unique'],
             [['contact_phone'], 'match', 'pattern' => '/^[0-9]+$/'],
+            [['contact_phone'], 'string', 'min' => 11],
             [['city', 'state'], 'string', 'max' => 50],
             [['contact_phone'], 'string', 'max' => 11],
         ];

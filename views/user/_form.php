@@ -51,11 +51,19 @@ use app\views\helpers\Alert;
                  ) 
             ?>
         </div>
+        
+        <div class="col-md-4 hidden" id="zone-box">
+            <?= $form->field($model, 'zone_id')->dropDownList(
+                    $zonesMap, 
+                    array('options' => array($model->zone_id=>array('selected'=>true)))
+                 ) 
+            ?>
+        </div>
     </div>
     <br>
-    <div class="text-right">
+    <div class="form-group text-right">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', [
-            'class' => $model->isNewRecord ? 'btn btn-mas' : 'btn btn-mas',
+            'class' => $model->isNewRecord ? 'btn btn-success btn-mas' : 'btn btn-primary btn-mas',
             ]) ?>
     </div>
 
@@ -66,17 +74,25 @@ use app\views\helpers\Alert;
 <?php
         $this->registerJs("
             $('#user-role_id').change(function(){
-                if( $('#user-role_id option:selected').text().toUpperCase() == 'MAS PROVIDER' )
+                if( $('#user-role_id option:selected').text().toUpperCase() == 'MAS PROVIDER' ){
                     $('#provider-box').removeClass('hidden');
-                    $('#provider-box').removeClass('hidden');
-                else {
+                    $('#zone-box').addClass('hidden');
+                } else if( $('#user-role_id option:selected').text().toUpperCase() == 'NAFDAC REGIONAL ADMINISTRATOR' ) {
                     $('#provider-box').addClass('hidden');
+                    $('#zone-box').removeClass('hidden');
+                } else {
+                    $('#provider-box').addClass('hidden');
+                    $('#zone-box').addClass('hidden');
                     $('#user-provider_id').val(0);
+                    $('#user-zone_id').val(0);
                 }
             });
             
-            if( $('#user-role_id option:selected').text().toUpperCase() == 'MAS PROVIDER' )
+            if( $('#user-role_id option:selected').text().toUpperCase() == 'MAS PROVIDER' ) {
                 $('#provider-box').removeClass('hidden');
+            } else if( $('#user-role_id option:selected').text().toUpperCase() == 'NAFDAC REGIONAL ADMINISTRATOR' ) {
+                $('#zone-box').removeClass('hidden');
+            }
         ",
         View::POS_READY,
         'reports-list-data-table'

@@ -14,8 +14,6 @@ $subtitle = 'Create New Product';
 <div class="product-create x-create-padding">
 
       <p>
-          <?= Html::a('<span class="glyphicon glyphicon-chevron-left"></span>Back', 
-                  ['index'], ['class'=>'btn btn-mas pull-right amrgintop5']) ?>  
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
         </h1>

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\Role;
+use app\models\Location;
 use app\controllers\services\RoleService;
 use app\controllers\services\UserService;
 use app\controllers\services\ProviderService;
@@ -81,7 +82,8 @@ class UserController extends BaseController
             
             $rolesMap = $roleService->getRolesMap(); $rolesMap[0] = '--Select Role--'; ksort($rolesMap);
             $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
-
+            $zonesMap = ['0'=>'--Select Zone--'] + Location::getTierLocationsAssocArray(1);
+            
             //add generated fields
             $model->salt = $userService->generateRandomString(6);
             $model->tempPass = $userService->generateRandomString(6);
@@ -104,9 +106,7 @@ class UserController extends BaseController
                 'model' => $model,
                 'rolesMap' => $rolesMap,
                 'providerMap' => $providerMap,
-                //'success' => $success,
-                //'selectedRoleId' => $selectedRoleId,
-                //'selectedDesignation' => $selectedDesignation
+                'zonesMap' => $zonesMap
             ]);
         } catch (Exception $e){
             echo $e->getMessage;
@@ -130,7 +130,8 @@ class UserController extends BaseController
             
             $rolesMap = $roleService->getRolesMap(); $rolesMap[0] = '--Select Role--'; ksort($rolesMap);
             $providerMap = $providerService->getProviderMap(); $providerMap[0] = '--Select Provider--'; ksort($providerMap);
-
+            $zonesMap = ['0'=>'--Select Zone--'] + Location::getTierLocationsAssocArray(1);
+            
             $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
             
             (new Trailable($model))->registerUpdate();
@@ -147,9 +148,7 @@ class UserController extends BaseController
                 'model' => $model,
                 'rolesMap' => $rolesMap,
                 'providerMap' => $providerMap,
-                //'success' => $success,
-                //'selectedRoleId' => $selectedRoleId,
-                //'selectedDesignation' => $selectedDesignation,
+                'zonesMap' => $zonesMap
             ]);
         } catch (Exception $e){
             echo $e->getMessage;

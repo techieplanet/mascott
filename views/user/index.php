@@ -21,7 +21,7 @@ $this->title = 'Users';
 <div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create New User', ['create'], ['class' => 'btn btn-mas']) ?>
+            <?= Html::a('Create User', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
     </div>
 </div>

@@ -59,6 +59,7 @@ class UsageReport extends \yii\db\ActiveRecord
             [['phone'], 'string', 'max' => 11],
             [['batch_number'], 'string', 'max' => 12],
             [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
+            [['phone'], 'string', 'min' => 11],
             [['pin_4_digits'], 'string', 'max' => 4],
             [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
         ];

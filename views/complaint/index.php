@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <!--<div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create New Report', ['create'], ['class' => 'btn btn-mas']) ?>
+            <?= Html::a('Create Report', ['create'], ['class' => 'btn btn-success']) ?>
         </p>
     </div>
 </div>-->
@@ -153,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
 <!--      <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-mas">Save changes</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>-->
     </div>
   </div>
@@ -201,5 +201,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ",
         View::POS_READY,
         'reports-list-data-table'
+    );
+?>
+
+<?php
+    $this->registerJs(
+            "$('#complaint-menu').addClass('active');"
+        ,View::POS_LOAD,
+        'complaint-menu'
     );
 ?>

@@ -95,6 +95,17 @@ class Location extends \yii\db\ActiveRecord
                 ->all();
     }
     
+    
+    public static function getTierLocationsAssocArray($tierId) {
+        $zones = Location::find()
+                ->where(['tier'=>$tierId])
+                ->asArray()
+                ->orderBy('location_name')
+                ->all();
+        
+        return $zonesMap = ArrayHelper::map($zones, 'id', 'location_name');
+    }
+    
     public function getTierText($tierId){
         switch ($tierId){
             case 1: return 'geozone_id';
