@@ -458,6 +458,10 @@ li.user-header {
     
 }
 
+.callout a {
+    text-decoration: none !important;
+}
+
 /* User registration form */
 
 .x-create-padding{ 

@@ -27,6 +27,7 @@ $this->title = 'Login';
                 </div> <!-- green header -->
             </div>
             
+        
                 <div class="loginform text-center">
                         <?php $form = ActiveForm::begin([
                 //            'id' => 'login-form',

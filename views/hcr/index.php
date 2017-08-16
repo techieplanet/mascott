@@ -14,7 +14,7 @@ use app\views\helpers\Alert;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$this->title = 'HCR List';
+$this->title = 'Holder of Certificate of Registration (HCR) List';
 //$this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -28,7 +28,7 @@ $this->title = 'HCR List';
         
 <!-- Button trigger modal -->
         <p class="text-right">
-            <button class="btn btn-success" data-toggle="modal" data-target="#createHcrModal">Add New</button>
+            <button class="btn btn-mas" data-toggle="modal" data-target="#createHcrModal">Add New HCR</button>
         </p>
     </div>
 </div>
@@ -50,6 +50,13 @@ $this->title = 'HCR List';
                     <th>Actions</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr>
+                    <th class="sorting">SN</th>
+                    <th class="sorting">Name</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
             <tbody>
                 <?php
                     $count=0;
@@ -67,7 +74,7 @@ $this->title = 'HCR List';
                                            $('#edit-hcr-id').val(<?= $h->id; ?>);
                                            $('#hcr-name-label').html('<?= $h->name; ?>');"
                                     >
-                                        <i class="fa fa-pencil"></i>
+                                        <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                     <?php //echo ActionButton::updateButton('hcr', $h->id); ?>
                                 </span>
@@ -109,7 +116,7 @@ $this->title = 'HCR List';
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton('Submit', ['class' => 'btn btn-mas']) ?>
         </div>
     </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -144,7 +151,7 @@ $this->title = 'HCR List';
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <?= Html::submitButton('Update', ['class' => 'btn btn-primary', 'id'=>"update-button"]) ?>
+            <?= Html::submitButton('Update', ['class' => 'btn btn-mas', 'id'=>"update-button"]) ?>
         </div>
     </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
