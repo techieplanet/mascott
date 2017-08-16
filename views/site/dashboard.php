@@ -38,17 +38,47 @@ $this->title = 'Dashboard';
         </div>
     </div>
     
+    <div class="row">
+        <div class="col-md-12" style="height: 30px"></div>
+    </div>
+    
     <div class="body-content">
-        <div class="row">
-            <div class="col-md-6" id="requests1" style="height: 400px; margin: 0 auto"></div>
-            <div class="col-md-6" id="requests2" style="height: 400px; margin: 0 auto"></div>
+        <div class="row marginbottom15">
+            <div class="col-md-6">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">MAS Requests Received by GeoZones</div>
+                    <div class="panel-body">
+                        <div id="requests1" class="paddingtop20" style="height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">Batches registered per product</div>
+                    <div class="panel-body">
+                        <div id="requests2" class="paddingtop20" style="height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-6" id="counterfeits1" style="height: 400px; margin: 0 auto"></div>
-            <div class="col-md-6" id="counterfeits2" style="height: 400px; margin: 0 auto"></div>
+            <div class="row">
+            <div class="col-md-6">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">Confirmed Counterfeit reports</div>
+                    <div class="panel-body">
+                        <div id="counterfeits1" class="paddingtop20" style="height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class=" panel panel-default text-center">
+                    <div class="panel-heading">Confirmed counterfeits per product</div>
+                    <div class="panel-body">
+                        <div id="counterfeits2" class="paddingtop20" style="height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 
