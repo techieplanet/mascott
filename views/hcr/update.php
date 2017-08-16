@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <p>
         <h1>
             <?= Html::a(Html::encode($this->title), ['index'], ['class' => '']); ?> <small>(<?= $subtitle; ?>)</small>
-            <?= Html::a('Create Hcr', ['create'], ['class' => 'btn btn-success pull-right']); ?>
+            <?= Html::a('Create Hcr', ['create'], ['class' => 'btn btn-mas pull-right']); ?>
         </h1>
     </p>
 

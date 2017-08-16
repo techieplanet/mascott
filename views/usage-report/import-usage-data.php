@@ -25,17 +25,16 @@ use yii\helpers\Html;
 
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]) ?>
 
-    <div class="row">
-        <div clas="col-md-12">
-            <?= $form->field($model, 'excelFile')->fileInput()->label('Upload Excel File') ?>
+        <div class="row">
+            <div clas="col-md-12">
+                <?= $form->field($model, 'excelFile')->fileInput()->label('Upload Excel File') ?>
+            </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div clas="col-md-12">
-            <?= Html::submitButton('Upload', ['class' => 'btn btn-primary btn-mas']) ?>
+        <div class="row">
+            <div clas="col-md-12"> 
+                <?= Html::submitButton('Upload', ['class' => 'btn btn-mas']) ?>
+            </div>
         </div>
-    </div>
 
     <!--<button>Submit</button>-->
 
