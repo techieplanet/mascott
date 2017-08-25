@@ -166,7 +166,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     
     public function getMyPermissions(){
         $userPermissions =  User::find()
-                ->select(['alias', 'user.role_id'])
+                ->select(['alias'])
                 ->innerJoinWith(['role.roleAcls.permission'])
                 ->where(['user.id' => $this->id])
                 ->asArray()

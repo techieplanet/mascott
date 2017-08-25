@@ -10,14 +10,14 @@ $this->title = 'Dashboard';
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-8 indicator-text">Total Number of MAS Providers<br/></div>
-                <div class="col-md-3 indicator-value text-center"><?= $providersCount ?></div>
+                <div class="col-md-3 indicator-value indicator-color1 text-center"><?= $providersCount ?></div>
             </div>
         </div>
         
         <div class="col-md-3">
             <div class="row">
-                <div class="col-md-8 indicator-text">Total Number of Products<br/><br/></div>
-                <div class="col-md-3 indicator-value text-center"><?= $productCount; ?></div>
+                <div class="col-md-8 indicator-text">Total Number of Products<br/></div>
+                <div class="col-md-3 indicator-value indicator-color2 text-center"><?= $productCount; ?></div>
             </div>
         </div>
         
@@ -26,14 +26,14 @@ $this->title = 'Dashboard';
                 <div class="col-md-8 indicator-text" style="font-size: 14px; padding: 14px 5px;">
                     Total Number of Confirmed Counterfeits
                 </div>
-                <div class="col-md-3 indicator-value text-center"><?= $confirmedCounterfeitsCount; ?></div>
+                <div class="col-md-3 indicator-value  indicator-color3 text-center"><?= $confirmedCounterfeitsCount; ?></div>
             </div>
         </div>
         
         <div class="col-md-3">
             <div class="row">
                 <div class="col-md-8 indicator-text">Total Number of Unresolved Requests</div>
-                <div class="col-md-3 indicator-value text-center"><?= $unresolvedComplaintsCount; ?></div>
+                <div class="col-md-3 indicator-value indicator-color4 text-center"><?= $unresolvedComplaintsCount; ?></div>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@ $this->title = 'Dashboard';
         (function() {
                         //set high charts global color scheme for all high charts instances on this page
                         Highcharts.setOptions({
-                            colors: ['#2F9E69','#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#DD4477', '#AAAA11', '#B77322']
+                            colors: ['#8FAD1F', '#2F9E69','#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#DD4477', '#AAAA11', '#B77322']
                         });
                     })();
                   ",
