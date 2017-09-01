@@ -134,7 +134,8 @@ class Product extends \yii\db\ActiveRecord
     }
     
     public static function getProductsAsAssocArray(){
-        return Product::find()->asArray()->all();
+        $roleConditionArray = Product::myRoleACL();
+        return Product::find()->where($roleConditionArray)->asArray()->all();
     }
     
     public function getUniqueDosageForms(){
@@ -150,4 +151,29 @@ class Product extends \yii\db\ActiveRecord
                 ->asArray()
                 ->all();
     }
+    
+    
+   public static function myRoleACL($userId=0) {
+        $userId = Yii::$app->user->id;
+        $user = User::find()->with('role')->where(['id' => $userId])->one();
+        
+        if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+             return ['provider_id' => $user->provider->id];
+        }
+       
+      return [];
+   }
+   
+   
+   public function isMyProduct($userId=0) {
+       $userId = empty($userId) ? Yii::$app->user->id : $userId;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+       
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER') {
+            $productProviderId = Product::findOne($this->id)->provider_id;
+            return $productProviderId == $user->provider->id;
+       }
+       
+       return true;
+   }
 }

@@ -7,7 +7,7 @@ use app\models\HCR;
 use app\models\utils\Trailable;
 
 
-class HcrController extends \yii\web\Controller
+class HcrController extends BaseController
 {
     public function actionCreate()
     {

@@ -47,7 +47,10 @@ class ProductController extends BaseController
      */
     public function actionIndex()
     {
-        $products = Product::find()->all();
+        $this->checkPermission(['view_edit_form_a']); 
+        
+        $roleConditionArray = Product::myRoleACL();
+        $products = Product::find()->where($roleConditionArray)->all();
 
         return $this->render('index', [
             'products' => $products,
@@ -56,7 +59,11 @@ class ProductController extends BaseController
 
     public function actionReport()
     {
-        $products = Product::find()->all();
+        $this->checkPermission(['view_edit_form_a']); 
+        
+        $roleConditionArray = Product::myRoleACL();
+        $products = Product::find()->where($roleConditionArray)->all();
+        
         $model = new Product();
         $hcrService = new HCRService();
         $countryService = new CountryService();
@@ -73,8 +80,8 @@ class ProductController extends BaseController
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
         
         if ($model->load(Yii::$app->request->post())) {
-            $filtersArray = $model->attributes;
-            //echo json_encode($filtersArray); exit;
+            $filtersArray = array_merge($model->attributes, $roleConditionArray);
+            
             $reportArray = $model->getProductReport($filtersArray);
             echo json_encode($reportArray);
             exit;
@@ -99,6 +106,8 @@ class ProductController extends BaseController
      */
     public function actionCreate()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $model = new Product();
         $hcrService = new HCRService();
         $countryService = new CountryService();
@@ -135,7 +144,15 @@ class ProductController extends BaseController
      */
     public function actionUpdate($id, $new = false)
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $model = $this->findModel($id);
+        
+        $roleTitle = Yii::$app->session['user_role_title'];
+        $providerId = Yii::$app->session['user_provider_id'];
+         if(!$model->isMyProduct()) 
+                throw new \yii\web\ForbiddenHttpException();
+        
         $batchModel = new Batch();
         $batches = $model->batches;
         
@@ -180,6 +197,8 @@ class ProductController extends BaseController
      */
     public function actionDelete($id)
     {
+        $this->checkPermission(['view_edit_form_a', 'delete_product']); 
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -214,6 +233,8 @@ class ProductController extends BaseController
      */
     public function actionCreateBatch()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $model = new Batch(['scenario' => Batch::SCENARIO_AJAX]);
         
         (new Trailable($model))->registerInsert();
@@ -244,6 +265,8 @@ class ProductController extends BaseController
      */
     public function actionUpdateBatch()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $id = $_POST['Batch']['id'];
         $model = $this->findBatchModel($id);
         //$model->scenario = Batch::SCENARIO_AJAX;
@@ -277,6 +300,8 @@ class ProductController extends BaseController
      */
     public function actionDeleteBatch()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $id = $_POST['id'];
         $this->findBatchModel($id)->delete();
         echo 'OK';
@@ -294,12 +319,17 @@ class ProductController extends BaseController
     
     public function actionExpiring()
     {
+       $this->checkPermission(['view_edit_form_a']); 
+        
        $model = new Batch();
        $productService = new ProductService();
        $ptService = new ProductTypeService();
        
        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
        $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+       
+       $session = Yii::$app->session;
+       $roleConditionArray = Product::myRoleACL(); //RBAC
        
         if ($model->load(Yii::$app->request->post())) {
             $filtersArray = array();
@@ -308,12 +338,12 @@ class ProductController extends BaseController
             if($_POST['Product']['product_type'] > 0) $filtersArray['product_type'] = $_POST['Product']['product_type'];
             if($_POST['Batch']['batch_number'] != '') $filtersArray['batch_number'] = $_POST['Batch']['batch_number'];
 
-            echo json_encode($model->getExpiringBatches($filtersArray));
+            echo json_encode($model->getExpiringBatches(array_merge($filtersArray, $roleConditionArray), true));
             exit;
         }
         
         return $this->render('expiry', [
-            'batches' => $model->getExpiringBatches([]),
+            'batches' => $model->getExpiringBatches($roleConditionArray),
             'model' => $model,
             'product' => new Product(),
             'productType' => new ProductType(),

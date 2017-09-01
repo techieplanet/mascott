@@ -28,55 +28,57 @@ use Yii;
  * @property Role $role
  * 
  * @property string $authKey;
+ * 
+ * Transient 
  */
-class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
-{
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface {
+
     public $tempPass = '';
-    //public $permissions = [];
-    
-    //public $id;
-    //public $username;
-    //public $password;
-    //public $authKey;
-    //public $accessToken;
-    
+    public $new_password = '';
+    public $new_password_repeat = '';
+
+    const CHANGE_PASSWORD_SCENARIO = 'change_password';
+    const CHANGE_PASSWORD_REQUIRED_SCENARIO = 'change_password';
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'user';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['firstname', 'lastname', 'email', 'phone' , 'role_id', 'provider_id'], 'required'],
-            [['role_id', 'provider_id', 'zone_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
-            [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
-            [['firstname', 'middlename', 'lastname'], 'string', 'max' => 30],
-            [['email'], 'string', 'max' => 100],
-            [['email'], 'email'],
-            [['email'], 'unique'],
-            //[['provider_id'], 'integer', 'min'=>1, 'message'=>'{attribute} must select a provider'],
-            [['phone'], 'string', 'max' => 11],
-            [['phone'], 'string', 'min' => 11],
-            [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
-            [['salt'], 'string', 'max' => 6],
-            [['password'], 'string', 'max' => 128],
-            [['access_token'], 'string', 'max' => 15],
-            [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
+                [['firstname', 'lastname', 'email', 'phone', 'role_id', 'provider_id'], 'required'],
+                [['role_id', 'provider_id', 'zone_id', 'deleted', 'created_by', 'modified_by'], 'integer'],
+                [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
+                [['firstname', 'middlename', 'lastname'], 'string', 'max' => 30],
+                [['email'], 'string', 'max' => 100],
+                [['email'], 'email'],
+                [['email'], 'unique'],
+                [['phone'], 'string', 'max' => 11],
+                [['phone'], 'string', 'min' => 11],
+                [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
+                [['salt'], 'string', 'max' => 6],
+                [['password'], 'string', 'max' => 128],
+                [['access_token'], 'string', 'max' => 15],
+            
+                [['new_password', 'new_password_repeat', 'tempPass'], 'required', 'message' => 'Cannot be blank', 'on' => self::CHANGE_PASSWORD_REQUIRED_SCENARIO],
+                [['new_password', 'new_password_repeat', 'password'], 'string', 'max' => 128, 'on' => self::CHANGE_PASSWORD_SCENARIO],
+                ['new_password', 'compare', 'compareAttribute' => 'new_password_repeat', 'on' => self::CHANGE_PASSWORD_SCENARIO],
+                ['tempPass', 'validatePassword', 'on' => self::CHANGE_PASSWORD_SCENARIO],
+            
+                [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'firstname' => 'First Name',
@@ -101,95 +103,90 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRole()
-    {
+    public function getRole() {
         return $this->hasOne(Role::className(), ['id' => 'role_id']);
     }
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProvider()
-    {
+    public function getProvider() {
         return $this->hasOne(Provider::className(), ['id' => 'provider_id']);
     }
-    
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getZone()
-    {
+    public function getZone() {
         return $this->hasOne(Location::className(), ['id' => 'zone_id']);
     }
-    
-    
+
     /**
      * @inheritdoc
      */
-    public static function findIdentity($id)
-    {
+    public static function findIdentity($id) {
         return User::findOne($id);
     }
 
     /**
      * @inheritdoc
      */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
+    public static function findIdentityByAccessToken($token, $type = null) {
         return User::findOne(['access_token' => $token]);
     }
-    
+
     /**
      * @inheritdoc
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * @inheritdoc
      */
-    public function getAuthKey()
-    {
+    public function getAuthKey() {
         return $this->access_token;
     }
 
     /**
      * @inheritdoc
      */
-    public function validateAuthKey($authKey)
-    {
+    public function validateAuthKey($authKey) {
         return $this->authKey === $authKey;
     }
-    
-    public function validatePassword($password)
-    {
+
+    public function validatePassword($password) {
         return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
-    
-    public function hashPassword($password){
+
+    public function hashPassword($password) {
         return Yii::$app->getSecurity()->generatePasswordHash($password);
     }
-    
-    public static function findByEmail($email){
-        return User::find()->where(['email' => $email])->one(); 
+
+    public static function findByEmail($email) {
+        return User::find()->where(['email' => $email])->one();
     }
-    
-    public function getMyPermissions(){
-        $userPermissions =  User::find()
+
+    public function getMyPermissions() {
+        $userPermissions = User::find()
                 ->select(['alias'])
                 ->innerJoinWith(['role.roleAcls.permission'])
-                ->where(['user.id' => $this->id])
+                ->where(['user.id' => $this->id, 'active' => 1])
                 ->asArray()
                 ->all();
-        
-        $permissions = array_map(function($value){
-                                    return $value['alias'];
-                       }, $userPermissions);
-                       
+
+        $permissions = array_map(function($value) {
+            return $value['alias'];
+        }, $userPermissions);
+
         return $permissions;
-                                
+    }
+
+    public function setUpSessionVars(){
+            Yii::$app->session['user_permissions'] = $this->getMyPermissions();
+            Yii::$app->session['user_provider_id'] = $this->provider_id;
+            Yii::$app->session['user_role_title'] = $this->role->title;
+            Yii::$app->session['user_role_id'] =  $this->role->id;
     }
 }

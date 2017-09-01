@@ -134,14 +134,15 @@ class UserController extends BaseController
             
             $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
             
-            (new Trailable($model))->registerUpdate();
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                //$success = true;
-                //$selectedRoleId = $model->role_id;
-                //$selectedDesignation = $model->designation;
-                //return $this->redirect(['view', 'id' => $model->id]);
-                Yii::$app->session->setFlash('saved', 'UPDATED');
+            if ($model->load(Yii::$app->request->post())) {
+                (new Trailable($model))->registerUpdate();
+                if($model->save()) {
+                    Yii::$app->session->setFlash('saved', 'UPDATED');
+                    
+                    if(Yii::$app->user->id == $model->id){
+                        $model->setUpSessionVars();
+                    }
+                }
             }
 
             return $this->render('update', [
@@ -155,6 +156,82 @@ class UserController extends BaseController
         }
     }
 
+    
+    
+    /**
+     * A logged in user changes his own profile
+     * 
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionProfile($id) {
+        try {
+            $model = $this->findModel($id);
+
+            if ($model->load(Yii::$app->request->post())) {
+                (new Trailable($model))->registerUpdate();
+                if($model->save()) 
+                    Yii::$app->session->setFlash('saved', 'UPDATED');
+            }
+
+            return $this->render('profile', [
+                'model' => $model
+            ]);
+        } catch (Exception $e){
+            echo $e->getMessage;
+        }
+    }
+  
+    
+    
+    /**
+     * A logged in user changes his own profile
+     * 
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionChangePassword($id) {
+        try {
+            $model = $this->findModel($id);
+            $model->scenario = User::CHANGE_PASSWORD_REQUIRED_SCENARIO;
+            $userService = new UserService();
+            
+            if ($model->load(Yii::$app->request->post())) {
+                $model->new_password = isset($_POST['User']['new_password']) ? $_POST['User']['new_password'] : '';
+                $model->tempPass = isset($_POST['User']['tempPass']) ? $_POST['User']['tempPass'] : '';
+                $model->new_password_repeat = isset($_POST['User']['new_password_repeat']) ? $_POST['User']['new_password_repeat'] : '';
+                
+                $model->scenario = User::CHANGE_PASSWORD_SCENARIO;
+                
+                /**
+                 * THE SCENARIOS AND RULES DID NOT WORK.
+                 * HAD TO ROLL MANUAL VALIDATION.
+                 */
+                if($model->validatePassword($model->tempPass) &&
+                        ($model->new_password === $model->new_password_repeat)) {
+                    $model->password = $userService->hashPassword($model->new_password);
+                    if($model->save()){
+                        Yii::$app->session->setFlash('changed', 'PASSWORD CHANGED');
+                        return $this->redirect(['profile', 'id' => $model->id]);
+                    } else {
+                        Yii::$app->session->setFlash('changed_error', 'PASSWORD ERROR');
+                    }
+                } else {
+                    Yii::$app->session->setFlash('changed_error', 'PASSWORD ERROR');
+                }
+                
+            }
+
+            return $this->render('change-password', [
+                'model' => $model
+            ]);
+        } catch (Exception $e){
+            echo $e->getMessage;
+        }
+    }
+    
+    
+    
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

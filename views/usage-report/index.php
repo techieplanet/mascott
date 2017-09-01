@@ -21,10 +21,10 @@ $this->title = 'Usage Reports';
 <div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create Report', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Create New Report', ['create'], ['class' => 'btn btn-mas']) ?>
             <?= Html::a('<i class="fa fa-upload" aria-hidden="true"></i>  Upload Excel Data File', 
                     ['import-usage-data'], 
-                    ['class' => 'btn btn-success marginleft10']) ?>
+                    ['class' => 'btn btn-mas marginleft10']) ?>
         </p>
     </div>
 </div>

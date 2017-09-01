@@ -21,11 +21,12 @@ class UserService extends Service{
         $this->sendEmail(
                 Yii::$app->params['no-reply-email'], //from 
                 $model->email,                       //to
-                'New Account Registration',         //$subject, 
+                'Your account for NAFDAC MAS Reporting System',         //$subject, 
                 [
                     'password' => $model->tempPass,
                     'firstname' => $model->firstname,
                     'lastname' => $model->lastname,
+                    'email' => $model->email
                 ],
                 'new-user',                          //view/template file
                 'new-account'                       //layout file

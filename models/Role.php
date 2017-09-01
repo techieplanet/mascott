@@ -71,11 +71,12 @@ class Role extends \yii\db\ActiveRecord
      * @return array of the permission IDs for the role
      */
     public function getPermissionIDs(){
-        unset($this->roleAcls);
-        $accessList = $this->roleAcls;
+        //unset($this->roleAcls);
+        //$accessList = $this->roleAcls->with('permission');
+        $permissionsList = Permission::getPermissionsByRole($this->id);
         $permissionIdList = array();
-        foreach($accessList as $aclItem){
-            $permissionIdList[] = $aclItem->permission_id;
+        foreach($permissionsList as $permission){
+            $permissionIdList[] = $permission->id;
         }
         
         return $permissionIdList;

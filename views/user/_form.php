@@ -61,9 +61,9 @@ use app\views\helpers\Alert;
         </div>
     </div>
     <br>
-    <div class="form-group text-right">
+    <div class="text-right">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', [
-            'class' => $model->isNewRecord ? 'btn btn-success btn-mas' : 'btn btn-primary btn-mas',
+            'class' => $model->isNewRecord ? 'btn btn-mas' : 'btn btn-mas',
             ]) ?>
     </div>
 

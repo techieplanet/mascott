@@ -22,7 +22,7 @@ $this->title = 'Roles';
 <div class="row">
     <div class="col-md-12">
         <p class="text-right">
-            <?= Html::a('Create Role', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Create New Role', ['create'], ['class' => 'btn btn-mas']) ?>
         </p>
     </div>
 </div>
@@ -38,6 +38,14 @@ $this->title = 'Roles';
                     <th>Actions</th>
                 </tr>
             </thead>
+              <tfoot>
+                <tr>
+                    <th class="sorting">SN</th>
+                    <th class="sorting">Title</th>
+                    <th class="sorting">Description</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
                 <tbody>
         <?php
             //echo is_array($roles) ? 'array' : 'scalar'; exit;

@@ -9,6 +9,8 @@ use app\models\HCR;
 
 $this->title = 'Products';
 //$this->params['breadcrumbs'][] = $this->title;
+
+$permissions = Yii::$app->session['user_permissions'];
 ?>
 
 <section class="content-header">
@@ -17,9 +19,11 @@ $this->title = 'Products';
 
 <div class="row">
     <div class="col-md-12">
+        <?php if(in_array('view_edit_form_a', $permissions)) { ?>
         <p class="text-right">
-            <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Create New Product', ['create'], ['class' => 'btn btn-mas']) ?>
         </p>
+        <?php }  ?>
     </div>
 </div>
 
@@ -34,11 +38,26 @@ $this->title = 'Products';
                     <th class="sorting">Certificate Holder</th>
                     <th class="sorting">Brand Name</th>
                     <th class="sorting">Generic Name</th>
-                    <th class="sorting">NAFDAC Reg. Number</th>                    
+                    <th class="sorting">NAFDAC Reg. Number</th>       
+                    <?php if(in_array('view_edit_form_a', $permissions)) { ?>
                     <th>Actions</th>
+                    <?php } ?>
                 </tr>
             </thead>
-           
+           <tfoot>
+                <tr>
+                    <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
+                    <th class="sorting">Product Type</th>
+                    <th class="sorting">Certificate Holder</th>
+                    <th class="sorting">Brand Name</th>
+                    <th class="sorting">Generic Name</th>
+                    <th class="sorting">NAFDAC Reg. Number</th>    
+                    <?php if(in_array('view_edit_form_a', $permissions)) { ?>
+                    <th>Actions</th>
+                    <?php } ?>
+                </tr>
+            </tfoot>
             
                 <tbody>
         <?php
@@ -54,14 +73,18 @@ $this->title = 'Products';
                         <td><?php echo $product->brand_name; ?></td>
                         <td><?php echo $product->generic_name; ?></td>
                         <td><?php echo $product->nrn; ?></td>
-                        <td>
+                        <?php if(in_array('view_edit_form_a', $permissions)) { ?>
+                        <td class="text-center">
                             <span>
                                 <?php echo ActionButton::updateButton('product', $product->id); ?>
                             </span>
+                            <?php if(in_array('delete_product', $permissions)) { ?>
                             <span class="marginleft10">
                                 <?php echo ActionButton::deleteButton('product', $product->id); ?>
                             </span>
+                            <?php }  ?>
                         </td>
+                        <?php } ?>
                     </tr>
         <?php
             }

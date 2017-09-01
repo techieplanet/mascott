@@ -75,4 +75,11 @@ class Permission extends \yii\db\ActiveRecord
                 ->where(['permission_id'=>$this->id])
                 ->all();
     }
+    
+    public static function getPermissionsByRole($roleID){
+        return Permission::find()
+                ->innerJoinWith(['roleAcls'])
+                ->where(['role_id' => $roleID, 'active' => 1])
+                ->all();
+    }
 }

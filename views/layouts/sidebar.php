@@ -1,5 +1,6 @@
 <?php
     use yii\helpers\Html;
+    use yii\helpers\Url;
     $permissions = Yii::$app->session['user_permissions'];
 ?>
 
@@ -17,7 +18,6 @@
                 Yii::$app->user->identity->firstname . ' ' . 
                 Yii::$app->user->identity->lastname;
           ?>
-          
         </div>
       </div>
      
@@ -37,7 +37,7 @@
             if(
                     in_array('view_edit_form_a', $permissions) ||
                     in_array('view_edit_hcr', $permissions) ||
-                    in_array('view_edit_mas_provider', $permissions)
+                    in_array('view_edit_mas_provider', $permissions) 
               ) {
         ?>
                 <li id="reg-menu" class="treeview">
@@ -87,8 +87,8 @@
             if(
                 in_array('view_charts_reports', $permissions) ||
                 in_array('view_res_report', $permissions) ||
-                in_array('view_regional_data', $permissions) ||
-                in_array('view_own_data_only', $permissions)
+                in_array('view_regional_data', $permissions)  ||
+                in_array('view_edit_form_a', $permissions) 
               ) {
         ?>
         <!--------  REPORTS   -------------->
@@ -98,22 +98,25 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                  
+                
                 <li id="reports_product-report-menu">
                   <a href="#"><i class="fa fa-circle-o"></i> Products <i class="fa fa-angle-left pull-right"></i></a>
                   <ul class="treeview-menu">
-                    <li id="reports_product-reg-update-menu" class="paddingxleft10">
-                      <?= Html::a('<i class="fa fa-circle-o"></i> MAS Registration Update','@web/product/report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
-                    </li>
-                    <li id="reports_product-expiry-menu" class="paddingleft10">
-                      <?= Html::a('<i class="fa fa-circle-o"></i> Product Expiry Status','@web/product/expiring', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
-                    </li>
+                     <?php if(in_array('view_edit_form_a', $permissions)) { ?>
+                        <li id="reports_product-reg-update-menu" class="paddingxleft10">
+                          <?= Html::a('<i class="fa fa-circle-o"></i> MAS Registration Update','@web/product/report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                        </li>
+                        <li id="reports_product-expiry-menu" class="paddingleft10">
+                          <?= Html::a('<i class="fa fa-circle-o"></i> Product Expiry Status','@web/product/expiring', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+                        </li>
+                     <?php } ?>
                   </ul>
                 </li>
 
                 <li id="reports_usage-report-menu">
                   <a href="#"><i class="fa fa-circle-o"></i> Usage <i class="fa fa-angle-left pull-right"></i></a>
                   <ul class="treeview-menu">
+                     <?php if(in_array('view_edit_form_b', $permissions)) { ?>
                     <li id="reports_usage-mas-requests-menu">
                         <?= Html::a('<i class="fa fa-circle-o"></i>Number of MAS requests <br/>received',
                                     '@web/usage-report/requests-received', 
@@ -124,6 +127,7 @@
                                     '@web/usage-report/activated-used', 
                                     ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
                     </li>
+                     <?php }  ?>
                   </ul>
                 </li>
                 
@@ -194,16 +198,11 @@
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
             <ul class="treeview-menu">
-                <li id="">
-                    <?= Html::a('<i class="fa fa-circle-o"></i> Change Profile',
-                            '#', 
+                <li id="profile_change-menu">
+                    <?= Html::a(
+                            '<i class="fa fa-user"></i> Change Profile',
+                            Url::toRoute(['user/profile', 'id' => Yii::$app->user->id]), 
                             ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
-                </li>
-                <li id="">
-                    <?= Html::a('<i class="fa fa-circle-o"></i> Change Password',
-                            '#', 
-                            ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
-                    </a>
                 </li>
               </ul>
         </li>

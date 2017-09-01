@@ -50,7 +50,11 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
+                  <?= Html::a(
+                            'Profile',
+                            Url::toRoute(['user/profile', 'id' => Yii::$app->user->id]), 
+                            ['title' => '', 'style'=> 'word-wrap: normal;', 'class'=>'btn btn-default btn-flat']); ?>
                 </div>
                 <div class="pull-right">
                   <a href="<?= Url::toRoute('site/logout', true) ?>" class="btn btn-default btn-flat">Sign out</a>

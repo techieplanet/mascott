@@ -90,7 +90,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             //load permissions into session 
             $user = User::findOne(Yii::$app->user->id);
-            Yii::$app->session['user_permissions'] = $user->getMyPermissions();
+            
+            $user->setUpSessionVars();
             
             $url = (isset($_GET['r']) && (!empty($_GET['r']))) ? $_GET['r'] : 'site/dashboard';
             return $this->redirect([$url]); //does Url::to([])

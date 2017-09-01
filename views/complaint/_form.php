@@ -29,12 +29,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'report_id')->hiddenInput(['maxlength' => true])->label('') ?>
     
-    <div class="form-group text-right">
-        <span id="ask"><?= Html::button('Submit', ['class' => 'btn btn-success']) ?></span>
+    <div class="text-right">
+        <span id="ask"><?= Html::button('Submit', ['class' => 'btn btn-mas']) ?></span>
         <span class="hidden" id="action-options">
             <span class="marginright10">Are you sure? &nbsp;</span>
             <?= Html::button('No', ['id'=>'cancel','class' => 'btn btn-default marginright15']) ?>
-            <?= Html::submitButton('Yes', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Yes', ['class' => 'btn btn-mas']) ?>
         </span>
     </div>
 

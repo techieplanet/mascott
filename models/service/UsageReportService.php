@@ -21,7 +21,9 @@ class UsageReportService extends UsageReport {
                 array_key_exists('lgas',$filtersArray) ? json_decode($filtersArray['lgas']) : []
         ); 
         
-        if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type'])) 
+        $whereArray = parent::myRoleACL();
+        
+        if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type']))
                 $whereArray['product_type'] =  $filtersArray['product_type'];
         
         if(array_key_exists('provider_id', $filtersArray) && !empty($filtersArray['provider_id'])) 
@@ -61,7 +63,9 @@ class UsageReportService extends UsageReport {
     public function getActivatedProductsUsed($filtersArray, $asArray=true) {
         $whereArray = array(); $geozoneIds = array();
 
-        if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type'])) 
+        $whereArray = parent::myRoleACL();
+        
+        if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type']))
                 $whereArray['product_type'] =  $filtersArray['product_type'];
         
         if(array_key_exists('product_id', $filtersArray) && !empty($filtersArray['product_id'])) 
@@ -74,27 +78,24 @@ class UsageReportService extends UsageReport {
         $toDate = array_key_exists('to_date', $filtersArray) && !empty($filtersArray['to_date']) ? 
                 $filtersArray['to_date'] : 
                 $this->getLastReported()->date_reported;
-        
-        //Denom: # of MAS requests received
-        //Num: # of requests received on activated products
             
         $nums = UsageReport::find()
-                    ->select(['COUNT(*) AS requests', 'date_reported', 'MONTHNAME(date_reported) AS month', 'batch.batch_number'])
+                    ->select(['COUNT(*) AS requests', 'MONTHNAME(date_reported) AS month'])
                     ->innerJoinWith(['batch', 'batch.product', 'batch.product.productType', 'batch.product.provider'])
                     ->where($whereArray)
                     ->andWhere(['=', 'mas_code_status', 2])
                     ->andWhere(['between', 'date_reported', $fromDate, $toDate])
-                    ->groupBy(['MONTH(date_reported)'])
+                    ->groupBy(['month'])
                     ->indexBy('month')
                     ->asArray($asArray)
                     ->all();    
         
         $denoms = UsageReport::find()
-                    ->select(['COUNT(*) AS requests', 'date_reported', 'MONTHNAME(date_reported) AS month', 'batch.batch_number'])
+                    ->select(['COUNT(*) AS requests', 'MONTHNAME(date_reported) AS month'])
                     ->innerJoinWith(['batch', 'batch.product', 'batch.product.productType', 'batch.product.provider'])
                     ->where($whereArray)
                     ->andWhere(['between', 'date_reported', $fromDate, $toDate])
-                    ->groupBy(['MONTH(date_reported)'])
+                    ->groupBy(['month'])
                     ->indexBy('month')
                     ->asArray($asArray)
                     ->all();
@@ -130,13 +131,16 @@ class UsageReportService extends UsageReport {
                 array_key_exists('lgas',$filtersArray) ? json_decode($filtersArray['lgas']) : []
         ); 
         
-        //echo empty(json_decode($filtersArray['providers'])); exit;
+        $whereArray = parent::myRoleACL();
         
         if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type'])) 
                 $whereArray['product_type'] =  $filtersArray['product_type'];
         
-        if(array_key_exists('providers', $filtersArray) && !empty(json_decode($filtersArray['providers']))) 
+        
+        if(array_key_exists('providers', $filtersArray))
                 $providers = json_decode($filtersArray['providers']);
+                if(empty($providers))
+                    $providers = array_keys(Provider::find()->asArray()->indexBy('id')->all());
         else 
                 $providers = array_keys(Provider::find()->asArray()->indexBy('id')->all());
         

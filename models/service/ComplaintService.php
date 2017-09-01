@@ -36,6 +36,8 @@ class ComplaintService extends Complaint {
         $whereArray = []; $geozoneIds = []; $providers = [];
         $location = new Location(); $usageReport = new UsageReport();
         
+        $whereArray = self::myRoleACL();
+        
         list($locationIDArray, $tiervalue) = Location::getGeoLevelData(
                 array_key_exists('geozones', $filtersArray) ? json_decode($filtersArray['geozones']) : [],
                 array_key_exists('states',$filtersArray) ? json_decode($filtersArray['states']) : [],
@@ -113,6 +115,8 @@ class ComplaintService extends Complaint {
         $whereArray = []; $geozoneIds = []; 
         $usageReport = new UsageReport();
                 
+        $whereArray = self::myRoleACL();
+        
         if(array_key_exists('product_type', $filtersArray) && !empty($filtersArray['product_type'])) 
                 $whereArray['product_type'] =  $filtersArray['product_type'];
         
@@ -178,11 +182,14 @@ class ComplaintService extends Complaint {
         foreach($productIDs as $productID)
             $productIDsArray[] = $productID['id'];
         
+        $roleConditionArray = self::myRoleACL();
+        
         return Complaint::find()
                 ->select(['count(product.id) AS fakesCount', 'product_name'])
                 ->innerJoinWith(['report', 'report.batch.product'])
                 ->where(['in', 'product.id', $productIDsArray])
                 ->andWhere(['>', 'validation_result', 1])
+                ->andWhere($roleConditionArray)
                 ->asArray()
                 ->indexBy('product_name')
                 ->groupBy('product.id')

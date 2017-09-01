@@ -89,4 +89,30 @@ class Complaint extends \yii\db\ActiveRecord
             3 => self::UNRESOLVED
          ];
     }
+    
+    
+    public static function myRoleACL() {
+       $userId = Yii::$app->user->id;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+        
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+            return ['provider_id' => $user->provider->id];
+       }
+       
+       return [];
+   }
+    
+   
+    public function isMyComplaint() {
+       $userId = Yii::$app->user->id;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+       
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER') {
+           $complaint = Complaint::find()->with('report.batch.product.provider')->where(['id'=> $this->id])->one();
+            $complaintProviderId = $complaint->report->batch->product->provider->id;
+            return $complaintProviderId == $user->provider->id;
+       }
+       
+       return true;
+   }
 }

@@ -82,6 +82,18 @@ class Provider extends \yii\db\ActiveRecord
     }
     
     public static function getProvidersAsAssocArray(){
-        return Provider::find()->asArray()->all();
+        $roleConditionArray = Provider::myRoleACL();
+        return Provider::find()->where($roleConditionArray)->asArray()->all();
     }
+    
+    public static function myRoleACL() {
+        $userId = Yii::$app->user->id;
+        $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+        
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+            return ['id' => $user->provider->id];
+       }
+       
+      return [];
+   }
 }

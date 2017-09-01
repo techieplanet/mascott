@@ -50,22 +50,17 @@ class UsageReportController extends BaseController
      */
     public function actionIndex()
     {        
-        $reports = UsageReport::find()->all();
+        $this->checkPermission(['view_edit_form_b']);
+        
+        $session = Yii::$app->session;
+        $roleConditionArray = UsageReport::myRoleACL();
+        $reports = UsageReport::find()
+                ->innerJoinWith(['batch.product'])
+                ->where($roleConditionArray)
+                ->all();    
 
         return $this->render('index', [
             'reports' => $reports,
-        ]);
-    }
-
-    /**
-     * Displays a single UsageReport model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 
@@ -76,6 +71,8 @@ class UsageReportController extends BaseController
      */
     public function actionCreate()
     {
+        $this->checkPermission(['view_edit_form_b']);
+        
         $model = new UsageReport();
         $locationService = new LocationService();
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
@@ -98,7 +95,7 @@ class UsageReportController extends BaseController
                 Yii::$app->session->setFlash('saved', 'CREATED');
                 return $this->redirect(['update', 'id' => $model->id, 'new' => true]);
             }
-        } 
+        }
         
         return $this->render('create', [
                 'model' => $model,
@@ -116,7 +113,13 @@ class UsageReportController extends BaseController
      */
     public function actionUpdate($id, $new = false)
     {
+        $this->checkPermission(['view_edit_form_b']);
+        
         $model = $this->findModel($id);
+        $session = Yii::$app->session;
+        if(!$model->isMyReport())
+                throw new \yii\web\ForbiddenHttpException();
+        
         $locationService = new LocationService();
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
         
@@ -152,6 +155,8 @@ class UsageReportController extends BaseController
      */
     public function actionDelete($id)
     {
+        $this->checkPermission(['view_edit_form_b']);
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -172,6 +177,7 @@ class UsageReportController extends BaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
     
     public function actionRequestsReceived(){
         $filtersArray = array();

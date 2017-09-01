@@ -35,7 +35,7 @@ use yii\web\View;
             <?= $form->field($batchModel, 'id')->hiddenInput()->label(false) ?>
         </div>
         <div class="col-md-3" style="margin-top: 25px;">
-            <?= Html::button('Add', ['id'=>'add-batch','class'=>'btn btn-success btn-mas']) ?>
+            <?= Html::button('Add', ['id'=>'add-batch','class'=>'btn btn-mas']) ?>
             <?= Html::button('Clear', ['id'=>'clear-form','class'=>'btn btn-default marginleft10']) ?>
         </div>
         
@@ -64,6 +64,16 @@ use yii\web\View;
                         <th>Actions</th>
                     </tr>
                 </thead>
+                <tfoot>
+                    <tr>
+                        <th class="">SN</th>
+                        <th class="">Batch Number</th>
+                        <th class="">Manufacturing Date</th>
+                        <th class="">Expiry Date</th>
+                        <th class="">Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </tfoot>
               
                     <tbody>
             <?php

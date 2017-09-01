@@ -586,3 +586,13 @@ legend {
     padding: 20px 2px;
     /*margin-top: 20px;*/
 }
+
+.simple-anchor{
+    word-wrap: normal; 
+    text-decoration: none; 
+    font-size:18px; 
+    color: #2F9E69
+}
+.simple-anchor:hover{
+    text-decoration: underline !important;
+}

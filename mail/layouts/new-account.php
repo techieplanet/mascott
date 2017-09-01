@@ -19,33 +19,7 @@ use yii\helpers\Url;
 <style type="text/css">
     /* FONTS */
     @media screen {
-        @font-face {
-          font-family: 'Lato';
-          font-style: normal;
-          font-weight: 400;
-          src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
-        }
         
-        @font-face {
-          font-family: 'Lato';
-          font-style: normal;
-          font-weight: 700;
-          src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
-        }
-        
-        @font-face {
-          font-family: 'Lato';
-          font-style: italic;
-          font-weight: 400;
-          src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
-        }
-        
-        @font-face {
-          font-family: 'Lato';
-          font-style: italic;
-          font-weight: 700;
-          src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
-        }
     }
     
     /* CLIENT-SPECIFIC STYLES */
@@ -98,10 +72,28 @@ use yii\helpers\Url;
             <![endif]-->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
                 <tr>
-                    <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
-                        <a href="http://11itmusss.com" target="_blank">
-                            <img alt="Logo" src="http://litmuswww.s3.amazonaws.com/community/template-gallery/ceej/logo.png" width="40" height="40" style="display: block; width: 40px; max-width: 40px; min-width: 40px; font-family: 'Lato', Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">
-                        </a>
+                    <td align="center" valign="top" style="padding: 50px 10px 40px 10px;text-align: center;">
+                        <img alt="Logo" 
+                             src="http://mas.nafdac.gov.ng/web/images/logo.png" 
+                              width="70" height="70" 
+                              style="" border="0"
+                        />
+                        <br/>
+                        <p 
+                            style="color: #fff;
+                                font-size: 13px;
+                                font-weight: 600;
+                                line-height: 17px;
+                                margin: 10px 10px 0;"
+                        >
+                            NATIONAL AGENCY FOR FOODS AND DRUGS<br/> ADMINISTRATION AND CONTROL (NAFDAC)<br/>
+                            <span 
+                                style="color: #FCBF3D;
+                                        font-size: 14px;
+                                        font-weight: bold;">
+                                MAS Reporting System
+                            </span>
+                        </p>
                     </td>
                 </tr>
             </table>
@@ -124,7 +116,7 @@ use yii\helpers\Url;
                 <tr>
                     <td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
                       <!--<h1 style="font-size: 48px; font-weight: 400; margin: 0;">Welcome!</h1>-->
-                      <h6>New Account Notification </h6>
+                      <h6 style="margin:40px 20px 10px; font-size: 25px;">New Account Notification </h6>
                     </td>
                 </tr>
             </table>
@@ -146,52 +138,34 @@ use yii\helpers\Url;
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
               <!-- COPY -->
               <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                    <p style="margin: 0;">
+                <td bgcolor="#ffffff" align="left" 
+                    style="padding: 0px 30px 40px 30px; color: #666666; 
+                            font-family: 'Lato', Helvetica, Arial, sans-serif; 
+                            font-size: 15px; font-weight: 400; 
+                            line-height: 20px !important;" 
+                >
+                    <p style="margin: 0; font-size: 15px important; color: #666666;">
                         <?php $this->beginBody() ?>
                             <?= $content ?>
                         <?php $this->endBody() ?>
                     </p>
                 </td>
               </tr>
-              <!-- BULLETPROOF BUTTON -->
-              <!-- <tr>
-                <td bgcolor="#ffffff" align="left">
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
-                        <table border="0" cellspacing="0" cellpadding="0">
-                          <tr>
-                              <td align="center" style="border-radius: 3px;" bgcolor="#FFA73B"><a href="<?= Html::a('Home page', Url::home('http')) ?>" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #FFA73B; display: inline-block;">Confirm Account</a></td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>-->
-              <!-- COPY -->
-<!--              <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                  <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p>
-                </td>
-              </tr>
-               COPY 
-                <tr>
-                  <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                    <p style="margin: 0;"><a href="<?= Html::a('Home page', Url::home('http')) ?>" target="_blank" style="color: #FFA73B;"><?= Url::home('http') ?></a></p>
-                  </td>
-                </tr>-->
-              <!-- COPY -->
-              <!-- <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                  <p style="margin: 0;">If you have any questions, just reply to this email—we're always happy to help out.</p>
-                </td>
-              </tr>-->
-              <!-- COPY -->
               <tr>
-                <td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                  <p style="margin: 0;">Regards,<br>The NAFDAC MAS Team</p>
+                <td bgcolor="#ffffff" align="left" 
+                    style="padding: 0px 30px 40px 30px; 
+                            border-radius: 0px 0px 4px 4px; color: #666666; 
+                            font-family: 'Lato', Helvetica, Arial, sans-serif; 
+                            font-size: 15px; font-weight: 400; line-height: 25px;" 
+                >
+                    <p style="margin: 0;">Regards,<br>The NAFDAC MAS Team</p> 
+                    <hr/>
+                    <p>
+                        <small style="font-size: 14px; font-style: italic; line-height: 0;">
+                            You have received this email because you recently registered for NAFDAC’s MAS reporting system. 
+                            If you have received this email in error, please disregard.
+                        </small>
+                    </p>
                 </td>
               </tr>
             </table>
@@ -202,102 +176,7 @@ use yii\helpers\Url;
             <![endif]-->
         </td>
     </tr>
-    <!-- SUPPORT CALLOUT -->
-<!--    <tr>
-        <td bgcolor="#f4f4f4" align="center" style="padding: 30px 10px 0px 10px;">
-            [if (gte mso 9)|(IE)]>
-            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
-            <tr>
-            <td align="center" valign="top" width="600">
-            <![endif]
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-                 HEADLINE 
-                <tr>
-                  <td bgcolor="#FFECD1" align="center" style="padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-                    <h2 style="font-size: 20px; font-weight: 400; color: #111111; margin: 0;">Need more help?</h2>
-                    <p style="margin: 0;"><a href="http://litmus.com" target="_blank" style="color: #FFA73B;">We&rsquo;re here, ready to talk</a></p>
-                  </td>
-                </tr>
-            </table>
-            [if (gte mso 9)|(IE)]>
-            </td>
-            </tr>
-            </table>
-            <![endif]
-        </td>
-    </tr>-->
-    <!-- FOOTER -->
-<!--    <tr>
-        <td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-            [if (gte mso 9)|(IE)]>
-            <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
-            <tr>
-            <td align="center" valign="top" width="600">
-            <![endif]
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-               NAVIGATION 
-              <tr>
-                <td bgcolor="#f4f4f4" align="left" style="padding: 30px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-                  <p style="margin: 0;">
-                    <a href="http://litmus.com" target="_blank" style="color: #111111; font-weight: 700;">Dashboard</a> -
-                    <a href="http://litmus.com" target="_blank" style="color: #111111; font-weight: 700;">Billing</a> -
-                    <a href="http://litmus.com" target="_blank" style="color: #111111; font-weight: 700;">Help</a>
-                  </p>
-                </td>
-              </tr>
-               PERMISSION REMINDER 
-              <tr>
-                <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-                  <p style="margin: 0;">You received this email because you just signed up for a new account. If it looks weird, <a href="http://litmus.com" target="_blank" style="color: #111111; font-weight: 700;">view it in your browser</a>.</p>
-                </td>
-              </tr>
-               UNSUBSCRIBE 
-              <tr>
-                <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-                  <p style="margin: 0;">If these emails get annoying, please feel free to <a href="http://litmus.com" target="_blank" style="color: #111111; font-weight: 700;">unsubscribe</a>.</p>
-                </td>
-              </tr>
-               ADDRESS 
-              <tr>
-                <td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-                  <p style="margin: 0;">Ceej - 1234 Main Street - Anywhere, MA - 56789</p>
-                </td>
-              </tr>
-            </table>
-            [if (gte mso 9)|(IE)]>
-            </td>
-            </tr>
-            </table>
-            <![endif]
-        </td>
-    </tr>-->
 </table>
-
-    <!-- LITMUS ATTRIBUTION -->
-<!--    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr>
-            <td bgcolor="#ffffff" align="center">
-                [if (gte mso 9)|(IE)]>
-<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
-<tr>
-<td align="center" valign="top" width="600">
-<![endif]
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-                    <tr>
-                        <td bgcolor="#ffffff" align="center" style="padding: 30px 30px 30px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-                            <p style="margin: 0;">This email was built and tested with Litmus. <a href="https://litmus.com?utm_campaign=litmus_templates&utm_source=litmus_community&utm_medium=templates" style="color: #5db3ec;">What's Litmus?</a></p>
-                        </td>
-                    </tr>
-                </table>
-                [if (gte mso 9)|(IE)]>
-</td>
-</tr>
-</table>
-<![endif]
-            </td>
-        </tr>
-    </table>-->
-    <!-- END LITMUS ATTRIBUTION -->
     
 </body>
 </html>

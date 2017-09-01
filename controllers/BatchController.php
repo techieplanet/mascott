@@ -65,7 +65,9 @@ class BatchController extends BaseController
      */
     public function actionCreate()
     {
-        echo 'inside create action'; exit;
+        $this->checkPermission('view_edit_form_a');
+            
+        //echo 'inside create action'; exit;
         $model = new Batch();
         //trail
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
