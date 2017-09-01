@@ -60,7 +60,7 @@ class ComplaintService extends Complaint {
         $tierFieldName = $location->getTierFieldName($tiervalue);
         
         $nums = Complaint::find()
-                    ->select(['COUNT(*) AS res_result', $tierFieldName . ' AS location_name', $tierText, 'report_id'])
+                    ->select(['COUNT(*) AS res_result', $tierFieldName . ' AS location_name', $tierText])
                     ->innerJoinWith(['report', 'report.location', 'report.batch.product', 'report.batch.product.productType'])
                     ->where($whereArray)
                     ->andWhere(['=', 'validation_result', 1])
@@ -73,7 +73,7 @@ class ComplaintService extends Complaint {
                     ->all();  
 
         $denoms = UsageReport::find()
-                    ->select(['COUNT(*) AS requests', $tierFieldName . ' AS location_name', $tierText, 'batch.batch_number', 'location_id'])
+                    ->select(['COUNT(*) AS requests', $tierFieldName . ' AS location_name', $tierText])
                     ->innerJoinWith(['batch', 'location', 'batch.product.productType'])
                     ->where($whereArray)
                     ->andWhere(['in', $tierText, $locationIDArray])
@@ -179,7 +179,7 @@ class ComplaintService extends Complaint {
             $productIDsArray[] = $productID['id'];
         
         return Complaint::find()
-                ->select(['count(product.id) AS fakesCount', 'product_name', 'report_id'])
+                ->select(['count(product.id) AS fakesCount', 'product_name'])
                 ->innerJoinWith(['report', 'report.batch.product'])
                 ->where(['in', 'product.id', $productIDsArray])
                 ->andWhere(['>', 'validation_result', 1])

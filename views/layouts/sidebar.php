@@ -12,7 +12,7 @@
         <div class="image">
             <?= Html::img('@web/images/user.png', ['alt' => 'User Image']) ?>
         </div>
-          <div class="padding10 text-center" style="color: #fff;">
+          <div class="padding10 text-center" style="color: #000;">
           <?= 
                 Yii::$app->user->identity->firstname . ' ' . 
                 Yii::$app->user->identity->lastname;
@@ -35,7 +35,7 @@
         <!--------  REGISTRATION   -------------->
         <li id="reg-menu" class="treeview">
           <a href="#">
-            <i class="fa fa-files-o"></i>
+            <i class="fa fa-sign-in"></i>
             <span>REGISTRATION</span>
             <i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -54,7 +54,7 @@
         
         <!--------  USAGE   -------------->
         <li id="usage-menu" class="">
-            <?= Html::a('<i class="fa fa-files-o"></i>USAGE REPORT','@web/usage-report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
+            <?= Html::a('<i class="fa fa-file-text"></i>USAGE REPORT','@web/usage-report', ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
         <!--<li id="hcr-menu" class="">
@@ -64,7 +64,7 @@
         </li>-->
         
         <li id="complaint-menu" class="">
-            <?= Html::a('<i class="fa fa-files-o"></i> COMPLAINTS RESOLUTION',
+            <?= Html::a('<i class="fa fa-tags"></i> COMPLAINTS RESOLUTION',
                     '@web/complaint', 
                     ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
@@ -131,12 +131,12 @@
         
         
         <li id="role-menu">
-          <?= Html::a('<i class="fa fa-user"></i> ROLES','@web/role', 
+          <?= Html::a('<i class="fa fa-tasks"></i> ROLES','@web/role', 
                     ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         
         <li id="user-menu">
-            <?= Html::a('<i class="fa fa-user"></i> USERS','@web/user', 
+            <?= Html::a('<i class="fa fa-users"></i> USERS','@web/user', 
                     ['title' => '', 'style'=> 'word-wrap: normal;']); ?>
         </li>
         

@@ -12,8 +12,11 @@
                 <?= Html::img('@web/images/logo.png', ['alt' => 'Logo']) ?>
             </div>
             <span class="logo-text">
-                NATIONAL AGENCY FOR FOODS AND DRUGS<br/> ADMINISTRATION AND CONTROL (NAFDAC)<br/>
-                <span class="sub-logo-text">MAS Reporting System</span>
+                MAS Reporting System
+                <hr class="logo-hr"/>
+                <span class="sub-logo-text">
+                    NATIONAL AGENCY FOR FOODS AND DRUGS<br/> ADMINISTRATION AND CONTROL (NAFDAC)
+                </span><br/>
             </span>
         </a>
         

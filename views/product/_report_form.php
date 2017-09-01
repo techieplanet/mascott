@@ -18,14 +18,7 @@ $homeUrl = Yii::$app->homeUrl;
         'id' => 'product-report-form',
         'options'=> ['class' => 'x-form-padding']
 ]); ?>
-    <div class="row marginbottom15">
-       <div class="col-md-4">
-            <?= $form->field($model, 'provider_id')->dropDownList(
-                   $providerMap, 
-                   array('options' => array($model->provider_id=>array('selected'=>true)))
-                )
-           ?>
-        </div>        
+    <div class="row marginbottom15">              
         <div class="col-md-4">
             <?= $form->field($model, 'product_name')->dropDownList(
                    $productMap, 
@@ -40,16 +33,23 @@ $homeUrl = Yii::$app->homeUrl;
                  ) 
             ?>
         </div>
-    </div>
-    <div class="row marginbottom10">
-        <div class="col-md-3">
-             <?= $form->field($model, 'production_country')->dropDownList(
+        <div class="col-md-4">
+            <?= $form->field($model, 'production_country')->dropDownList(
                     $countryMap, 
                     array('options' => array($model->production_country=>array('selected'=>true)))
                  ) 
             ?>
+        </div> 
+    </div>
+    <div class="row marginbottom10">
+        <div class="col-md-3">
+             <?= $form->field($model, 'provider_id')->dropDownList(
+                   $providerMap, 
+                   array('options' => array($model->provider_id=>array('selected'=>true)))
+                )
+           ?>
          </div>        
-         <div class="col-md-3">
+         <div class="col-md-3 split">
              <?= $form->field($model, 'mas_code_status')->dropDownList(
                      ['0'=>'-- Select --', '1'=>'Not Activated', '2'=>'Activated'],
                      array('options' => array($model->mas_code_status=>array('selected'=>true)))

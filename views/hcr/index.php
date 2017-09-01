@@ -14,7 +14,7 @@ use app\views\helpers\Alert;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$this->title = 'Holder of Certificate of Registration (HCR) List';
+$this->title = 'Holder of Certificate of Registration (HCR)';
 //$this->params['breadcrumbs'][] = $this->title;
 
 ?>

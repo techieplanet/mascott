@@ -19,11 +19,14 @@ $this->title = 'Login';
                     <?= Html::img('@web/images/logo.png', ['alt' => 'Logo']) ?>
                 </div>
                 <div class="logo-text nofloat" style="padding-bottom: 10px;">
-                    NATIONAL AGENCY FOR FOOD AND DRUGS
+                    MAS Reporting System
+                    <hr class="logo-login-hr"/>
+                    <span class="sub-logo-text">
+                        NATIONAL AGENCY FOR FOOD AND DRUGS
                     <br>
                     ADMINISTRATION AND CONTROL (NAFDAC)
                     <br>
-                    <span class="sub-logo-text">MAS Reporting System</span>
+                    </span>
                 </div> <!-- green header -->
             </div>
             

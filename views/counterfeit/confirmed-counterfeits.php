@@ -25,14 +25,14 @@ use app\views\helpers\Alert;
         'options' => ['class' => 'x-form-padding']
 ]); ?>
     <div class="row marginbottom15">
-       <div class="col-md-5">
+       <div class="col-md-6">
             <?= $form->field($product, 'product_name')->dropDownList(
                    $productMap
                 )
            ?>
         </div>
         
-       <div class="col-md-5">
+       <div class="col-md-6">
             <?= $form->field($product, 'product_type')->dropDownList(
                    $ptMap, 
                    array('options' => array(0=>array('selected'=>true)))
@@ -282,7 +282,7 @@ use app\views\helpers\Alert;
         (function() {
                         //set high charts global color scheme for all high charts instances on this page
                         Highcharts.setOptions({
-                            colors: ['#2F9E69','#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#DD4477', '#AAAA11', '#B77322']
+                            colors: ['#8FAD1F','#2F9E69','#3366CC', '#DC3912', '#FF9900', '#109618', '#990099', '#0099C6', '#DD4477', '#AAAA11', '#B77322']
                         });
                     })();
                   ",
