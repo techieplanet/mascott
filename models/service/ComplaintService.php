@@ -68,12 +68,16 @@ class ComplaintService extends Complaint {
                     ->andWhere(['=', 'validation_result', 1])
                     ->andWhere(['in', $tierText, $locationIDArray])
                     ->andWhere(['between', 'date_reported', $fromDate, $toDate])
-                    ->indexBy('location_name')
                     ->groupBy([$tierText, $tierFieldName])
                     ->orderBy($tierText . ' ASC')
                     ->asArray($asArray)
-                    ->all();  
-
+                    ->indexBy('location_name')
+                    ->createCommand()
+                    ->queryAll();
+                    
+        //change the keys to locations
+        $nums = $this->changeKeys($nums, 'location_name');
+        
         $denoms = UsageReport::find()
                     ->select(['COUNT(*) AS requests', $tierFieldName . ' AS location_name', $tierText])
                     ->innerJoinWith(['batch', 'location', 'batch.product.productType'])
@@ -84,7 +88,11 @@ class ComplaintService extends Complaint {
                     ->groupBy([$tierText, $tierFieldName])
                     ->orderBy($tierText . ' ASC')
                     ->asArray($asArray)
-                    ->all();  
+                    ->createCommand()
+                    ->queryAll();  
+        
+        //change the keys to locations
+        $denoms = $this->changeKeys($denoms, 'location_name');
         
         //remove keys not existing in both arrays
         foreach($denoms as $key=>$value){
@@ -132,7 +140,7 @@ class ComplaintService extends Complaint {
                 $usageReport->getLastReported()->date_reported;
         
         $nums = Complaint::find()
-                    ->select(['COUNT(*) AS res_result', 'MONTHNAME(date_reported) AS month', 'batch.batch_number', 'location_id', 'report_id'])
+                    ->select(['COUNT(*) AS res_result', 'MONTHNAME(date_reported) AS month', 'batch.batch_number', 'location_id'])
                     ->innerJoinWith(['report', 'report.location', 'report.batch.product', 'report.batch.product.productType'])
                     ->where($whereArray)
                     ->andWhere(['=', 'validation_result', 1])
@@ -184,7 +192,7 @@ class ComplaintService extends Complaint {
         
         $roleConditionArray = self::myRoleACL();
         
-        return Complaint::find()
+        $complaints = Complaint::find()
                 ->select(['count(product.id) AS fakesCount', 'product_name'])
                 ->innerJoinWith(['report', 'report.batch.product'])
                 ->where(['in', 'product.id', $productIDsArray])
@@ -194,6 +202,11 @@ class ComplaintService extends Complaint {
                 ->indexBy('product_name')
                 ->groupBy('product.id')
                 ->orderBy('product_name')
-                ->all();
+                ->createCommand()
+                ->queryAll();
+        
+        $complaints = $this->changeKeys($complaints, 'product_name');
+        
+        return $complaints;
     }
 }

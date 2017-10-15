@@ -58,6 +58,7 @@ and open the template in the editor.
 .paddingleft10{ padding-left: 10px !important;}
 .paddingleft0 { padding-left: 0px !important; }
 .paddingright0 { padding-right: 0px !important; }
+.paddingright15 { padding-right: 15px !important; }
 .paddingleft0 { padding-left: 0px !important; }
 
 .width10{width: 10px !important;}
@@ -341,16 +342,17 @@ body .modal .modal-lg {
 }
 
 .logo-text {
-    color: #fff;
-    font-size: 14px;
+    color: #f7ad19;
+    font-size: 16px;
     font-weight: 600;
-    line-height: 17px;
+    line-height: 14px;
+    text-transform: uppercase;
     float:left;
-    margin: 20px 10px;
+    margin: 15px 10px;
 }
 
 .logo-text:hover {
-    color: #fff;
+    color: #f7ad19;
 }
 
 .logo-icon img {
@@ -362,27 +364,44 @@ body .modal .modal-lg {
     margin-top: -40px;
 }
 
+.logo-hr {
+    border: 0;
+    border-top: 1px solid #fff;
+    margin: 5px 0px;
+    width: 70%;
+    transform: translateX(19%)
+}
+
+.logo-login-hr {
+    border: 0;
+    border-top: 1px solid #fff;
+    margin: 5px 0px;
+    width: 50%;
+    transform: translateX(50%);
+}
+
 .logo-anchor {
     /*margin-left: 20px;*/
 }
 
 .sub-logo-text {
-    color: #D6AB4F;
-    font-size: 14px;
+    color: #fff;
+    font-size: 65%;
+    line-height: 12px;
     font-weight: bold;
 }
 
 .sub-logo-text:hover {
-    color: #D6AB4F;
+    color: #fff;
 }
 
 .main-sidebar, .left-side {
     padding-top: 120px !important;
-    background: #3D7359 !important;
+    background: #d4d0b5 !important;
 }
 
 .wrapper {
-    background: #3D7359 !important;
+    background: #d4d0b5 !important;
 }
 
 .content-wrapper, .right-side {
@@ -553,21 +572,44 @@ legend {
     padding: 20px;
 }
 
+.sidebar-menu {
+    margin-top: 35px !important;
+}
+
 .sidebar-menu .treeview-menu{
     padding-left: 0px !important;
 }
 
-.treeview-menu li.active {
-    background-color: #00363a  !important;/* #006f3e #003300 #2C3B41*/
-    border-left: 2px solid #00A65A !important;
+.skin-green .sidebar-menu>li>a {
+    border: none !important;
 }
 
-.treeview-menu li.active2 {
-    background-color:  #2f9e69 !important; /*#4c8c4a #48B782*/
+.skin-green .sidebar a {
+    color: #000 !important;
 }
 
-.active2 a {
-    color: #ffffff !important;
+.treeview-menu #reg_provider-menu.active a,
+.treeview-menu #reg_product-menu.active a,
+.treeview-menu #reg_hcr-menu.active a{
+    color: #fff  !important;/* #006f3e #003300 #2C3B41*/
+    
+}
+.skin-green .sidebar-menu>li:hover>a,
+.skin-green .sidebar-menu>li.active>a {
+    color: #fff !important;
+    background: #2F9E69;
+}
+
+.skin-green .sidebar-menu>li>.treeview-menu {
+    margin: 0px;
+    background: #AAA79A !important;
+}
+.treeview-menu li .active a {
+    color: #fff !important;
+}
+
+.treeview-menu li .active2 a{
+    color: #fff !important;
 }
 
 .indicator-text{
@@ -580,7 +622,6 @@ legend {
 
 .indicator-value{
     color: #FFFFFF;
-    background: #3D7359;
     font-weight: bold;
     font-size: 20px;
     padding: 20px 2px;
@@ -595,4 +636,26 @@ legend {
 }
 .simple-anchor:hover{
     text-decoration: underline !important;
+}
+.indicator-color1 {
+    background: #00CC00;
+}
+
+.indicator-color2 {
+    background: #3366FF;
+}
+
+.indicator-color3 {
+    background: #FF9900;
+}
+
+.indicator-color4 {
+    background: #E6001A;
+}
+.split {
+    border-right: 2px dashed #2f9e69 !important;
+}
+
+.popover{
+    min-width: 200px !important;
 }

@@ -35,6 +35,7 @@ $this->title = 'Usage Reports';
             <thead>
                 <tr>
                     <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
                     <th class="sorting">Batch Number</th>
                     <th class="text-center">Phone Number</th>
                     <th class="text-center">Location</th>
@@ -46,6 +47,7 @@ $this->title = 'Usage Reports';
             <tfoot>
                 <tr>
                     <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
                     <th class="sorting">Batch Number</th>
                     <th class="text-center">Phone Number</th>
                     <th class="text-center">Location</th>
@@ -63,6 +65,7 @@ $this->title = 'Usage Reports';
         ?>
                     <tr>
                         <td><?php echo ++$count; ?></td>
+                        <td><?php echo $report->batch->product->product_name; ?></td>
                         <td><?php echo $report->batch_number; ?></td>
                         <td class="text-center"><?php echo $report->phone; ?></td>
                         <td class="text-center"><?php echo Location::findOne($report->location_id)->location_name; ?></td>

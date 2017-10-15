@@ -86,16 +86,19 @@ class UserController extends BaseController
             
             //add generated fields
             $model->salt = $userService->generateRandomString(6);
-            $model->tempPass = $userService->generateRandomString(6);
+            //$model->tempPass = $userService->generateRandomString(6);
+            $model->tempPass = Yii::$app->params['default-password']; //default password
             $model->password = $userService->hashPassword($model->tempPass);
             $model->access_token = $userService->generateRandomString(15);
-            
+             //echo 'pss: ' . $model->tempPass . ', ' . $model->password; exit;
             (new Trailable($model))->registerInsert();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $success = true;
                 //$selectedRoleId = $model->role_id;
                 //$selectedDesignation = $model->designation;
+                
+                //send email to new user
                 $userService->sendNewUserEmail($model);
                 
                 Yii::$app->session->setFlash('saved', 'CREATED');
@@ -212,7 +215,13 @@ class UserController extends BaseController
                     $model->password = $userService->hashPassword($model->new_password);
                     if($model->save()){
                         Yii::$app->session->setFlash('changed', 'PASSWORD CHANGED');
-                        return $this->redirect(['profile', 'id' => $model->id]);
+                        
+                        if(Yii::$app->session['default-password'] === true) { //For first time compulsory change
+                            Yii::$app->session['default-password'] = false;
+                            return $this->redirect(['site/dashboard']);
+                        } else { 
+                            return $this->redirect(['profile', 'id' => $model->id]);
+                        }
                     } else {
                         Yii::$app->session->setFlash('changed_error', 'PASSWORD ERROR');
                     }

@@ -13,7 +13,6 @@ $this->title = 'Change Password';
 $subtitle = $model->firstname . ' ' . $model->lastname;
 ?>
 <div class="user-update">
-
     <p>
         <?= Html::a('<span class="glyphicon glyphicon-chevron-left"></span>Back', 
                 Url::toRoute(['user/profile', 'id' => Yii::$app->user->id]), 
@@ -47,12 +46,19 @@ $subtitle = $model->firstname . ' ' . $model->lastname;
             </div>
         </div>
         <br>
-        <div class="text-right">
-            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Submit', [
-                'class' => $model->isNewRecord ? 'btn btn-mas' : 'btn btn-mas',
-                ]) ?>
+        <!--<div class="text-right">-->
+        <div class="row">
+            <div class="col-md-8" style="font-size: 20px; color: #2F9E69; text-decoration: underline;">
+                 <?php if(Yii::$app->session['default-password'] === true) { ?>
+                        <strong><em>Please change your password before you can proceed on the platform</em></strong>
+                <?php } ?>
+                </div>
+                 <div class="col-md-4 pull-right text-right">
+                    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Submit', [
+                        'class' => $model->isNewRecord ? 'btn btn-mas' : 'btn btn-mas',
+                        ]) ?>
+                </div>
         </div>
-
         <?php ActiveForm::end(); ?>
 
     </div>

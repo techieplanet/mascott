@@ -77,6 +77,9 @@ class UsageReportController extends BaseController
         $locationService = new LocationService();
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
         
+        $productService = new ProductService();
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->location_id = $locationService->getSelectedLocationId(
                     $_POST['UsageReport']['geozone_id'],
@@ -100,7 +103,9 @@ class UsageReportController extends BaseController
         return $this->render('create', [
                 'model' => $model,
                 'lh' => $locationsHieJson,
-                'parentsJson' => '0'
+                'parentsJson' => '0',
+                'productMap' => $productMap,
+                'product' => new Product()
         ]);
         
     }
@@ -121,7 +126,9 @@ class UsageReportController extends BaseController
                 throw new \yii\web\ForbiddenHttpException();
         
         $locationService = new LocationService();
+        $productService = new ProductService();
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
         
         $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
         
@@ -142,7 +149,9 @@ class UsageReportController extends BaseController
         return $this->render('update', [
             'model' => $model,
             'lh' => $locationsHieJson,
-            'parentsJson' => $parentsJson
+            'parentsJson' => $parentsJson,
+            'productMap' => $productMap,
+            'product' => new Product()
         ]);
         
     }
@@ -244,8 +253,9 @@ class UsageReportController extends BaseController
     
     
     public function actionImportUsageData(){
+                
         $model = new Uploader(['scenario' => Uploader::SCENARIO_EXCEL]);
-        $startRow = 10;
+        $startRow = 19;
         $uploadErrors = array(); $parseResponse = array(); 
         
         if (Yii::$app->request->isPost) {
@@ -257,6 +267,7 @@ class UsageReportController extends BaseController
                  */
                 
                 $fileName = $model->excelFile->baseName . '.' . $model->excelFile->extension;
+                $fileName = 'uploads' . DIRECTORY_SEPARATOR . $fileName;
                 
                 /**
                 * $parseResponse is an array.

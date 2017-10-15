@@ -10,7 +10,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-
+use app\models\User;
 /**
  * Description of BaseController
  *
@@ -23,6 +23,16 @@ class BaseController extends Controller {
         if (Yii::$app->user->isGuest) {
             $this->redirect(['site/index?r='.$action->getUniqueId()]);
             return false;
+        } else  { //user is logged in but find if user is using the default password
+            $user = User::findOne(Yii::$app->user->id);
+            if($user->validatePassword(Yii::$app->params['default-password'])){
+                if($action->getUniqueId() !== 'user/change-password') {//avoid endless redirect loop
+                    Yii::$app->session['default-password'] = true;
+                    $url = ['user/change-password', 'id' => Yii::$app->user->id];
+                    $this->redirect($url);
+                    return false;
+                }
+            }
         }
         
         return true;

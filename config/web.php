@@ -34,9 +34,13 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => false,
             'class' => 'yii\swiftmailer\Mailer',
+            'messageConfig' => [
+                'charset' => 'UTF-8',
+                'from' => ['masadmin@nafdac.gov.ng' => 'NAFDAC MAS'],
+            ],
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                //'host' => 'mail.techieplanetltd.com',
+               // 'host' => 'mail.techieplanetltd.com',
                 'host' => 'smtp.gmail.com',
                 //'host' => 'smtp.gbb.com.ng',
                 //'username' => 'devtest@techieplanetltd.com',
@@ -44,9 +48,11 @@ $config = [
                 //'username' => 'masadmin@nafdac.gov.ng',
                 'password' => 'nafdacmastest!20',
                 //'password' => 'Password1',
+                //'password' => 'devtest112',
                 //'port' => '587',
-                'port' => '465',
-                'encryption' => 'SSL'
+                //'port' => '465',
+                'port' =>'587',
+                'encryption' => 'TLS'
             ],
         ],
         'log' => [

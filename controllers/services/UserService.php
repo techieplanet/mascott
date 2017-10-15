@@ -19,7 +19,7 @@ class UserService extends Service{
     
     public function sendNewUserEmail($model){
         $this->sendEmail(
-                Yii::$app->params['no-reply-email'], //from 
+                //Yii::$app->params['no-reply-email'], //from 
                 $model->email,                       //to
                 'Your account for NAFDAC MAS Reporting System',         //$subject, 
                 [

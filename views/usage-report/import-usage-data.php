@@ -4,7 +4,7 @@ use app\views\helpers\Alert;
 use yii\helpers\Html;
 ?>
 
-<?php if(empty($uploadErrors) && empty($excelErrors)) { ?>
+<?php if(empty($uploadErrors) && empty($excelErrors) && Yii::$app->request->isPost) { ?>
     <div class="row paddingbottom20">
         <div clas="col-md-12">
             <div class=" no-print">

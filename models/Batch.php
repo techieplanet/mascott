@@ -127,12 +127,14 @@ class Batch extends \yii\db\ActiveRecord
         $obj = Batch::find()
                 ->innerJoinWith(['product', 'product.productType'])
                 ->where([
-                    'UPPER(product_name)' => strtoupper($pname),
+                    'UPPER(product_name)' => strtoupper($pname) . '',
                     'UPPER(title)' => strtoupper($pt_title),
                     'UPPER(nrn)' => strtoupper($nrn),
                     'UPPER(batch_number)' => strtoupper($batchnum)
-                ])->one();
+                ])->one();        
         
+        //echo is_object($obj) ? 'OBJECT' : 'SCALAR'; exit;
+
         return is_object($obj);
     }
     

@@ -17,7 +17,7 @@ use Yii;
  *
  * @property UsageReport $report
  */
-class Complaint extends \yii\db\ActiveRecord
+class Complaint extends BaseModel
 {
     const UNRESOLVED = 'UNRESOLVED';
     const CONFIRMED = 'TRUE';

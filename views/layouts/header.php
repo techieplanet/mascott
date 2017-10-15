@@ -12,8 +12,11 @@
                 <?= Html::img('@web/images/logo.png', ['alt' => 'Logo']) ?>
             </div>
             <span class="logo-text">
-                NATIONAL AGENCY FOR FOODS AND DRUGS<br/> ADMINISTRATION AND CONTROL (NAFDAC)<br/>
-                <span class="sub-logo-text">MAS Reporting System</span>
+                MAS Reporting System
+                <hr class="logo-hr"/>
+                <span class="sub-logo-text">
+                    NATIONAL AGENCY FOR FOODS AND DRUGS<br/> ADMINISTRATION AND CONTROL (NAFDAC)
+                </span><br/>
             </span>
         </a>
         
@@ -30,8 +33,8 @@
               <?= Html::img('@web/images/user.png', ['alt' => 'User Image']) ?>
               <span class="hidden-xs">
                   <?= 
-                        Yii::$app->user->identity->firstname . ' ' . 
-                        Yii::$app->user->identity->lastname;
+                        ucfirst(Yii::$app->user->identity->firstname) . ' ' . 
+                        ucfirst(Yii::$app->user->identity->lastname);
                   ?>
               </span>
             </a>
@@ -50,11 +53,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
-                  <?= Html::a(
-                            'Profile',
-                            Url::toRoute(['user/profile', 'id' => Yii::$app->user->id]), 
-                            ['title' => '', 'style'=> 'word-wrap: normal;', 'class'=>'btn btn-default btn-flat']); ?>
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?= Url::toRoute('site/logout', true) ?>" class="btn btn-default btn-flat">Sign out</a>

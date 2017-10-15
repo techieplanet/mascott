@@ -55,6 +55,23 @@ class SiteController extends Controller
             ],
         ];
     }
+    
+    
+    public function beforeAction($action){
+        if (!Yii::$app->user->isGuest) {
+            $user = User::findOne(Yii::$app->user->id);
+            if($user->validatePassword(Yii::$app->params['default-password'])){
+                if($action->getUniqueId() !== 'site/logout') {//avoid endless redirect loop
+                    Yii::$app->session['default-password'] = true;
+                    $url = ['user/change-password', 'id' => Yii::$app->user->id];
+                    $this->redirect($url);
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
 
     /**
      * @inheritdoc
@@ -80,9 +97,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         //if logged in, redirect to dashboard page
-//        if (!Yii::$app->user->isGuest) {
-//            return $this->redirect('site/dashboard');
-//        }
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('site/dashboard');
+        }
 
         $this->layout = 'centered';
         $model = new LoginForm();

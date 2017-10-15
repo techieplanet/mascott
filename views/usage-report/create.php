@@ -30,7 +30,9 @@ $subtitle = 'Create New Usage Report';
     <?= $this->render('_form', [
         'model' => $model,
         'lh' => $lh,
-        'parentsJson' => $parentsJson
+        'parentsJson' => $parentsJson,
+        'productMap' => $productMap,
+         'product' => $product
     ]) ?>
 
 </div>
