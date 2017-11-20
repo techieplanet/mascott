@@ -50,22 +50,17 @@ class UsageReportController extends BaseController
      */
     public function actionIndex()
     {        
-        $reports = UsageReport::find()->all();
+        $this->checkPermission(['view_edit_form_b']);
+        
+        $session = Yii::$app->session;
+        $roleConditionArray = UsageReport::myRoleACL();
+        $reports = UsageReport::find()
+                ->innerJoinWith(['batch.product'])
+                ->where($roleConditionArray)
+                ->all();    
 
         return $this->render('index', [
             'reports' => $reports,
-        ]);
-    }
-
-    /**
-     * Displays a single UsageReport model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 
@@ -76,9 +71,15 @@ class UsageReportController extends BaseController
      */
     public function actionCreate()
     {
+        //ini_set('display_errors', 'On');
+        $this->checkPermission(['view_edit_form_b']);
+        
         $model = new UsageReport();
         $locationService = new LocationService();
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
+        
+        $productService = new ProductService();
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
         
         if ($model->load(Yii::$app->request->post())) {
             $model->location_id = $locationService->getSelectedLocationId(
@@ -98,12 +99,14 @@ class UsageReportController extends BaseController
                 Yii::$app->session->setFlash('saved', 'CREATED');
                 return $this->redirect(['update', 'id' => $model->id, 'new' => true]);
             }
-        } 
+        }
         
         return $this->render('create', [
                 'model' => $model,
                 'lh' => $locationsHieJson,
-                'parentsJson' => '0'
+                'parentsJson' => '0',
+                'productMap' => $productMap,
+                'product' => new Product()
         ]);
         
     }
@@ -116,9 +119,17 @@ class UsageReportController extends BaseController
      */
     public function actionUpdate($id, $new = false)
     {
+        $this->checkPermission(['view_edit_form_b']);
+        
         $model = $this->findModel($id);
+        $session = Yii::$app->session;
+        if(!$model->isMyReport())
+                throw new \yii\web\ForbiddenHttpException();
+        
         $locationService = new LocationService();
+        $productService = new ProductService();
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
+        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
         
         $new == true ?  Yii::$app->session->setFlash('saved', Yii::$app->session->getFlash('saved')) : '';
         
@@ -139,7 +150,9 @@ class UsageReportController extends BaseController
         return $this->render('update', [
             'model' => $model,
             'lh' => $locationsHieJson,
-            'parentsJson' => $parentsJson
+            'parentsJson' => $parentsJson,
+            'productMap' => $productMap,
+            'product' => new Product()
         ]);
         
     }
@@ -152,6 +165,8 @@ class UsageReportController extends BaseController
      */
     public function actionDelete($id)
     {
+        $this->checkPermission(['view_edit_form_b']);
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -172,6 +187,7 @@ class UsageReportController extends BaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
     
     public function actionRequestsReceived(){
         $filtersArray = array();
@@ -238,8 +254,9 @@ class UsageReportController extends BaseController
     
     
     public function actionImportUsageData(){
+                
         $model = new Uploader(['scenario' => Uploader::SCENARIO_EXCEL]);
-        $startRow = 10;
+        $startRow = 19;
         $uploadErrors = array(); $parseResponse = array(); 
         
         if (Yii::$app->request->isPost) {
@@ -251,6 +268,7 @@ class UsageReportController extends BaseController
                  */
                 
                 $fileName = $model->excelFile->baseName . '.' . $model->excelFile->extension;
+                $fileName = 'uploads' . DIRECTORY_SEPARATOR . $fileName;
                 
                 /**
                 * $parseResponse is an array.
@@ -273,5 +291,23 @@ class UsageReportController extends BaseController
             'excelErrors' => $parseResponse
         ]);
         
+    }
+    
+    public function actionDownloadSample(){        
+        $file = 'uploads/templates/MAS Request Report- Form B.xlsx';
+  
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        } else {
+            echo 'no file'; 
+        }
     }
 }

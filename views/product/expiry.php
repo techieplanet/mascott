@@ -12,6 +12,7 @@ use app\models\HCR;
 
 $this->title = 'Product Expiry Status';
 //$this->params['breadcrumbs'][] = $this->title;
+//var_dump($batches[0]->product); exit;
 ?>
 
 <section class="content-header">

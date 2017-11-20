@@ -26,7 +26,7 @@ class RoleService {
      * @return array(entity1=>[...actions...], entity2=>[...actions...])
      */
     public function getEntitiesAndPermissions(){
-        $permissions = Permission::find()->orderBy('entity,weight')->all();
+        $permissions = Permission::find()->where(['active' => 1])->orderBy('entity,weight')->all();
         
         $currentEntity = '';
         $result = array();

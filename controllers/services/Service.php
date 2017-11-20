@@ -25,10 +25,11 @@ class Service {
         return Yii::$app->getSecurity()->generatePasswordHash($password);
     }
     
-    public function sendEmail($from, $to, $subject, $params, $viewFile='', $layoutFile=''){
+    public function sendEmail($to, $subject, $params, $viewFile='', $layoutFile=''){
+        //return;
         Yii::$app->mailer->htmlLayout = 'layouts/' . $layoutFile;
         Yii::$app->mailer->compose($viewFile, $params)
-            ->setFrom($from)
+            //->setFrom($from)
             ->setTo($to)
             ->setSubject($subject)
             //->setTextBody($message)

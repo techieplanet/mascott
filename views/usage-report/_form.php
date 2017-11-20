@@ -22,13 +22,20 @@ use app\views\helpers\Alert;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class="col-md-4 paddingleft0">
+        <div class="col-md-3">
+            <?php $selected = !is_null($model->batch) ? $model->batch->product_id : 0; ?>
+            <?= $form->field($product, 'product_name')->dropDownList(
+                    $productMap,
+                    array('options' => array($selected=>array('selected'=>true))) 
+              )  ?>
+          </div>
+        <div class="col-md-3 paddingleft0">
             <?= $form->field($model, 'batch_number')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <?= $form->field($model, 'response')->dropDownList(
                     [0 => '--Select--', 1 => 'Genuine', 2 => 'False', 3 => 'Invalid' ],
                     array('options' => array($model->response=>array('selected'=>true))) 

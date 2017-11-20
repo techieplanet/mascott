@@ -59,6 +59,7 @@ class UsageReport extends \yii\db\ActiveRecord
             [['phone'], 'string', 'max' => 11],
             [['batch_number'], 'string', 'max' => 12],
             [['phone'], 'match', 'pattern' => '/^[0-9]+$/'],
+            [['phone'], 'string', 'min' => 11],
             [['pin_4_digits'], 'string', 'max' => 4],
             [['location_id'], 'exist', 'skipOnError' => true, 'targetClass' => Location::className(), 'targetAttribute' => ['location_id' => 'id']],
         ];
@@ -148,4 +149,29 @@ class UsageReport extends \yii\db\ActiveRecord
         return UsageReport::find()->orderBy(['date_reported'=>SORT_DESC])->limit(1)->one();
     }
     
+    
+    public static function myRoleACL() {
+       $userId = Yii::$app->user->id;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+        
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+            return ['provider_id' => $user->provider->id];
+       }
+       
+       return [];
+   }
+    
+   
+    public function isMyReport() {
+       $userId = Yii::$app->user->id;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+       
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER') {
+           $report = UsageReport::find()->with('batch.product.provider')->where(['id'=> $this->id])->one();
+            $reportProductProviderId = $report->batch->product->provider->id;
+            return $reportProductProviderId == $user->provider->id;
+       }
+       
+       return true;
+   }
 }

@@ -16,15 +16,15 @@ $this->title = 'Dashboard';
         
         <div class="col-md-3">
             <div class="row">
-                <div class="col-md-8 indicator-text">Total Number of Products<br/></div>
+                <div class="col-md-8 indicator-text">Total Number of <br/>Products</div>
                 <div class="col-md-3 indicator-value indicator-color2 text-center"><?= $productCount; ?></div>
             </div>
         </div>
         
         <div class="col-md-3">
             <div class="row">
-                <div class="col-md-8 indicator-text" style="font-size: 14px; padding: 14px 5px;">
-                    Total Number of Confirmed Counterfeits
+                <div class="col-md-8 indicator-text" style="padding: inherit 5px;">
+                    Total Number of Negative Responses
                 </div>
                 <div class="col-md-3 indicator-value  indicator-color3 text-center"><?= $confirmedCounterfeitsCount; ?></div>
             </div>
@@ -64,7 +64,7 @@ $this->title = 'Dashboard';
             <div class="row">
             <div class="col-md-6">
                 <div class=" panel panel-default text-center">
-                    <div class="panel-heading">Confirmed Counterfeit reports</div>
+                    <div class="panel-heading">Confirmed negative responses</div>
                     <div class="panel-body">
                         <div id="counterfeits1" class="paddingtop20" style="height: 400px; margin: 0 auto"></div>
                     </div>
@@ -72,7 +72,7 @@ $this->title = 'Dashboard';
             </div>
             <div class="col-md-6">
                 <div class=" panel panel-default text-center">
-                    <div class="panel-heading">Confirmed counterfeits per product</div>
+                    <div class="panel-heading">Confirmed negative responses per product</div>
                     <div class="panel-body">
                         <div id="counterfeits2" class="paddingtop20" style="height: 400px; margin: 0 auto"></div>
                     </div>
@@ -124,4 +124,3 @@ $this->title = 'Dashboard';
                 'highcharts-colors'
             );   
 ?>
-

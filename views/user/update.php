@@ -27,9 +27,7 @@ $subtitle = 'Edit User: ' . $model->firstname . ' ' . $model->lastname;
         'model' => $model,
         'rolesMap' => $rolesMap,
         'providerMap' => $providerMap,
-        //'success' => $success,
-        //'selectedRoleId' => $selectedRoleId,
-        //'selectedDesignation' => $selectedDesignation,
+        'zonesMap' => $zonesMap
     ]) ?>
 
     <?php //unset($model->role) ?>

@@ -25,9 +25,7 @@ $subtitle = 'Create New User';
         'model' => $model,
         'rolesMap' => $rolesMap,
         'providerMap' => $providerMap,
-        //'success' => $success,
-        //'selectedRoleId' => $selectedRoleId,
-        //'selectedDesignation' => $selectedDesignation,
+        'zonesMap' => $zonesMap
     ]) ?>
 
 </div>

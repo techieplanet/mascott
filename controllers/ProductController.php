@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 use app\models\Product;
 use app\models\ProductType;
 use app\models\Batch;
@@ -19,6 +20,8 @@ use app\controllers\services\ProviderService;
 use app\controllers\services\ProductTypeService;
 use app\controllers\services\ProductService;
 use app\controllers\services\LocationService;
+use app\models\utils\Uploader;
+use app\models\service\ProductExcelParser;
 
 
 /**
@@ -47,7 +50,10 @@ class ProductController extends BaseController
      */
     public function actionIndex()
     {
-        $products = Product::find()->all();
+        $this->checkPermission(['view_edit_form_a']); 
+        
+        $roleConditionArray = Product::myRoleACL();
+        $products = Product::find()->where($roleConditionArray)->all();
 
         return $this->render('index', [
             'products' => $products,
@@ -56,7 +62,11 @@ class ProductController extends BaseController
 
     public function actionReport()
     {
-        $products = Product::find()->all();
+        $this->checkPermission(['view_edit_form_a']); 
+        
+        $roleConditionArray = Product::myRoleACL();
+        $products = Product::find()->where($roleConditionArray)->all();
+        
         $model = new Product();
         $hcrService = new HCRService();
         $countryService = new CountryService();
@@ -73,8 +83,8 @@ class ProductController extends BaseController
         $locationsHieJson = $locationService->getLocationsHierachyAsJson();
         
         if ($model->load(Yii::$app->request->post())) {
-            $filtersArray = $model->attributes;
-            //echo json_encode($filtersArray); exit;
+            $filtersArray = array_merge($model->attributes, $roleConditionArray);
+            
             $reportArray = $model->getProductReport($filtersArray);
             echo json_encode($reportArray);
             exit;
@@ -99,6 +109,8 @@ class ProductController extends BaseController
      */
     public function actionCreate()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $model = new Product();
         $hcrService = new HCRService();
         $countryService = new CountryService();
@@ -135,7 +147,15 @@ class ProductController extends BaseController
      */
     public function actionUpdate($id, $new = false)
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $model = $this->findModel($id);
+        
+        $roleTitle = Yii::$app->session['user_role_title'];
+        $providerId = Yii::$app->session['user_provider_id'];
+         if(!$model->isMyProduct()) 
+                throw new \yii\web\ForbiddenHttpException();
+        
         $batchModel = new Batch();
         $batches = $model->batches;
         
@@ -180,6 +200,8 @@ class ProductController extends BaseController
      */
     public function actionDelete($id)
     {
+        $this->checkPermission(['view_edit_form_a', 'delete_product']); 
+        
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -214,6 +236,8 @@ class ProductController extends BaseController
      */
     public function actionCreateBatch()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $model = new Batch(['scenario' => Batch::SCENARIO_AJAX]);
         
         (new Trailable($model))->registerInsert();
@@ -244,6 +268,8 @@ class ProductController extends BaseController
      */
     public function actionUpdateBatch()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $id = $_POST['Batch']['id'];
         $model = $this->findBatchModel($id);
         //$model->scenario = Batch::SCENARIO_AJAX;
@@ -277,6 +303,8 @@ class ProductController extends BaseController
      */
     public function actionDeleteBatch()
     {
+        $this->checkPermission(['view_edit_form_a']); 
+        
         $id = $_POST['id'];
         $this->findBatchModel($id)->delete();
         echo 'OK';
@@ -294,12 +322,17 @@ class ProductController extends BaseController
     
     public function actionExpiring()
     {
+       $this->checkPermission(['view_edit_form_a']); 
+        
        $model = new Batch();
        $productService = new ProductService();
        $ptService = new ProductTypeService();
        
        $productMap = $productService->getProductMap(); $productMap[0] = '--Select Product--'; ksort($productMap);
        $ptMap = $ptService->getProductTypesMap(); $ptMap[0] = '--Select Product Type--'; ksort($ptMap);
+       
+       $session = Yii::$app->session;
+       $roleConditionArray = Product::myRoleACL(); //RBAC
        
         if ($model->load(Yii::$app->request->post())) {
             $filtersArray = array();
@@ -308,12 +341,12 @@ class ProductController extends BaseController
             if($_POST['Product']['product_type'] > 0) $filtersArray['product_type'] = $_POST['Product']['product_type'];
             if($_POST['Batch']['batch_number'] != '') $filtersArray['batch_number'] = $_POST['Batch']['batch_number'];
 
-            echo json_encode($model->getExpiringBatches($filtersArray));
+            echo json_encode($model->getExpiringBatches(array_merge($filtersArray, $roleConditionArray), true));
             exit;
         }
         
         return $this->render('expiry', [
-            'batches' => $model->getExpiringBatches([]),
+            'batches' => $model->getExpiringBatches($roleConditionArray),
             'model' => $model,
             'product' => new Product(),
             'productType' => new ProductType(),
@@ -321,5 +354,64 @@ class ProductController extends BaseController
             'ptMap' => $ptMap
         ]);
        
+    }
+    
+    
+    public function actionDownloadSample(){
+        $file = 'uploads/templates/MAS Registration form - Form A.xlsx';
+
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        } else {
+            echo 'no file'; 
+        }
+    }
+    
+    
+    public function actionImportProductData(){
+        $model = new Uploader(['scenario' => Uploader::SCENARIO_EXCEL]);
+        $startRow = 19;
+        $uploadErrors = array(); $parseResponse = array(); 
+        
+        if (Yii::$app->request->isPost) {
+            $model->excelFile = UploadedFile::getInstance($model, 'excelFile');
+            if ($model->uploadExcelFile()) {
+                /**
+                 * HURRAY!
+                 * file is uploaded successfully
+                 */
+                
+                $fileName = $model->excelFile->baseName . '.' . $model->excelFile->extension;
+                $fileName = 'uploads' . DIRECTORY_SEPARATOR . $fileName;
+                
+                /**
+                * $parseResponse is an array.
+                * Will contain errors if any
+                * Will be empty of no errors.
+                */
+                $parseResponse = (new ProductExcelParser($startRow, $fileName))->run();
+                
+                //Yii::$app->session->setFlash('uploaded', 'UPLOADED');
+                
+            } else {
+                $uploadErrors[] = $model->getErrors();
+            }
+            
+        }
+
+        return $this->render('import-product-data', [
+            'model' => $model,
+            'uploadErrors' => $uploadErrors,
+            'excelErrors' => $parseResponse
+        ]);
+        
     }
 }

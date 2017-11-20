@@ -37,7 +37,7 @@ class Permission extends \yii\db\ActiveRecord
             [['weight', 'active'], 'integer'],
             [['entity'], 'string', 'max' => 50],
             [['alias'], 'string', 'max' => 60],
-            [['title'], 'string', 'max' => 30],
+            [['title'], 'string', 'max' => 60],
             [['description'], 'string', 'max' => 250],
         ];
     }
@@ -73,6 +73,13 @@ class Permission extends \yii\db\ActiveRecord
         return User::find()
                 ->innerJoinWith(['role', 'role.roleAcls'])
                 ->where(['permission_id'=>$this->id])
+                ->all();
+    }
+    
+    public static function getPermissionsByRole($roleID){
+        return Permission::find()
+                ->innerJoinWith(['roleAcls'])
+                ->where(['role_id' => $roleID, 'active' => 1])
                 ->all();
     }
 }

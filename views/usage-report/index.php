@@ -18,15 +18,38 @@ $this->title = 'Usage Reports';
     <h1><?= $this->title; ?></h1>
 </section>
 
-<div class="row">
-    <div class="col-md-12">
-        <p class="text-right">
-            <?= Html::a('Create New Report', ['create'], ['class' => 'btn btn-mas']) ?>
-            <?= Html::a('<i class="fa fa-upload" aria-hidden="true"></i>  Upload Excel Data File', 
-                    ['import-usage-data'], 
-                    ['class' => 'btn btn-mas marginleft10']) ?>
-        </p>
-    </div>
+<div class="row marginbottom15">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-mas dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Actions <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><?= Html::a('<i class="fa fa-plus" aria-hidden="true"></i> '
+                                . 'Create New Report', 
+                                ['create'], ['class' => '']) ?>
+              </li>
+
+              <li role="separator" class="divider"></li>
+               <li class="dropdown-header">REGISTRATION TEMPLATE</li>
+               <li role="separator" class="divider"></li>
+
+              <li><?= Html::a('<i class="fa fa-download" aria-hidden="true"></i> '
+                                . 'Download Sample Template', 
+                                ['download-sample'], ['class' => '']) ?>
+              </li>
+              <li><?= Html::a('<i class="fa fa-upload" aria-hidden="true"></i> '
+                                . 'Upload Reports Data File', 
+                                ['import-usage-data'], ['class' => '']) ?>
+              </li>
+            </ul>
+        </div>
+        
+        <!--<p class="text-right">-->
+            <?php //Html::a('Create New Report', ['create'], ['class' => 'btn btn-mas']) ?>
+            <?php //Html::a('<i class="fa fa-upload" aria-hidden="true"></i>  Upload Excel Data File', 
+                    //['import-usage-data'], 
+                    //['class' => 'btn btn-mas marginleft10']) ?>
+        <!--</p>-->
 </div>
 
 <div class="row">
@@ -35,6 +58,7 @@ $this->title = 'Usage Reports';
             <thead>
                 <tr>
                     <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
                     <th class="sorting">Batch Number</th>
                     <th class="text-center">Phone Number</th>
                     <th class="text-center">Location</th>
@@ -46,6 +70,7 @@ $this->title = 'Usage Reports';
             <tfoot>
                 <tr>
                     <th class="sorting">SN</th>
+                    <th class="sorting">Product Name</th>
                     <th class="sorting">Batch Number</th>
                     <th class="text-center">Phone Number</th>
                     <th class="text-center">Location</th>
@@ -63,6 +88,7 @@ $this->title = 'Usage Reports';
         ?>
                     <tr>
                         <td><?php echo ++$count; ?></td>
+                        <td><?php echo $report->batch->product->product_name; ?></td>
                         <td><?php echo $report->batch_number; ?></td>
                         <td class="text-center"><?php echo $report->phone; ?></td>
                         <td class="text-center"><?php echo Location::findOne($report->location_id)->location_name; ?></td>

@@ -83,13 +83,14 @@ class Batch extends \yii\db\ActiveRecord
      * Get the expiring batches in the system
      * A batch is in this category if it 
      */   
-    public function getExpiringBatches($filtersArray){
+    public function getExpiringBatches($filtersArray, $asArray=false){
+        
         $date = date('Y-m-d');
         return Batch::find()
                 ->innerJoinWith(['product.productType','product.certificateHolder'])
                 ->where("DATEDIFF(expiry_date, '$date') <= 90")
                 ->andWhere($filtersArray)
-                ->asArray(!empty($filtersArray) ? true : false)
+                ->asArray($asArray)
                 ->all();
     }
     
@@ -105,10 +106,12 @@ class Batch extends \yii\db\ActiveRecord
         foreach($productIDs as $productID)
             $productIDsArray[] = $productID['id'];
         
+        $roleConditionArray = self::myRoleACL();
         return Batch::find()
                 ->select(['count(batch.id) AS batchCount', 'product_name', 'product_id'])
                 ->innerJoinWith('product')
                 ->where(['in', 'product.id', $productIDsArray])
+                ->andWhere($roleConditionArray)
                 ->asArray()
                 ->indexBy('product_name')
                 ->orderBy('product_name')
@@ -124,12 +127,39 @@ class Batch extends \yii\db\ActiveRecord
         $obj = Batch::find()
                 ->innerJoinWith(['product', 'product.productType'])
                 ->where([
-                    'UPPER(product_name)' => strtoupper($pname),
+                    'UPPER(product_name)' => strtoupper($pname) . '',
                     'UPPER(title)' => strtoupper($pt_title),
                     'UPPER(nrn)' => strtoupper($nrn),
                     'UPPER(batch_number)' => strtoupper($batchnum)
-                ])->one();
+                ])->one();        
         
+        //echo is_object($obj) ? 'OBJECT' : 'SCALAR'; exit;
+
         return is_object($obj);
     }
+    
+    
+    public static function myRoleACL() {
+        $userId = Yii::$app->user->id;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+       
+        if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+             return ['provider_id' => $user->provider->id];
+        }
+
+       return [];
+   }
+   
+   
+   public function isMyBtach($roleTitle, $providerId) {
+       $userId = Yii::$app->user->id;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+       
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER') {
+            $productProviderId = Product::findOne($this->id)->provider_id;
+            return $productProviderId == $user->provider->id;
+       }
+       
+       return true;
+   }
 }

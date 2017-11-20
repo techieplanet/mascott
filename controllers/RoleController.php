@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\User;
 use app\models\Role;
 use app\models\RoleAcl;
 use app\models\Permission;
@@ -150,6 +151,10 @@ class RoleController extends BaseController
             }
             
             Yii::$app->session->setFlash('saved', 'UPDATED');
+            if(Yii::$app->session['user_role_id'] == $model->id){
+                $user = User::findOne(Yii::$app->user->id);
+                $user->setUpSessionVars();
+            }
             
             $rolePermissions = $model->getPermissionIDs(); 
         } 

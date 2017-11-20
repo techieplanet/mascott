@@ -572,6 +572,10 @@ legend {
     padding: 20px;
 }
 
+.sidebar-menu {
+    margin-top: 35px !important;
+}
+
 .sidebar-menu .treeview-menu{
     padding-left: 0px !important;
 }
@@ -624,6 +628,15 @@ legend {
     /*margin-top: 20px;*/
 }
 
+.simple-anchor{
+    word-wrap: normal; 
+    text-decoration: none; 
+    font-size:18px; 
+    color: #2F9E69
+}
+.simple-anchor:hover{
+    text-decoration: underline !important;
+}
 .indicator-color1 {
     background: #00CC00;
 }
@@ -641,4 +654,12 @@ legend {
 }
 .split {
     border-right: 2px dashed #2f9e69 !important;
+}
+
+.popover{
+    min-width: 200px !important;
+}
+
+.dropdown-menu {
+    border-color: #999 !important;
 }

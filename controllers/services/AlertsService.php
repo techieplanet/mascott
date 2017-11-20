@@ -25,7 +25,7 @@ class AlertsService extends Service {
 
     public function sendNewUserEmail($model){
         $this->sendEmail(
-                $this->alertsSenderEmail, //from 
+                //$this->alertsSenderEmail, //from 
                 $model->email,                       //to
                 'New Account Registration',         //$subject, 
                 [
@@ -41,7 +41,7 @@ class AlertsService extends Service {
     public function sendResolutionRequestEmail($usersList, $report){
         foreach($usersList as $user){
             $this->sendEmail(
-                    $this->alertsSenderEmail, //from 
+                    //$this->alertsSenderEmail, //from 
                     $user->email,                       //to
                     'Resolution Request',         //$subject, 
                     [
@@ -59,7 +59,7 @@ class AlertsService extends Service {
     public function sendResolutionUpdateEmail($usersList, $report){
         foreach($usersList as $user){
             $this->sendEmail(
-                    $this->alertsSenderEmail, //from 
+                    //$this->alertsSenderEmail, //from 
                     $user->email,                 //to
                     'Resolution Update',         //$subject, 
                     [

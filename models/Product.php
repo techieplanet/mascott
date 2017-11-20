@@ -39,6 +39,8 @@ use app\models\reports\ProductReport;
 class Product extends \yii\db\ActiveRecord
 {
     const SCENARIO_PRODUCT = 'product';
+    const SCENARIO_EXCEL = 'excel';
+    
     /**
      * @inheritdoc
      */
@@ -54,6 +56,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['product_name', 'product_type', 'dosage_form', 'certificate_holder', 'production_country', 'brand_name', 'generic_name', 'nrn', 'mas_code_assigned', 'mas_code_status', 'provider_id'], 'required'],
+            //[['product_name', 'product_type', 'dosage_form', 'certificate_holder', 'production_country', 'brand_name', 'generic_name', 'nrn'], 'required', 'on' => self::SCENARIO_EXCEL],
             [['product_type', 'certificate_holder', 'production_country', 'mas_code_assigned', 'mas_code_status', 'provider_id'], 'integer'],
             [['deleted', 'created_by', 'modified_by'], 'integer'],
             [['created_date', 'modified_date', 'created_by', 'modified_by'], 'safe'],
@@ -66,7 +69,8 @@ class Product extends \yii\db\ActiveRecord
             [['product_type'], 'exist', 'skipOnError' => true, 'targetClass' => ProductType::className(), 'targetAttribute' => ['product_type' => 'id']],
         ];
     }
-
+    
+    
     /**
      * @inheritdoc
      */
@@ -134,7 +138,8 @@ class Product extends \yii\db\ActiveRecord
     }
     
     public static function getProductsAsAssocArray(){
-        return Product::find()->asArray()->all();
+        $roleConditionArray = Product::myRoleACL();
+        return Product::find()->where($roleConditionArray)->asArray()->all();
     }
     
     public function getUniqueDosageForms(){
@@ -150,4 +155,29 @@ class Product extends \yii\db\ActiveRecord
                 ->asArray()
                 ->all();
     }
+    
+    
+   public static function myRoleACL($userId=0) {
+        $userId = Yii::$app->user->id;
+        $user = User::find()->with('role')->where(['id' => $userId])->one();
+        
+        if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+             return ['provider_id' => $user->provider->id];
+        }
+       
+      return [];
+   }
+   
+   
+   public function isMyProduct($userId=0) {
+       $userId = empty($userId) ? Yii::$app->user->id : $userId;
+       $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+       
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER') {
+            $productProviderId = Product::findOne($this->id)->provider_id;
+            return $productProviderId == $user->provider->id;
+       }
+       
+       return true;
+   }
 }

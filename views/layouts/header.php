@@ -33,8 +33,8 @@
               <?= Html::img('@web/images/user.png', ['alt' => 'User Image']) ?>
               <span class="hidden-xs">
                   <?= 
-                        Yii::$app->user->identity->firstname . ' ' . 
-                        Yii::$app->user->identity->lastname;
+                        ucfirst(Yii::$app->user->identity->firstname) . ' ' . 
+                        ucfirst(Yii::$app->user->identity->lastname);
                   ?>
               </span>
             </a>

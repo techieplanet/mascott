@@ -46,6 +46,7 @@ class Provider extends \yii\db\ActiveRecord
             [['contact_email'], 'email'],
             [['contact_email'], 'unique'],
             [['contact_phone'], 'match', 'pattern' => '/^[0-9]+$/'],
+            [['contact_phone'], 'string', 'min' => 11],
             [['city', 'state'], 'string', 'max' => 50],
             [['contact_phone'], 'string', 'max' => 11],
         ];
@@ -81,6 +82,18 @@ class Provider extends \yii\db\ActiveRecord
     }
     
     public static function getProvidersAsAssocArray(){
-        return Provider::find()->asArray()->all();
+        $roleConditionArray = Provider::myRoleACL();
+        return Provider::find()->where($roleConditionArray)->asArray()->all();
     }
+    
+    public static function myRoleACL() {
+        $userId = Yii::$app->user->id;
+        $user = User::find()->with(['role', 'provider'])->where(['id' => $userId])->one();
+        
+       if(strtoupper($user->role->title) ==  'MAS PROVIDER'){
+            return ['id' => $user->provider->id];
+       }
+       
+      return [];
+   }
 }
