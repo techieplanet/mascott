@@ -2,6 +2,8 @@
     use yii\helpers\Html;
     use yii\helpers\Url;
     $permissions = Yii::$app->session['user_permissions'];
+    //echo 'ppppppp';
+    //var_dump($permissions); exit;
 ?>
 
 

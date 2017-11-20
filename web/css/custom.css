@@ -659,3 +659,7 @@ legend {
 .popover{
     min-width: 200px !important;
 }
+
+.dropdown-menu {
+    border-color: #999 !important;
+}

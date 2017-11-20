@@ -17,14 +17,36 @@ $permissions = Yii::$app->session['user_permissions'];
     <h1><?= $this->title; ?></h1>
 </section>
 
-<div class="row">
-    <div class="col-md-12">
+<div class="row marginbottom15">
         <?php if(in_array('view_edit_form_a', $permissions)) { ?>
-        <p class="text-right">
-            <?= Html::a('Create New Product', ['create'], ['class' => 'btn btn-mas']) ?>
-        </p>
-        <?php }  ?>
-    </div>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-mas dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li><?= Html::a('<i class="fa fa-plus" aria-hidden="true"></i> '
+                                    . 'Create New Product', 
+                                    ['create'], ['class' => '']) ?>
+                  </li>
+                   
+                  <li role="separator" class="divider"></li>
+                   <li class="dropdown-header">REGISTRATION TEMPLATE</li>
+                   <li role="separator" class="divider"></li>
+                   
+                  <li><?= Html::a('<i class="fa fa-download" aria-hidden="true"></i> '
+                                    . 'Download Sample Template', 
+                                    ['download-sample'], ['class' => '']) ?>
+                  </li>
+                  <li><?= Html::a('<i class="fa fa-download" aria-hidden="true"></i> '
+                                    . 'Upload Product Data File', 
+                                    ['import-product-data'], ['class' => '']) ?>
+                  </li>
+                </ul>
+            </div>
+
+            
+            
+        <?php }  ?>    
 </div>
 
 <div class="row">

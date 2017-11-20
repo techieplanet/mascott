@@ -66,4 +66,5 @@ class HCR extends \yii\db\ActiveRecord
     public static function getHCRAsAssocArray(){
         return HCR::find()->asArray()->all();
     }
+ 
 }

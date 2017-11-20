@@ -157,6 +157,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface {
     }
 
     public function validatePassword($password) {
+        //return true;
         return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 
@@ -174,7 +175,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface {
                 ->innerJoinWith(['role.roleAcls.permission'])
                 ->where(['user.id' => $this->id, 'active' => 1])
                 ->asArray()
-                ->all();
+                //->all();
+                ->createCommand()
+                ->queryAll();
 
         $permissions = array_map(function($value) {
             return $value['alias'];

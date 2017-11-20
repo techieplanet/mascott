@@ -71,6 +71,7 @@ class UsageReportController extends BaseController
      */
     public function actionCreate()
     {
+        //ini_set('display_errors', 'On');
         $this->checkPermission(['view_edit_form_b']);
         
         $model = new UsageReport();
@@ -290,5 +291,23 @@ class UsageReportController extends BaseController
             'excelErrors' => $parseResponse
         ]);
         
+    }
+    
+    public function actionDownloadSample(){        
+        $file = 'uploads/templates/MAS Request Report- Form B.xlsx';
+  
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        } else {
+            echo 'no file'; 
+        }
     }
 }

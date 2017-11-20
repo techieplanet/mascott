@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 use app\models\Product;
 use app\models\ProductType;
 use app\models\Batch;
@@ -19,6 +20,8 @@ use app\controllers\services\ProviderService;
 use app\controllers\services\ProductTypeService;
 use app\controllers\services\ProductService;
 use app\controllers\services\LocationService;
+use app\models\utils\Uploader;
+use app\models\service\ProductExcelParser;
 
 
 /**
@@ -351,5 +354,64 @@ class ProductController extends BaseController
             'ptMap' => $ptMap
         ]);
        
+    }
+    
+    
+    public function actionDownloadSample(){
+        $file = 'uploads/templates/MAS Registration form - Form A.xlsx';
+
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        } else {
+            echo 'no file'; 
+        }
+    }
+    
+    
+    public function actionImportProductData(){
+        $model = new Uploader(['scenario' => Uploader::SCENARIO_EXCEL]);
+        $startRow = 19;
+        $uploadErrors = array(); $parseResponse = array(); 
+        
+        if (Yii::$app->request->isPost) {
+            $model->excelFile = UploadedFile::getInstance($model, 'excelFile');
+            if ($model->uploadExcelFile()) {
+                /**
+                 * HURRAY!
+                 * file is uploaded successfully
+                 */
+                
+                $fileName = $model->excelFile->baseName . '.' . $model->excelFile->extension;
+                $fileName = 'uploads' . DIRECTORY_SEPARATOR . $fileName;
+                
+                /**
+                * $parseResponse is an array.
+                * Will contain errors if any
+                * Will be empty of no errors.
+                */
+                $parseResponse = (new ProductExcelParser($startRow, $fileName))->run();
+                
+                //Yii::$app->session->setFlash('uploaded', 'UPLOADED');
+                
+            } else {
+                $uploadErrors[] = $model->getErrors();
+            }
+            
+        }
+
+        return $this->render('import-product-data', [
+            'model' => $model,
+            'uploadErrors' => $uploadErrors,
+            'excelErrors' => $parseResponse
+        ]);
+        
     }
 }
